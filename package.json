@@ -4,8 +4,14 @@
   "private": true,
   "description": "Vue3 Query Components Monorepo - 企业后台管理系统组件库",
   "type": "module",
+  "workspaces": [
+    "packages/*"
+  ],
   "engines": {
     "node": "^20.19.0 || >=22.12.0"
+  },
+  "overrides": {
+    "vitepress": "^1.6.4"
   },
   "scripts": {
     "dev": "npm-run-all --parallel dev:components dev:docs",
