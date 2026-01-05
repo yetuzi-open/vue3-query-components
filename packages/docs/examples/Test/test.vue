@@ -1,7 +1,15 @@
 <script setup lang="ts">
-import { CommonQueryTable, CommonForm, CommonConfigProvider } from '@components-src'
-import { reactive } from 'vue'
+import { CommonQueryTable, CommonForm, CommonConfigProvider, type CommonFormPropForm } from '@components-src'
 import { ElButton } from 'element-plus'
+
+const a: CommonFormPropForm<any> = [
+    {
+        is: 'aaaaa',
+        prop: 'name',
+        label: '用户名',
+        props: { placeholder: '请输入用户名' }
+    }
+]
 
 console.log(ElButton)
 
@@ -52,11 +60,15 @@ const columns = [
 </script>
 
 <template>
-  <CommonQueryTable
-    :fetch="fetch"
-    :form="form"
-    :columns="columns"
-  />
+    <div>
+        <CommonForm :form="form"></CommonForm>
+        <CommonQueryTable
+            :fetch="fetch"
+            :form="form"
+            :columns="columns"
+        />
+    </div>
+
 </template>
 
 <style>
