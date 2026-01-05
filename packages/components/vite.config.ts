@@ -1,15 +1,11 @@
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import { resolve } from 'path'
-import { libInjectCss } from 'vite-plugin-lib-inject-css'
 import dts from 'vite-plugin-dts'
 
 export default defineConfig({
   plugins: [
     vue(),
-    // 使用 libInjectCss 插件来处理 CSS 导入
-    // 这个插件会自动将 CSS 导入从 JS 中移除并合并到 CSS 文件中
-    libInjectCss(),
     // 生成类型声明文件
     dts({
       insertTypesEntry: true,
