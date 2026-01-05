@@ -37,7 +37,7 @@ const appConfig = reactive({
 
 ### 2. 页面级别配置
 
-在特定页面配置，覆盖全局配置：
+在特定页面配置，覆盖页面及其子组件：
 
 ```vue
 <template>
