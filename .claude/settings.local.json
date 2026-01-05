@@ -11,7 +11,17 @@
       "Bash(git commit:*)",
       "Bash(git push:*)",
       "Bash(git pull:*)",
-      "Bash(git stash:*)"
+      "Bash(git stash:*)",
+      "Bash(npm install)",
+      "Bash(npm ls:*)",
+      "Bash(npm info:*)",
+      "Bash(npm view:*)",
+      "Bash(npx tsc:*)",
+      "Bash(timeout:*)",
+      "Bash(curl:*)",
+      "Bash(npx vitepress build:*)",
+      "Bash(npm run build)",
+      "Bash(taskkill:*)"
     ],
     "deny": [],
     "ask": []
