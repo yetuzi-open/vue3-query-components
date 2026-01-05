@@ -1,0 +1,80 @@
+{
+  "name": "@yetuzi/vue3-query-components",
+  "version": "1.1.38",
+  "description": "Vue3查询页面组件库，基于Element Plus封装的表格查询组件 - 开箱即用",
+  "type": "module",
+  "main": "dist/index.js",
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    },
+    "./dist/style.css": "./dist/index.css",
+    "./dist/index.css": "./dist/index.css"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "dev": "vite build --watch",
+    "build": "node scripts/build.js",
+    "build:patch": "node scripts/build.js patch",
+    "build:minor": "node scripts/build.js minor",
+    "build:major": "node scripts/build.js major",
+    "type-check": "vue-tsc --noEmit",
+    "test": "npm run build"
+  },
+  "keywords": [
+    "vue3",
+    "element-plus",
+    "components",
+    "typescript",
+    "ui",
+    "table",
+    "form",
+    "query",
+    "search",
+    "list-page",
+    "data-table",
+    "crud"
+  ],
+  "author": "yetuzi",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://gitee.com/yetuzi/vue3-common.git"
+  },
+  "bugs": {
+    "url": "https://gitee.com/yetuzi/vue3-common/issues"
+  },
+  "homepage": "https://gitee.com/yetuzi/vue3-common#readme",
+  "peerDependencies": {
+    "element-plus": "^2.11.5",
+    "vue": "^3.5.0"
+  },
+  "dependencies": {
+    "dayjs": "^1.11.18",
+    "lodash-es": "^4.17.21",
+    "vue-hooks-plus": "^2.4.1"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "@vitejs/plugin-vue": "^6.0.0",
+    "@vue/tsconfig": "^0.8.0",
+    "sass": "^1.97.0",
+    "typescript": "~5.9.0",
+    "unplugin-element-plus": "^0.11.2",
+    "vite": "^6.0.0",
+    "vite-plugin-dts": "^4.5.4",
+    "vite-plugin-lib-inject-css": "^2.2.2",
+    "vite-plugin-package-version": "^1.1.0",
+    "vue-tsc": "^3.0.0"
+  },
+  "engines": {
+    "node": ">=16.0.0"
+  }
+}

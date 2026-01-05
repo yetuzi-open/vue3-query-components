@@ -1,0 +1,32 @@
+{
+  "name": "vue3-query-components-monorepo",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Vue3 Query Components Monorepo - 企业后台管理系统组件库",
+  "type": "module",
+  "engines": {
+    "node": "^20.19.0 || >=22.12.0"
+  },
+  "scripts": {
+    "dev": "npm-run-all --parallel dev:components dev:docs",
+    "dev:components": "cd packages/components && npm run dev",
+    "dev:docs": "cd packages/docs && npm run dev",
+    "build": "npm run build:components && npm run build:docs",
+    "build:components": "cd packages/components && npm run build",
+    "build:docs": "cd packages/docs && npm run build",
+    "type-check": "cd packages/components && npm run type-check",
+    "format": "prettier --write \"**/*.{ts,js,vue,json,md}\"",
+    "clean": "rm -rf packages/components/dist packages/docs/.vitepress/dist"
+  },
+  "devDependencies": {
+    "@tsconfig/node22": "^22.0.2",
+    "@types/node": "^22.18.6",
+    "@vue/tsconfig": "^0.8.1",
+    "npm-run-all2": "^8.0.4",
+    "prettier": "^3.6.2",
+    "typescript": "~5.9.0"
+  },
+  "volta": {
+    "node": "22.16.0"
+  }
+}

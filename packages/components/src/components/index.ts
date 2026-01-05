@@ -1,0 +1,13 @@
+// 自动导出所有组件
+export * from './CommonConfigProvider'
+export * from './CommonQueryTable'
+export * from './CommonForm'
+export * from './CommonTable'
+export * from './CommonPagination'
+export * from './CommonSelect'
+export * from './CommonInput'
+export * from './CommonDatePicker'
+export * from './CommonRadio'
+export * from './CommonCheckbox'
+export * from './CommonSwitch'
+export * from './CommonButton'

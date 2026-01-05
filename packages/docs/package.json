@@ -1,0 +1,29 @@
+{
+  "name": "@yetuzi/vue3-query-components-docs",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Vue3 Query Components 文档站点",
+  "scripts": {
+    "dev": "vitepress dev .",
+    "build": "vitepress build .",
+    "serve": "vitepress serve .",
+    "preview": "vitepress serve ."
+  },
+  "dependencies": {
+    "@yetuzi/vue3-query-components": "^1.1.38",
+    "element-plus": "^2.12.0",
+    "vitepress-plugin-group-icons": "^1.6.5",
+    "vue": "^3.5.25"
+  },
+  "devDependencies": {
+    "@types/node": "^25.0.2",
+    "sass": "^1.97.0",
+    "sass-loader": "^16.0.6",
+    "typescript": "^5.9.3",
+    "unplugin-element-plus": "^0.11.2",
+    "vite-plugin-package-version": "^1.1.0",
+    "vitepress": "^1.6.4",
+    "vitepress-demo-plugin": "^1.5.1"
+  }
+}

@@ -1,0 +1,38 @@
+
+:root {
+  --vp-layout-max-width: 100%;
+  --vp-content-max-width: 100%;
+  --vp-doc-content-max-width: 100%;
+}
+
+.VPDoc .content-container {
+  max-width: 100% !important;
+}
+
+.VPDoc .container {
+  max-width: 100% !important;
+}
+
+.vp-doc {
+  max-width: 100% !important;
+}
+
+/* 让Header占据全宽度 */
+.VPNav {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  width: 100% !important;
+  z-index: var(--vp-z-index-nav) !important;
+}
+
+/* 调整内容区域，避免被固定header遮挡 */
+.VPDoc {
+  padding-top: var(--vp-nav-height) !important;
+}
+
+/* 确保sidebar也在正确位置 */
+.VPSidebar {
+  top: var(--vp-nav-height) !important;
+}
