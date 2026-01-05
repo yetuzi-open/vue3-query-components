@@ -91,11 +91,11 @@ const pageConfig = reactive({
 
 #### 默认配置
 
-<<< ../../../../../vue3-query-components/vue3-common/vue3-query-components/src/index.ts#config
+<<< ../../../components/src/index.ts#config
 
 #### TypeScript 类型定义
 
-<<< ../../../../../vue3-query-components/vue3-common/vue3-query-components/src/types/index.ts#config
+<<< ../../../components/src/types/index.ts#config
 
 #### 配置项说明
 
