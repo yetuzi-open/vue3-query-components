@@ -172,9 +172,7 @@ export default defineConfig({
     },
     css: {
       preprocessorOptions: {
-        scss: {
-          api: 'modern' // 添加此行
-        }
+        scss: {}
       }
     },
     ssr: {
