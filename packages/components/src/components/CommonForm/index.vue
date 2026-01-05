@@ -2,7 +2,8 @@
 import { ElForm, ElFormItem, ElButton } from 'element-plus'
 import type { FormInstance } from 'element-plus'
 
-import type { CommonFormProps, CommonFormData, CommonFormExpose } from './type'
+import type { CommonFormProps, CommonFormData, CommonFormExpose, CommonFormPropForm } from './type'
+import { isFormItemType } from './type'
 
 import {
   CommonSelect,
@@ -15,6 +16,7 @@ import {
   CommonButton,
 } from '../../index'
 import type { AnyObject } from '../../index'
+import type { Component } from 'vue'
 import { reactive, ref, useAttrs, getCurrentInstance } from 'vue'
 
 /** 组件Props定义，提供默认值 */
@@ -25,6 +27,30 @@ const props = withDefaults(defineProps<CommonFormProps<T>>(), {
     return []
   },
 })
+
+/**
+ * 内置组件映射
+ * 使用 Map 存储组件类型映射
+ */
+const componentMap = new Map<string, Component>([
+  ['select', CommonSelect],
+  ['input', CommonInput],
+  ['date-picker', CommonDatePicker],
+  ['radio', CommonRadio],
+  ['check-box', CommonCheckbox],
+  ['switch', CommonSwitch],
+])
+
+/**
+ * 获取对应的组件
+ * 如果是内置组件类型，返回对应组件；否则返回 undefined
+ */
+function getComponent(item: CommonFormPropForm<T>[number]): Component | undefined {
+  if (typeof item.is === 'string') {
+    return componentMap.get(item.is)
+  }
+  return undefined
+}
 
 const vm = getCurrentInstance()
 
@@ -124,39 +150,10 @@ defineOptions({
         :value="formData[item.prop]"
         :updateValue="(val: any) => (formData[item.prop] = val)"
       >
-        <!-- 使用 v-if 替代动态组件渲染 -->
-        <CommonSelect
-          v-if="item.is === 'select'"
-          v-bind="item.props"
-          :modelValue="formData[item.prop]"
-          @update:modelValue="(val: any) => (formData[item.prop] = val)"
-        />
-        <CommonInput
-          v-else-if="item.is === 'input'"
-          v-bind="item.props"
-          :modelValue="formData[item.prop]"
-          @update:modelValue="(val: any) => (formData[item.prop] = val)"
-        />
-        <CommonDatePicker
-          v-else-if="item.is === 'date-picker'"
-          v-bind="item.props"
-          :modelValue="formData[item.prop]"
-          @update:modelValue="(val: any) => (formData[item.prop] = val)"
-        />
-        <CommonRadio
-          v-else-if="item.is === 'radio'"
-          v-bind="item.props"
-          :modelValue="formData[item.prop]"
-          @update:modelValue="(val: any) => (formData[item.prop] = val)"
-        />
-        <CommonCheckbox
-          v-else-if="item.is === 'check-box'"
-          v-bind="item.props"
-          :modelValue="formData[item.prop]"
-          @update:modelValue="(val: any) => (formData[item.prop] = val)"
-        />
-        <CommonSwitch
-          v-else-if="item.is === 'switch'"
+        <!-- 使用 getComponent 函数获取内置组件 -->
+        <component
+          v-if="getComponent(item)"
+          :is="getComponent(item)"
           v-bind="item.props"
           :modelValue="formData[item.prop]"
           @update:modelValue="(val: any) => (formData[item.prop] = val)"
