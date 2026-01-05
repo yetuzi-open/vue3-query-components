@@ -6,7 +6,7 @@ import { getCommonProviderConfig, getFirstValidValue } from '../../index'
 import type { AnyObject } from '../../index'
 import type { TableInstance } from 'element-plus'
 import { cloneDeep } from 'lodash-es'
-import { columnSupplementType } from './config'
+import { getColumnSupplementType } from './config'
 
 /** 全局配置对象 */
 const config = getCommonProviderConfig()
@@ -60,10 +60,13 @@ const arrayColumns = computed(() => {
   }
   return columns.map((item) => {
     if (item.type) {
-      return Object.assign(columnSupplementType[item.type], {
-        ...item,
-        prop: item.prop as string,
-      })
+      const supplementConfig = getColumnSupplementType(item.type)
+      if (supplementConfig) {
+        return Object.assign(supplementConfig, {
+          ...item,
+          prop: item.prop as string,
+        })
+      }
     }
     return {
       ...item,

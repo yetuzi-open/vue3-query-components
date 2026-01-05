@@ -14,11 +14,28 @@ export type CommonTableColumn<T extends AnyObject> =
   | CommonTableArrayColumns<T>
   | CommonTableObjectColumns<T>
 
+/**
+ * 表格列类型数组
+ * 用于 CommonTable 的 columns 属性，也可用于类型标注
+ *
+ * @example
+ * ```ts
+ * import type { CommonTableArrayColumns } from '@yetuzi/vue3-query-components'
+ *
+ * const columns: CommonTableArrayColumns<MyDataType> = [
+ *   { prop: 'id', label: 'ID', type: 'index' },
+ *   { prop: 'name', label: '用户名' },
+ *   { prop: 'createTime', label: '创建时间', type: 'dateTime' }
+ * ]
+ * ```
+ */
+export type CommonTableArrayColumns<T extends AnyObject> = Array<CommonTableColumnRoot<T>>
+
 /** 增强 TableColumn 的类型 */
 interface TableColumnSupplement<T extends AnyObject>
   extends Partial<Omit<TableColumnCtx<T>, 'prop' | 'type'>> {
   prop: keyof T | (string & {})
-  type?: 'index' | 'selection' | 'expand' | 'date' | 'dateTime'
+  type?: TableColumnType | (string & {})
 }
 
 /**
@@ -71,8 +88,11 @@ export type CommonTableColumnRoot<T extends AnyObject> =
   | TableColumnTypeDate<T>
   | TableColumnTypeDateTime<T>
 
-/** Columns 为 Array 时的ts类型 */
-export type CommonTableArrayColumns<T extends AnyObject> = Array<CommonTableColumnRoot<T>>
+/**
+ * 表格列类型
+ * 从 CommonTableColumnRoot 中自动提取 type 字段的类型
+ */
+export type TableColumnType = Extract<CommonTableColumnRoot<AnyObject>, { type: any }>['type']
 
 /** Columns 为 Object 时的ts类型 */
 type CommonTableObjectColumns<T extends AnyObject> = Record<
