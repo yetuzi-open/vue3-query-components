@@ -6,8 +6,9 @@ import { useData } from 'vitepress'
 import './style.css'
 import 'virtual:group-icons.css'
 
-// 导入 Element Plus 样式
-import 'element-plus/dist/index.css'
+// 只导入 Element Plus 基础样式和暗色主题变量
+// 具体组件样式由 unplugin-element-plus 自动按需导入
+import 'element-plus/theme-chalk/src/base.scss'
 import 'element-plus/theme-chalk/dark/css-vars.css'
 
 // 导入组件库样式

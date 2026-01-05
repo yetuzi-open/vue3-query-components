@@ -14,14 +14,17 @@
       "@/*": ["./.vitepress/*"],
       "@examples": ["./examples"],
       "@pages": ["./pages"],
-      "@public": ["./public"]
+      "@public": ["./public"],
+      "@components-src": ["../components/src"]
     }
   },
   "include": [
     ".vitepress/**/*.ts",
     ".vitepress/**/*.vue",
     "examples/**/*.vue",
-    "pages/**/*.md"
+    "examples/**/*.ts",
+    "pages/**/*.md",
+    "../components/src/**/*"
   ],
   "exclude": [
     "node_modules",
