@@ -24,6 +24,11 @@ pnpm add @yetuzi/vue3-query-components
 
 :::
 
+## 引入CSS
+
+```sh  [main.ts]
+import '@yetuzi/vue3-query-components/dist/style.css'
+```
 
 ## 浏览器兼容性
 
@@ -32,6 +37,6 @@ pnpm add @yetuzi/vue3-query-components
 
 ## 版本说明
 
-| 版本 | Vue 版本 | Element Plus 版本 | 状态 |
-|-----|---------|------------------|------|
-| 1.x | 3.5+ | 2.11+ | 当前版本 |
+| 版本 | Vue 版本 | Element Plus 版本 |
+|-----|---------|------------------|
+| 1.x | 3.5+ | 2.11+ |
