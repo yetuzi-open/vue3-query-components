@@ -168,7 +168,9 @@ export default defineConfig({
         '@pages': resolve(__dirname, '../pages'),
         '@public': resolve(__dirname, '../public'),
         // 组件库源码别名（开发时使用）
-        '@components-src': resolve(__dirname, '../../components/src')
+        '@components-src': resolve(__dirname, '../../components/src'),
+        // 组件库根目录（用于引用 CHANGELOG.md 等）
+        '@components-root': resolve(__dirname, '../../components')
       }
     },
     optimizeDeps: {
