@@ -1,0 +1,28 @@
+{
+  "types": [
+    { "type": "feat", "section": "✨ 新增" },
+    { "type": "fix", "section": "🔧 修复" },
+    { "type": "docs", "section": "📝 文档" },
+    { "type": "style", "section": "💄 样式" },
+    { "type": "refactor", "section": "♻️ 重构" },
+    { "type": "perf", "section": "⚡ 性能" },
+    { "type": "test", "section": "✅ 测试" },
+    { "type": "build", "section": "📦 构建" },
+    { "type": "ci", "hidden": true },
+    { "type": "chore", "hidden": true },
+    { "type": "revert", "hidden": true }
+  ],
+  "releaseCommitMessageFormat": "chore: release {{currentTag}}",
+  "skip": {
+    "tag": false,
+    "commit": false,
+    "bump": false
+  },
+  "commitFiles": false,
+  "bumpFiles": [
+    {
+      "filename": "package.json",
+      "type": "json"
+    }
+  ]
+}

@@ -72,6 +72,15 @@ try {
   console.log('- dist/index.js      (ES Module)')
   console.log('- dist/index.d.ts    (TypeScript 声明文件)')
   console.log('- dist/index.css     (样式文件)')
+
+  // 生成版本信息（供 docs 使用）
+  try {
+    console.log('')
+    console.log('📝 生成版本信息...')
+    execSync('node scripts/generate-version-info.js', { stdio: 'inherit' })
+  } catch (error) {
+    console.warn('⚠️  版本信息生成失败，但不影响构建')
+  }
 } catch (error) {
   console.error('❌ 构建失败：', error.message)
   process.exit(1)

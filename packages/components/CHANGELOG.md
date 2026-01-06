@@ -1,5 +1,36 @@
 # 更新日志
 
+## [1.2.0] - 2025-01-06
+
+### 优化
+- ✨ CommonForm - 优化类型命名，提升代码可读性
+  - `CommonFormPropForm` → `CommonFormItemArray`
+  - `CommonFormSupplement` → `CommonFormItemBase`
+  - `CommonFormCustomComponentsItem` → `CommonFormCustomItem`
+- ✨ CommonTable - 优化类型命名，与 CommonForm 保持一致
+  - `TableColumnSupplement` → `TableColumnBase`
+- 📝 为所有类型定义添加详细的 JSDoc 注释
+- 📝 添加类型参数说明和使用示例
+- 📝 改善 IDE 智能提示体验
+
+### 文档
+- 📝 优化文档内容和结构
+- 📝 添加 CSS 引入说明
+- 📝 修复文档中的无效 demo 标签
+
+### 修复
+- 🔧 替换 sass 为 sass-embedded，解决 Dart Sass 弃用警告
+- 🔧 更新依赖锁定文件
+
+## [1.1.38] - 2024-12-XX
+
+### 重构
+- ♻️ 重构 CommonTable 类型系统
+- ♻️ 重构 CommonForm 类型系统
+
+### 新增
+- 🔧 添加 vue-component-type-helpers 依赖
+
 ## [1.0.4] - 2024-12-11
 
 ### 修复
