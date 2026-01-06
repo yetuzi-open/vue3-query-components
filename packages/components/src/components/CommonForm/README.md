@@ -449,7 +449,7 @@ const handleReset = () => {
 
 ```typescript
 interface CommonFormProps {
-  form: CommonFormPropForm[]
+  form: CommonFormItemArray[]
   model?: Record<string, any>
   rules?: Record<string, any>
   inline?: boolean
@@ -458,7 +458,7 @@ interface CommonFormProps {
   showFooter?: boolean
 }
 
-interface CommonFormPropForm {
+interface CommonFormItemArray {
   type: 'input' | 'select' | 'date' | 'radio' | 'switch' | 'checkbox' | 'custom'
   prop: string
   label: string

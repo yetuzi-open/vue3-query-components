@@ -1,4 +1,4 @@
-import type { AnyObject, ListParam, CommonTableColumn, CommonFormPropForm } from '../../index'
+import type { AnyObject, ListParam, CommonTableColumn, CommonFormItemArray } from '../../index'
 
 export interface CommonQueryTableProps<T extends AnyObject = AnyObject> {
   /**
@@ -12,7 +12,7 @@ export interface CommonQueryTableProps<T extends AnyObject = AnyObject> {
    * 表单配置数组
    * 定义查询表单的字段和属性
    */
-  form?: CommonFormPropForm<T>
+  form?: CommonFormItemArray<T>
 
   /**
    * 表格列配置

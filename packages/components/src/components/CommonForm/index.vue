@@ -2,8 +2,7 @@
 import { ElForm, ElFormItem, ElButton } from 'element-plus'
 import type { FormInstance } from 'element-plus'
 
-import type { CommonFormProps, CommonFormData, CommonFormExpose, CommonFormPropForm } from './type'
-import { isFormItemType } from './type'
+import type { CommonFormProps, CommonFormData, CommonFormExpose, CommonFormItemArray } from './type'
 
 import {
   CommonSelect,
@@ -45,7 +44,7 @@ const componentMap = new Map<string, Component>([
  * 获取对应的组件
  * 如果是内置组件类型，返回对应组件；否则返回 undefined
  */
-function getComponent(item: CommonFormPropForm<T>[number]): Component | undefined {
+function getComponent(item: CommonFormItemArray<T>[number]): Component | undefined {
   if (typeof item.is === 'string') {
     return componentMap.get(item.is)
   }
