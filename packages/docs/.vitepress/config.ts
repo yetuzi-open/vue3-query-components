@@ -4,7 +4,6 @@ import { groupIconMdPlugin, groupIconVitePlugin } from 'vitepress-plugin-group-i
 import { vitepressDemoPlugin } from 'vitepress-demo-plugin'
 import path from 'path'
 import { version } from '@yetuzi/vue3-query-components'
-import ElementPlus from 'unplugin-element-plus/vite'
 
 // https://vitepress.vuejs.org/config/app-configs
 export default defineConfig({
@@ -150,9 +149,7 @@ export default defineConfig({
 
   vite: {
     plugins: [
-      groupIconVitePlugin(),
-      // Element Plus 按需自动导入样式
-      ElementPlus()
+      groupIconVitePlugin()
     ],
     define: {
       __VUE_OPTIONS_API__: true
@@ -185,11 +182,7 @@ export default defineConfig({
       }
     },
     ssr: {
-      noExternal: [
-        // 让 unplugin-element-plus 在 SSR 时正常工作
-        /^element-plus/,
-        /^unplugin-element-plus/
-      ]
+      noExternal: []
     }
   }
 })
