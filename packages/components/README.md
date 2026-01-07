@@ -50,6 +50,33 @@ npm install element-plus
 ```typescript
 // 导入组件库样式
 import '@yetuzi/vue3-query-components/dist/index.css'
+
+// 导入 Element Plus 样式（需要根据你使用的组件导入对应样式）
+import 'element-plus/es/components/table/style/css'
+import 'element-plus/es/components/form/style/css'
+import 'element-plus/es/components/form-item/style/css'
+import 'element-plus/es/components/input/style/css'
+import 'element-plus/es/components/select/style/css'
+import 'element-plus/es/components/date-picker/style/css'
+import 'element-plus/es/components/radio-group/style/css'
+import 'element-plus/es/components/radio/style/css'
+import 'element-plus/es/components/checkbox-group/style/css'
+import 'element-plus/es/components/checkbox/style/css'
+import 'element-plus/es/components/switch/style/css'
+import 'element-plus/es/components/button/style/css'
+import 'element-plus/es/components/pagination/style/css'
+import 'element-plus/es/components/empty/style/css'
+import 'element-plus/es/components/loading/style/css'
+```
+
+或者简化为导入完整样式：
+
+```typescript
+// 导入组件库样式
+import '@yetuzi/vue3-query-components/dist/index.css'
+
+// 导入 Element Plus 完整样式（包含所有组件）
+import 'element-plus/dist/index.css'
 ```
 
 ### 3. 按需引入组件
