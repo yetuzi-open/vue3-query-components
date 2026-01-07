@@ -27,9 +27,10 @@ export default defineConfig({
     // 搜索配置
     search: {
       provider: 'local',
+      defaultLang: 'zh-CN',
       options: {
         locales: {
-          zh: {
+          'zh-CN': {
             translations: {
               button: {
                 buttonText: '搜索文档',
