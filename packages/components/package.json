@@ -53,12 +53,12 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://gitee.com/yetuzi_open/vue3-query-components"
+    "url": "https://github.com/yetuzi-open/vue3-query-components"
   },
   "bugs": {
-    "url": "https://gitee.com/yetuzi_open/vue3-query-components/issues"
+    "url": "https://github.com/yetuzi-open/vue3-query-components/issues"
   },
-  "homepage": "https://gitee.com/yetuzi_open/vue3-query-components",
+  "homepage": "https://github.com/yetuzi-open/vue3-query-components#readme",
   "peerDependencies": {
     "element-plus": "^2.11.5",
     "vue": "^3.5.0"

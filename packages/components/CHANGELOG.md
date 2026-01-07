@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+**仓库地址**：
+- [GitHub](https://github.com/yetuzi-open/vue3-query-components)
+- [Gitee](https://gitee.com/yetuzi_open/vue3-query-components)
+
 ### 1.2.3 (2026-01-07)
 
 

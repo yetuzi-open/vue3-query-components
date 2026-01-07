@@ -54,8 +54,12 @@ export default defineConfig({
         link: 'https://www.npmjs.com/package/@yetuzi/vue3-query-components'
       },
       {
+        text: 'GitHub',
+        link: 'https://github.com/yetuzi-open/vue3-query-components'
+      },
+      {
         text: 'Gitee',
-        link: 'https://gitee.com/yetuzi/vue3-common',
+        link: 'https://gitee.com/yetuzi_open/vue3-query-components',
       },
       {
         text: `v${version}`,
@@ -126,7 +130,7 @@ export default defineConfig({
     },
 
     editLink: {
-      pattern: 'https://github.com/vue3-query-components/vue3-query-components/edit/main/docs/:path',
+      pattern: 'https://github.com/yetuzi-open/vue3-query-components/edit/main/packages/docs/:path',
       text: '在 GitHub 上编辑此页'
     }
   },
