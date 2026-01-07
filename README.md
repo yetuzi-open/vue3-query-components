@@ -11,7 +11,7 @@
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.9+-blue)](https://www.typescriptlang.org/)
 [![Element Plus](https://img.shields.io/badge/Element%20Plus-2.11+-blueviolet)](https://element-plus.org/)
 
-[在线文档](https://github.com/vue3-query-components/vue3-query-components) · [快速开始](#快速开始) · [组件](#核心组件)
+[在线文档](https://gitee.com/yetuzi_open/vue3-query-components) · [快速开始](#快速开始) · [组件](#核心组件)
 
 </div>
 

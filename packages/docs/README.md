@@ -1,6 +1,6 @@
 # Vue3 Query Components 文档
 
-这是 [vue3-query-components](https://github.com/vue3-query-components/vue3-query-components) 组件库的官方文档站点。
+这是 [vue3-query-components](https://gitee.com/yetuzi_open/vue3-query-components) 组件库的官方文档站点。
 
 ## 快速开始
 
