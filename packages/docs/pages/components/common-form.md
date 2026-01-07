@@ -141,3 +141,170 @@ A: 可以使用 `v-if` 动态控制 form 数组中的项，或者在插槽中使
 ### Q: 自定义组件如何实现双向绑定？
 
 A: 自定义组件需要接收 `modelValue` prop 并触发 `update:modelValue` 事件，或者使用 `v-model` 的方式。
+
+## TypeScript 类型
+
+组件导出了以下 TypeScript 类型定义，可在你的项目中直接使用：
+
+### CommonFormProps
+
+```typescript
+interface CommonFormProps<T extends AnyObject> {
+  /** 表单项配置数组 */
+  form?: CommonFormItemArray<T>
+}
+```
+
+### CommonFormItemArray
+
+```typescript
+/**
+ * 表单项类型数组
+ * 用于 CommonForm 的 form 属性，也可用于类型标注
+ */
+type CommonFormItemArray<T extends AnyObject> = Array<
+  | CommonFormSelectItem<T>      // 选择器
+  | CommonFormInputItem<T>       // 输入框
+  | CommonFormDatePickerItem<T>  // 日期选择器
+  | CommonFormRadioItem<T>       // 单选框
+  | CommonFormCustomItem<T>      // 自定义组件
+  | CommonFormCheckboxItem<T>    // 复选框
+  | CommonFormSwitchItem<T>      // 开关
+>
+```
+
+### 表单项类型
+
+```typescript
+/** 选择器组件表单项 */
+interface CommonFormSelectItem<T extends AnyObject>
+  extends CommonFormItemBase<'select', CommonSelectProps, T> {}
+
+/** 输入框组件表单项 */
+interface CommonFormInputItem<T extends AnyObject>
+  extends CommonFormItemBase<'input', CommonInputProps, T> {}
+
+/** 日期选择器组件表单项 */
+interface CommonFormDatePickerItem<T extends AnyObject>
+  extends CommonFormItemBase<'date-picker', CommonDatePickerProps, T> {}
+
+/** 单选框组件表单项 */
+interface CommonFormRadioItem<T extends AnyObject>
+  extends CommonFormItemBase<'radio', CommonRadioProps, T> {}
+
+/** 复选框组件表单项 */
+interface CommonFormCheckboxItem<T extends AnyObject>
+  extends CommonFormItemBase<'check-box', CommonCheckboxProps, T> {}
+
+/** 开关组件表单项 */
+interface CommonFormSwitchItem<T extends AnyObject>
+  extends CommonFormItemBase<'switch', CommonSwitchProps, T> {}
+
+/** 自定义组件表单项 */
+interface CommonFormCustomItem<
+  T extends AnyObject,
+  C extends Component = Component,
+  P = ComponentProps<C>,
+> extends CommonFormItemBase<C, P, T> {}
+```
+
+### CommonFormItemBase
+
+```typescript
+/**
+ * 表单项基础接口
+ * @typeParam T - 组件类型
+ * @typeParam P - 组件的 Props 类型
+ * @typeParam D - 表单数据对象类型
+ */
+interface CommonFormItemBase<T, P, D extends AnyObject, V = any> {
+  /** 组件类型标识 */
+  is: T | (string & {})
+
+  /** 表单项标签 */
+  label?: string
+
+  /** 表单字段名 */
+  prop: keyof D | (string & {})
+
+  /** 传递给组件的额外属性 */
+  props?: Partial<P>
+
+  /** 字段初始值 */
+  initialValue?: V
+
+  /** ElFormItem 的额外属性配置 */
+  formItem?: Partial<Omit<FormItemProps, 'prop' | 'label'>>
+}
+```
+
+### CommonFormExpose
+
+```typescript
+/**
+ * CommonForm 组件实例暴露类型
+ * 继承 Element Plus FormInstance 的所有方法
+ */
+interface CommonFormExpose<T extends AnyObject = AnyObject> extends FormInstance {
+  /**
+   * 表单数据响应式对象
+   * 包含所有表单字段的当前值
+   */
+  formData: Reactive<CommonFormData<T>>
+}
+```
+
+### CommonFormData
+
+```typescript
+/**
+ * 表单数据类型
+ */
+type CommonFormData<T extends AnyObject> = T & Record<string, any>
+```
+
+**使用示例：**
+
+```typescript
+import type {
+  CommonFormProps,
+  CommonFormItemArray,
+  CommonFormInputItem,
+  CommonFormSelectItem,
+} from '@yetuzi/vue3-query-components'
+
+// 定义表单数据类型
+interface MyFormData {
+  name: string
+  status: number
+  createTime: string
+}
+
+// 定义表单配置
+const form: CommonFormItemArray<MyFormData> = [
+  {
+    is: 'input',
+    prop: 'name',
+    label: '姓名',
+    props: {
+      placeholder: '请输入姓名',
+    },
+  },
+  {
+    is: 'select',
+    prop: 'status',
+    label: '状态',
+    props: {
+      options: [
+        { label: '启用', value: 1 },
+        { label: '禁用', value: 0 },
+      ],
+    },
+  },
+]
+
+// 使用组件
+const formProps: CommonFormProps<MyFormData> = {
+  form
+}
+```

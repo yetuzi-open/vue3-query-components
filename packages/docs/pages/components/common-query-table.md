@@ -115,3 +115,88 @@ CommonQueryTable 支持通过布局插槽向内部组件传递内容：
 | @form-submit | 表单提交时触发 | `formData` |
 | @form-reset | 表单重置时触发 | - |
 | @pagination-change | 分页变化时触发 | `{ pageNo, pageSize }` |
+
+## TypeScript 类型
+
+组件导出了以下 TypeScript 类型定义，可在你的项目中直接使用：
+
+### CommonQueryTableProps
+
+```typescript
+interface CommonQueryTableProps<T extends AnyObject = AnyObject> {
+  /** 数据获取函数 */
+  fetch: (params?: ListParam) => Promise<{ list: T[]; total: string | number }>
+
+  /** 表单配置数组 */
+  form?: CommonFormItemArray<T>
+
+  /** 表格列配置 */
+  columns: CommonTableColumn<T>
+
+  /** 页面布局配置 */
+  layouts?: Array<CommonQueryTableLayoutsUnite>
+}
+```
+
+### CommonQueryTableLayoutsUnite
+
+```typescript
+/** 布局名联合类型 */
+type CommonQueryTableLayoutsUnite =
+  | 'header'    // 头部区域
+  | 'form'      // 表单区域
+  | 'toolbar'   // 工具栏区域
+  | 'table'     // 表格区域
+  | 'pagination' // 分页区域
+  | 'footer'    // 底部区域
+```
+
+### ListParam
+
+```typescript
+/**
+ * 列表请求参数类型
+ * @typeParam T - 额外的查询参数类型
+ */
+type ListParam<T extends AnyObject = AnyObject> = PaginationParam & T
+
+/**
+ * 分页请求参数
+ */
+type PaginationParam = {
+  pageNo: number
+  pageSize: number
+}
+```
+
+**使用示例：**
+
+```typescript
+import type {
+  CommonQueryTableProps,
+  CommonQueryTableLayoutsUnite,
+  ListParam,
+} from '@yetuzi/vue3-query-components'
+
+// 定义查询参数类型
+interface MyQueryParams {
+  name: string
+  status: number
+}
+
+// 定义数据行类型
+interface UserData {
+  id: number
+  name: string
+  email: string
+}
+
+// 使用类型
+const fetch = (params: ListParam<MyQueryParams>) => {
+  // params 包含: pageNo, pageSize, name, status
+  return Promise.resolve({
+    list: [] as UserData[],
+    total: 0
+  })
+}
+```

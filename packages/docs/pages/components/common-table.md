@@ -98,3 +98,131 @@ CommonTable 支持自定义列内容的插槽：
 <demo vue="CommonTable/slots-api.vue" ssg="true"/>
 
 > 💡 **提示**：CommonTable 还支持 Element Plus Table 的所有插槽，如 `empty`、`append`、`header` 等。详情请参考 [Element Plus Table 文档](https://element-plus.org/zh-CN/component/table.html#table-slots)。
+
+## TypeScript 类型
+
+组件导出了以下 TypeScript 类型定义，可在你的项目中直接使用：
+
+### CommonTableProps
+
+```typescript
+interface CommonTableProps<T extends AnyObject = AnyObject> {
+  /** 表格列配置 */
+  columns: CommonTableColumn<T>
+
+  /** 表格数据 */
+  data: T[]
+}
+```
+
+### CommonTableColumn
+
+```typescript
+/**
+ * 表格列配置类型
+ * @typeParam T - 表格数据行类型
+ */
+type CommonTableColumn<T extends AnyObject> =
+  | CommonTableArrayColumns<T>
+  | CommonTableObjectColumns<T>
+```
+
+### CommonTableArrayColumns
+
+```typescript
+/**
+ * 表格列类型数组
+ * 用于 CommonTable 的 columns 属性，也可用于类型标注
+ */
+type CommonTableArrayColumns<T extends AnyObject> = Array<CommonTableColumnRoot<T>>
+```
+
+### CommonTableColumnRoot
+
+```typescript
+/**
+ * 表格列定义根类型，包含所有列类型的联合类型
+ */
+type CommonTableColumnRoot<T extends AnyObject> =
+  | TableColumnBase<T>           // 普通列
+  | TableColumnTypeIndex<T>      // 索引列
+  | TableColumnTypeSelection<T>  // 选择列
+  | TableColumnTypeExpand<T>     // 展开列
+  | TableColumnTypeDate<T>       // 日期列
+  | TableColumnTypeDateTime<T>   // 日期时间列
+```
+
+### 特殊列类型
+
+```typescript
+/** 索引列类型 */
+interface TableColumnTypeIndex<T extends AnyObject> {
+  type: 'index'
+}
+
+/** 选择列类型 */
+interface TableColumnTypeSelection<T extends AnyObject> {
+  type: 'selection'
+  selectable?: (row: T, index: number) => boolean
+  'reserve-selection'?: boolean
+}
+
+/** 展开列类型 */
+interface TableColumnTypeExpand<T extends AnyObject> {
+  type: 'expand'
+}
+
+/** 日期列类型 */
+interface TableColumnTypeDate<T extends AnyObject> {
+  type: 'date'
+}
+
+/** 日期时间列类型 */
+interface TableColumnTypeDateTime<T extends AnyObject> {
+  type: 'dateTime'
+}
+```
+
+### CommonTableInstance
+
+```typescript
+/**
+ * CommonTable 组件实例暴露类型
+ */
+interface CommonTableInstance {
+  /** ElTable 组件实例引用 */
+  elTableRef: Ref<TableInstance | undefined>
+}
+```
+
+**使用示例：**
+
+```typescript
+import type {
+  CommonTableProps,
+  CommonTableArrayColumns,
+  TableColumnType,
+} from '@yetuzi/vue3-query-components'
+
+// 定义数据行类型
+interface UserData {
+  id: number
+  name: string
+  email: string
+  createTime: number
+}
+
+// 定义列配置
+const columns: CommonTableArrayColumns<UserData> = [
+  { prop: 'id', label: 'ID', type: 'index' },
+  { prop: 'name', label: '姓名' },
+  { prop: 'email', label: '邮箱' },
+  { prop: 'createTime', label: '创建时间', type: 'dateTime' },
+]
+
+// 使用组件
+const tableProps: CommonTableProps<UserData> = {
+  columns,
+  data: []
+}
+```

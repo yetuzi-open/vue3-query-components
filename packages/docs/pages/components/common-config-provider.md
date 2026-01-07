@@ -109,4 +109,90 @@ const pageConfig = reactive({
 | form.resetText | 表单重置按钮文本 | `string` | `'重置'` |
 | form.formItem.components.width | 表单项宽度 | `string` | `'200px'` |
 
+## TypeScript 类型
+
+组件导出了以下 TypeScript 类型定义，可在你的项目中直接使用：
+
+### Config
+
+```typescript
+/**
+ * 全局配置类型
+ */
+interface Config {
+  component: {
+    /** 空值占位 */
+    placeholder: string
+
+    /** 分页组件默认分页数据 */
+    pagination: {
+      /** 默认请求起始页数 */
+      defaultPageCount: number
+      /** 默认每页请求的条数 */
+      defaultPageSize: number
+    }
+
+    /** 表格组件 */
+    table: {}
+
+    /** 表单组件 */
+    form: {
+      /** 提交按钮文本 */
+      submitText: string
+      /** 重置按钮文本 */
+      resetText: string
+      /** 表单项配置 */
+      formItem: {
+        components: {
+          width: string
+        }
+      }
+    }
+  }
+}
+```
+
+### CommonConfigProviderProps
+
+```typescript
+/**
+ * CommonConfigProvider 组件 Props
+ */
+interface CommonConfigProviderProps extends Partial<Config> {}
+```
+
+**使用示例：**
+
+```typescript
+import { reactive } from 'vue'
+import type { Config } from '@yetuzi/vue3-query-components'
+
+// 定义全局配置
+const appConfig: Config = {
+  component: {
+    placeholder: '暂无数据',
+    pagination: {
+      defaultPageCount: 1,
+      defaultPageSize: 20,
+    },
+    table: {},
+    form: {
+      submitText: '查询',
+      resetText: '重置',
+      formItem: {
+        components: {
+          width: '240px',
+        },
+      },
+    },
+  },
+}
+
+// 使用响应式配置
+const config = reactive(appConfig)
+
+// 动态更新配置
+config.component.pagination.defaultPageSize = 50
+```
+
 
