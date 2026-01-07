@@ -12,7 +12,7 @@
     "update:latest": "node update-latest.js"
   },
   "dependencies": {
-    "@yetuzi/vue3-query-components": "^1.2.1",
+    "@yetuzi/vue3-query-components": "^1.2.3",
     "element-plus": "^2.12.0",
     "vitepress-plugin-group-icons": "^1.6.5",
     "vue": "^3.5.25"
