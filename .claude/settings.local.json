@@ -21,7 +21,14 @@
       "Bash(curl:*)",
       "Bash(npx vitepress build:*)",
       "Bash(npm run build)",
-      "Bash(taskkill:*)"
+      "Bash(taskkill:*)",
+      "Bash(npm run build:*)",
+      "Bash(npm whoami:*)",
+      "Bash(npm publish)",
+      "Bash(npx vitepress dev:*)",
+      "Bash(npm install:*)",
+      "Bash(npm run release:dry:*)",
+      "WebSearch"
     ],
     "deny": [],
     "ask": []
