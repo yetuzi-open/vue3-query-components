@@ -8,11 +8,14 @@ const versionType = args.find(arg => ['patch', 'minor', 'major'].includes(arg))
 
 console.log('🚀 开始构建组件库...')
 
-// 只有指定了版本类型时才升级版本号
+// 只有指定了版本类型时才升级版本号和更新 CHANGELOG
 if (versionType) {
   try {
-    console.log(`📈 升级版本号 (${versionType})...`)
-    execSync(`npm version ${versionType} --no-git-tag-version`, { stdio: 'inherit' })
+    console.log(`📈 升级版本号 (${versionType}) 并更新 CHANGELOG...`)
+    // 使用 standard-version 更新 CHANGELOG 和版本号，但不创建 git tag
+    execSync(`standard-version --release-as ${versionType} --skip.tag --skip.commit`, {
+      stdio: 'inherit',
+    })
   } catch (error) {
     console.error('❌ 版本号升级失败：', error.message)
     process.exit(1)
