@@ -76,6 +76,7 @@ export default defineConfig({
           items: [
             { text: '介绍', link: '/guide/' },
             { text: '安装', link: '/guide/installation' },
+            { text: '常见问题', link: '/guide/faq' },
           ]
         }
       ],
@@ -121,7 +122,7 @@ export default defineConfig({
 
     footer: {
       message: 'MIT Licensed',
-      copyright: 'Copyright © 2024 vue3-query-components'
+      copyright: 'Copyright © 2026 vue3-query-components'
     },
 
     editLink: {
