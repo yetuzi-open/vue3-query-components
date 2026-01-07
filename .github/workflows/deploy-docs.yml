@@ -1,0 +1,71 @@
+name: Deploy Docs to GitHub Pages
+
+on:
+  # 推送到 docs 分支时触发
+  push:
+    branches:
+      - docs
+    # 只在 packages/docs 或 .github/workflows 目录变化时触发
+    paths:
+      - 'packages/docs/**'
+      - '.github/workflows/deploy-docs.yml'
+
+  # 允许手动触发
+  workflow_dispatch:
+
+# 设置权限
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# 并发控制
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout 代码
+        uses: actions/checkout@v4
+
+      - name: 设置 Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+          cache-dependency-path: |
+            package-lock.json
+            packages/*/package-lock.json
+
+      - name: 安装依赖
+        run: npm ci
+
+      - name: 构建组件库
+        run: npm run build:components
+
+      - name: 构建文档站点
+        run: npm run build:docs
+        env:
+          # 设置源码路径为组件库源码，而不是构建产物
+          NODE_OPTIONS: --max-old-space-size=4096
+
+      - name: 上传构建产物
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: packages/docs/.vitepress/dist
+
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build
+
+    steps:
+      - name: 部署到 GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
