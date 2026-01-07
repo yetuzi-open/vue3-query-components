@@ -1,18 +1,27 @@
 # @yetuzi/vue3-query-components
 
-基于 Vue 3 + Element Plus 的企业级查询页面组件库，专注于表格查询场景，开箱即用。
+<div align="center">
+
+**企业级查询页面组件库**
+
+专为 Vue3 设计的高效查询组件，提升开发效率
+
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](../../LICENSE)
+[![Vue](https://img.shields.io/badge/Vue-3.5+-brightgreen)](https://vuejs.org/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.9+-blue)](https://www.typescriptlang.org/)
+[![Element Plus](https://img.shields.io/badge/Element%20Plus-2.11+-blueviolet)](https://element-plus.org/)
+[![npm version](https://img.shields.io/npm/v/@yetuzi/vue3-query-components)](https://www.npmjs.com/package/@yetuzi/vue3-query-components)
+
+</div>
 
 ## ✨ 特性
 
-- 🚀 **开箱即用** - 高度封装的业务组件，减少重复开发
-- 🎨 **统一设计** - 基于 Element Plus 设计语言，支持全局配置
-- 🔧 **高度可配置** - 灵活的配置选项，满足不同业务需求
-- 📦 **TypeScript 支持** - 完整的类型定义，类型安全
-- 🌳 **Tree Shaking** - 按需引入，减小打包体积
-- 🔥 **热更新** - 支持开发模式热更新
-- 🎯 **业务导向** - 专注于查询、表单、表格等常见业务场景
-- 🔄 **状态管理** - 内置数据请求、分页、表单状态管理
-- 🎨 **插槽支持** - 灵活的插槽系统，支持自定义扩展
+- 🚀 **一体化查询** - CommonQueryTable 集成表单、表格、分页，一个组件即可构建完整的查询页面，支持灵活的布局配置
+- 📋 **类型安全** - 完整的 TypeScript 泛型支持，列类型、表单项类型自动推导，提供精准的类型提示和校验
+- 🎨 **高度可定制** - 响应式全局配置系统，支持自定义组件、插槽和样式扩展，满足各种业务场景需求
+- 🧩 **丰富组件** - 提供 CommonTable（多种列类型）、CommonForm（7种表单项）及完整的基础组件体系
+- ⚡️ **开箱即用** - 基于 Element Plus 封装，API 设计一致，学习成本低，大幅提升开发效率
+- 🛠️ **实用工具** - 内置 useResettable 等实用 hooks，提供可重置的响应式数据管理能力
 
 ## 📦 安装
 
@@ -26,17 +35,24 @@ pnpm add @yetuzi/vue3-query-components
 
 ## 🚀 快速开始
 
-### 1. 全局引入
+### 1. 安装 Element Plus
 
-```typescript
-import { createApp } from 'vue'
-import '@yetuzi/vue3-query-components/dist/style.css'
-import 'element-plus/theme-chalk/index.css' // 需要安装 Element Plus
+本组件库基于 Element Plus 封装，需要先安装 Element Plus：
 
-const app = createApp(App)
+```bash
+npm install element-plus
 ```
 
-### 2. 按需引入
+### 2. 导入样式
+
+**重要**：本组件库不会自动导入 CSS，需要手动导入：
+
+```typescript
+// 导入组件库样式
+import '@yetuzi/vue3-query-components/dist/index.css'
+```
+
+### 3. 按需引入组件
 
 ```typescript
 import {
@@ -45,11 +61,9 @@ import {
   CommonForm,
   CommonConfigProvider,
 } from '@yetuzi/vue3-query-components'
-import '@yetuzi/vue3-query-components/dist/style.css'
-import 'element-plus/theme-chalk/index.css' // 需要安装 Element Plus
 ```
 
-### 3. 基础使用
+### 4. 基础使用
 
 #### 完整查询表格组件（推荐）
 
@@ -189,7 +203,39 @@ const queryTableConfig = {
 </script>
 ```
 
-## 📚 组件文档
+## 📚 组件列表
+
+### 核心组件
+
+| 组件名 | 说明 |
+|--------|------|
+| `CommonQueryTable` | 一体化查询表格，集成表单、表格、分页 |
+| `CommonTable` | 增强型表格组件，支持多种列类型 |
+| `CommonForm` | 动态表单组件，支持 7 种表单项 |
+| `CommonConfigProvider` | 全局配置组件，提供统一的组件配置 |
+
+### 基础组件
+
+| 组件名 | 说明 |
+|--------|------|
+| `CommonInput` | 输入框组件 |
+| `CommonSelect` | 下拉选择组件 |
+| `CommonDatePicker` | 日期选择器组件 |
+| `CommonRadio` | 单选框组件 |
+| `CommonCheckbox` | 复选框组件 |
+| `CommonSwitch` | 开关组件 |
+| `CommonButton` | 按钮组件 |
+| `CommonPagination` | 分页组件 |
+
+### Hooks
+
+| Hook 名 | 说明 |
+|---------|------|
+| `useResettableRef` | 创建可重置的 ref |
+| `useResettableReactive` | 创建可重置的 reactive |
+| `useGetComponentsChildrenSlots` | 获取组件子插槽 |
+
+## 📚 API 文档
 
 ### CommonQueryTable Props
 
@@ -202,14 +248,30 @@ const queryTableConfig = {
 
 ### 表单组件类型支持
 
-支持以下表单组件类型：
+CommonForm 支持以下 7 种内置表单项类型：
 
-- `input` - 输入框
-- `select` - 下拉选择
-- `date-picker` - 日期选择器
-- `radio` - 单选框组
-- `check-box` - 复选框组
-- `switch` - 开关
+| 组件类型 | 说明 | 用途 |
+|---------|------|------|
+| `input` | 输入框 | 文本、数字等简单输入 |
+| `select` | 下拉选择 | 单选下拉选项 |
+| `date-picker` | 日期选择器 | 日期、日期时间范围选择 |
+| `radio` | 单选框组 | 互斥选项选择 |
+| `check-box` | 复选框组 | 多选选项 |
+| `switch` | 开关 | 二元状态切换 |
+| 自定义组件 | 任意 Vue 组件 | 扩展自定义表单项 |
+
+### 表格列类型支持
+
+CommonTable 支持多种特殊列类型：
+
+| 列类型 | 说明 | 使用场景 |
+|--------|------|----------|
+| `index` | 索引列 | 自动显示行号 |
+| `selection` | 选择列 | 多选功能 |
+| `expand` | 展开列 | 行内容展开 |
+| `date` | 日期列 | 自动格式化日期显示 |
+| `dateTime` | 日期时间列 | 自动格式化日期时间显示 |
+| 普通列 | 数据列 | 绑定字段数据 |
 
 ### 表单配置项类型
 
@@ -284,55 +346,52 @@ interface TableColumn {
 
 ### 环境要求
 
-- Node.js >= 18.0.0
+- Node.js >= 16.0.0
 - Vue 3.5+
 - Element Plus 2.11+
 - TypeScript 5.9+
 
-### 本地开发
-
-```bash
-# 克隆项目
-git clone https://gitee.com/yetuzi/vue3-common.git
-cd vue3-common/vue3-query-components
-
-# 安装依赖
-npm install
-
-# 开发模式（构建并监听文件变化）
-npm run dev
-
-# 构建
-npm run build
-
-# 类型检查
-npm run type-check
-
-# 代码格式化
-npm run format
-
-# Lint
-npm run lint
-
-# 测试
-npm test
-```
-
 ### 依赖说明
+
+#### Peer Dependencies（需要宿主项目安装）
 
 ```json
 {
   "peerDependencies": {
-    "vue": "^3.5.0", // Vue 3 - 需要宿主项目安装
-    "element-plus": "^2.11.5" // Element Plus UI 库 - 需要宿主项目安装
-  },
-  "dependencies": {
-    "dayjs": "^1.11.18", // 日期处理库
-    "lodash-es": "^4.17.21", // 工具函数库
-    "vue-hooks-plus": "^2.4.1" // Vue 组合式 API 工具库
+    "vue": "^3.5.0",
+    "element-plus": "^2.11.5"
   }
 }
 ```
+
+#### Dependencies（随组件库一起安装）
+
+```json
+{
+  "dependencies": {
+    "dayjs": "^1.11.18",
+    "lodash-es": "^4.17.21",
+    "vue-hooks-plus": "^2.4.1"
+  }
+}
+```
+
+### 构建产物
+
+组件库构建后生成以下文件：
+
+```
+dist/
+├── index.js       # ES Module 格式的组件代码
+├── index.d.ts     # TypeScript 类型声明文件
+├── index.css      # 组件库样式文件
+└── index.js.map   # Source Map 文件
+```
+
+**重要说明**：
+- 组件库采用 ES Module 格式输出
+- 不会自动导入 CSS，需要手动导入样式文件
+- Vue 和 Element Plus 被外部化，不会打包进组件库（减小体积）
 
 ## 🎯 使用场景
 
@@ -347,14 +406,14 @@ npm test
 
 [MIT](./LICENSE)
 
-## 🤝 贡献
+## 📞 支持与反馈
 
-欢迎提交 Issue 和 Pull Request！
-
-## 📞 支持
-
-如有问题，请提交 [Issue](https://gitee.com/yetuzi/vue3-common/issues)
+如有问题或建议，请提交 [Issue](https://gitee.com/yetuzi/vue3-common/issues)
 
 ## 🗺️ 更新日志
 
-查看详细的更新日志请访问：[CHANGELOG.md](./CHANGELOG.md)
+查看详细的更新日志：[CHANGELOG.md](./CHANGELOG.md)
+
+---
+
+Made with ❤️ by [yetuzi](https://gitee.com/yetuzi)

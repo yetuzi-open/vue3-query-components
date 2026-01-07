@@ -18,21 +18,21 @@ hero:
 
 features:
   - icon: 🚀
-    title: 开箱即用
-    details: 高度封装的查询表格组件，一个组件即可构建完整的查询页面
-  - icon: ⚡️
-    title: 高效开发
-    details: 减少重复代码，专注于业务逻辑，提升开发效率
+    title: 一体化查询
+    details: CommonQueryTable 集成表单、表格、分页，一个组件即可构建完整的查询页面，支持灵活的布局配置
+  - icon: 📋
+    title: 类型安全
+    details: 完整的 TypeScript 泛型支持，列类型、表单项类型自动推导，提供精准的类型提示和校验
   - icon: 🎨
-    title: 高度定制
-    details: 灵活的配置系统，支持自定义插槽和样式
-  - icon: 🔧
-    title: TypeScript
-    details: 完整的 TypeScript 支持，类型安全，开发体验极佳
-  - icon: 📦
-    title: 按需引入
-    details: 支持 Tree Shaking，打包体积最小化
-  - icon: 🛡️
-    title: Element Plus
-    details: 基于 Element Plus，API 设计一致，学习成本低
+    title: 高度可定制
+    details: 响应式全局配置系统，支持自定义组件、插槽和样式扩展，满足各种业务场景需求
+  - icon: 🧩
+    title: 丰富组件
+    details: 提供 CommonTable（多种列类型）、CommonForm（7种表单项）及完整的基础组件体系
+  - icon: ⚡️
+    title: 开箱即用
+    details: 基于 Element Plus 封装，API 设计一致，学习成本低，大幅提升开发效率
+  - icon: 🛠️
+    title: 实用工具
+    details: 内置 useResettable 等实用 hooks，提供可重置的响应式数据管理能力
 ---
