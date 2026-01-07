@@ -2,10 +2,15 @@ import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import { resolve } from 'path'
 import dts from 'vite-plugin-dts'
+import ElementPlus from 'unplugin-element-plus/vite'
 
 export default defineConfig({
   plugins: [
     vue(),
+    // 自动导入 Element Plus 组件样式
+    ElementPlus({
+      useSource: false, // 使用编译后的样式
+    }),
     // 生成类型声明文件
     dts({
       insertTypesEntry: true,
@@ -34,18 +39,22 @@ export default defineConfig({
     },
 
     rollupOptions: {
-      // 外部化依赖 - 不打包进库，CSS样式由 unplugin-element-plus 自动处理
+      // 外部化依赖 - 只外部化 JS 模块，样式模块会被打包进组件库 CSS
       external: (id) => {
-        // 外部化主要的JS依赖
+        // 外部化主要的 JS 依赖
         if (id === 'vue' || id === 'element-plus') {
           return true
         }
-        // 其他所有element-plus子模块都外部化
-        if (id.startsWith('element-plus/')) {
+        // 外部化 Element Plus 的 JS 模块（es/components）
+        if (id.startsWith('element-plus/es/components/') && !id.includes('/style')) {
           return true
         }
-        // 外部化 CSS 导入，避免它们被打包到 JS 中
-        if (id.includes('element-plus') && id.includes('style')) {
+        // 外部化 Element Plus 的 JS 模块（lib）
+        if (id.startsWith('element-plus/lib/') && !id.includes('/style')) {
+          return true
+        }
+        // 不外部化样式模块 - 让它们被打包到组件库 CSS 中
+        if (id.includes('style') || id.includes('css')) {
           return false
         }
         return false

@@ -35,51 +35,24 @@ pnpm add @yetuzi/vue3-query-components
 
 ## 🚀 快速开始
 
-### 1. 安装 Element Plus
-
-本组件库基于 Element Plus 封装，需要先安装 Element Plus：
+### 安装依赖
 
 ```bash
-npm install element-plus
+npm install @yetuzi/vue3-query-components
 ```
 
-### 2. 导入样式
+::: tip 注意
+本组件库依赖 Element Plus，但**不需要手动安装** Element Plus，它作为 peer dependency 会在你的项目中自动解析。
+:::
 
-**重要**：本组件库不会自动导入 CSS，需要手动导入：
+### 导入样式
 
 ```typescript
-// 导入组件库样式
+// 导入组件库样式（已包含所需的 Element Plus 样式）
 import '@yetuzi/vue3-query-components/dist/index.css'
-
-// 导入 Element Plus 样式（需要根据你使用的组件导入对应样式）
-import 'element-plus/es/components/table/style/css'
-import 'element-plus/es/components/form/style/css'
-import 'element-plus/es/components/form-item/style/css'
-import 'element-plus/es/components/input/style/css'
-import 'element-plus/es/components/select/style/css'
-import 'element-plus/es/components/date-picker/style/css'
-import 'element-plus/es/components/radio-group/style/css'
-import 'element-plus/es/components/radio/style/css'
-import 'element-plus/es/components/checkbox-group/style/css'
-import 'element-plus/es/components/checkbox/style/css'
-import 'element-plus/es/components/switch/style/css'
-import 'element-plus/es/components/button/style/css'
-import 'element-plus/es/components/pagination/style/css'
-import 'element-plus/es/components/empty/style/css'
-import 'element-plus/es/components/loading/style/css'
 ```
 
-或者简化为导入完整样式：
-
-```typescript
-// 导入组件库样式
-import '@yetuzi/vue3-query-components/dist/index.css'
-
-// 导入 Element Plus 完整样式（包含所有组件）
-import 'element-plus/dist/index.css'
-```
-
-### 3. 按需引入组件
+### 按需引入组件
 
 ```typescript
 import {
@@ -391,6 +364,10 @@ interface TableColumn {
 }
 ```
 
+::: tip 关于 Element Plus
+组件库的 CSS 文件已包含所需的 Element Plus 组件样式，你只需要确保项目中安装了 Element Plus 即可，不需要单独导入 Element Plus 的样式。
+:::
+
 #### Dependencies（随组件库一起安装）
 
 ```json
@@ -411,14 +388,14 @@ interface TableColumn {
 dist/
 ├── index.js       # ES Module 格式的组件代码
 ├── index.d.ts     # TypeScript 类型声明文件
-├── index.css      # 组件库样式文件
+├── index.css      # 组件库样式（包含 Element Plus 组件样式）
 └── index.js.map   # Source Map 文件
 ```
 
 **重要说明**：
 - 组件库采用 ES Module 格式输出
-- 不会自动导入 CSS，需要手动导入样式文件
-- Vue 和 Element Plus 被外部化，不会打包进组件库（减小体积）
+- CSS 文件已包含所有所需的 Element Plus 组件样式（约 129KB，gzip 后约 17KB）
+- Vue 和 Element Plus JS 模块被外部化，不会打包进组件库（减小体积）
 
 ## 🎯 使用场景
 

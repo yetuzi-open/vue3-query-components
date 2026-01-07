@@ -50,22 +50,22 @@ try {
   jsContent = jsContent.replace(/"__PACKAGE_VERSION__"/g, `"${currentVersion}"`)
   jsContent = jsContent.replace(/'__PACKAGE_VERSION__'/g, `'${currentVersion}'`)
 
-  // 移除所有 element-plus 样式导入
-  const elementCssImportRegex = /import "element-plus\/es\/components\/[^"]+\/style\/(css|index)";?\s*/g
-  // 移除 index.css 导入
+  // 移除 index.css 导入（CSS 会被单独输出到 dist/index.css）
+  // 注意：保留 Element Plus 的样式导入，让 unplugin-element-plus 处理并合并到 CSS
   const indexCssImportRegex = /import\s+['"]\.\/index\.css['"]\s*;?\s*/g
 
-  const elementRemovedImports = jsContent.match(elementCssImportRegex) || []
   const indexRemovedImports = jsContent.match(indexCssImportRegex) || []
 
-  jsContent = jsContent.replace(elementCssImportRegex, '')
   jsContent = jsContent.replace(indexCssImportRegex, '')
 
   // 写回 JS 文件
   writeFileSync(jsPath, jsContent)
 
   console.log(
-    `   版本号: ${currentVersion}, CSS 导入清理: ${elementRemovedImports.length} + ${indexRemovedImports.length}`,
+    `   版本号: ${currentVersion}, CSS 导入清理: ${indexRemovedImports.length} 个 index.css 导入`,
+  )
+  console.log(
+    `   ✨ Element Plus 样式已合并到组件库 CSS 中`,
   )
 
   console.log('')
