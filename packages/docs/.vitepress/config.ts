@@ -53,7 +53,7 @@ export default defineConfig({
       { text: '指南', link: '/guide/' },
       { text: '组件', link: '/components/common-query-table' },
       {
-        text: 'NPM 包',
+        text: 'NPM',
         link: 'https://www.npmjs.com/package/@yetuzi/vue3-query-components'
       },
       {
