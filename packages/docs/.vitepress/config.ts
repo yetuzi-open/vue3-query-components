@@ -10,7 +10,8 @@ export default defineConfig({
   title: 'Vue3 Query Components',
   description: '一个专注于企业级查询页面的 Vue3 组件库',
   lang: 'zh-CN',
-  base: '/vue3-query-components/',
+  // 本地开发使用根路径，生产环境使用仓库名路径
+  base: process.env.NODE_ENV === 'production' ? '/vue3-query-components/' : '/',
   srcDir: 'pages', // 指定页面文件的根目录
   head: [
     ['meta', { name: 'keywords', content: 'vue3,query,components,table,form,element-plus' }],
