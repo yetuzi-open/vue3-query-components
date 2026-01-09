@@ -10,9 +10,9 @@ import {
   useGetComponentsChildrenSlots,
   useGetComponentsChildrenAttrs
 } from '../../index'
-import type { PaginationParam } from '../../index'
+import type { PaginationParam, CommonFormExpose } from '../../index'
 import { useRequest } from 'vue-hooks-plus'
-import { useTemplateRef } from 'vue'
+import { ref } from 'vue'
 import { ElLoading } from 'element-plus'
 
 const vLoading = ElLoading.directive
@@ -30,7 +30,7 @@ const props = withDefaults(defineProps<CommonQueryTableProps>(), {
 })
 
 /** CommonForm组件引用，用于获取表单数据 */
-const CommonFormRef = useTemplateRef('CommonFormRef')
+const CommonFormRef = ref<CommonFormExpose[]>()
 
 /** 获取子组件插槽，支持向内部组件传递插槽 */
 const childrenSlots = useGetComponentsChildrenSlots(['table', 'form', 'pagination'])
