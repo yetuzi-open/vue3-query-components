@@ -23,6 +23,10 @@
 - ⚡️ **开箱即用** - 基于 Element Plus 封装，API 设计一致，学习成本低，大幅提升开发效率
 - 🛠️ **实用工具** - 内置 useResettable 等实用 hooks，提供可重置的响应式数据管理能力
 
+## 📚 文档
+
+完整文档请访问：[https://yetuzi-open.github.io/vue3-query-components](https://yetuzi-open.github.io/vue3-query-components)
+
 ## 📦 安装
 
 ```bash

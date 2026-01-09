@@ -58,7 +58,7 @@
   "bugs": {
     "url": "https://github.com/yetuzi-open/vue3-query-components/issues"
   },
-  "homepage": "https://github.com/yetuzi-open/vue3-query-components#readme",
+  "homepage": "https://yetuzi-open.github.io/vue3-query-components",
   "peerDependencies": {
     "element-plus": "^2.11.5",
     "vue": "^3.5.0"
