@@ -300,4 +300,3 @@ const columns: CommonTableColumn<User>[] = [
 - 📖 查看 [组件文档](/components/common-query-table)
 - 💬 在 [GitHub Discussions](https://github.com/yetuzi-open/vue3-query-components/discussions) 提问
 - 🐛 在 [GitHub Issues](https://github.com/yetuzi-open/vue3-query-components/issues) 报告问题
-- 📧 发送邮件至 [support@example.com](mailto:support@example.com)
