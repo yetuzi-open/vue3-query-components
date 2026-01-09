@@ -2,7 +2,7 @@
 
 ## 环境要求
 
-- Vue 3.5+
+- Vue 3.4+
 - Element Plus 2.11+
 - TypeScript 5.9+ (推荐)
 
@@ -39,4 +39,4 @@ import '@yetuzi/vue3-query-components/dist/style.css'
 
 | 版本 | Vue 版本 | Element Plus 版本 |
 |-----|---------|------------------|
-| 1.x | 3.5+ | 2.11+ |
+| 1.x | 3.4+ | 2.11+ |

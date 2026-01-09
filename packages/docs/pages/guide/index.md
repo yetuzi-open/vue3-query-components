@@ -20,7 +20,7 @@ Vue3 Query Components 是一个专为 Vue3 设计的企业级查询页面组件�
 
 ## 技术栈
 
-- Vue 3.5+ (Composition API)
+- Vue 3.4+ (Composition API)
 - Element Plus 2.11+
 - TypeScript 5.9+
 - Vite 6.0+

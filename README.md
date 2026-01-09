@@ -7,7 +7,7 @@
 专为 Vue3 设计的高效查询组件，提升开发效率
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](../../LICENSE)
-[![Vue](https://img.shields.io/badge/Vue-3.5+-brightgreen)](https://vuejs.org/)
+[![Vue](https://img.shields.io/badge/Vue-3.4+-brightgreen)](https://vuejs.org/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.9+-blue)](https://www.typescriptlang.org/)
 [![Element Plus](https://img.shields.io/badge/Element%20Plus-2.11+-blueviolet)](https://element-plus.org/)
 [![npm version](https://img.shields.io/npm/v/@yetuzi/vue3-query-components)](https://www.npmjs.com/package/@yetuzi/vue3-query-components)
@@ -351,7 +351,7 @@ interface TableColumn {
 ### 环境要求
 
 - Node.js >= 16.0.0
-- Vue 3.5+
+- Vue 3.4+
 - Element Plus 2.11+
 - TypeScript 5.9+
 
@@ -362,7 +362,7 @@ interface TableColumn {
 ```json
 {
   "peerDependencies": {
-    "vue": "^3.5.0",
+    "vue": "^3.4.0",
     "element-plus": "^2.11.5"
   }
 }

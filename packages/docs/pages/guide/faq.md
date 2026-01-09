@@ -33,7 +33,7 @@ import '@yetuzi/vue3-query-components/dist/style.css'
 
 | 组件库版本 | Vue 版本 | Element Plus 版本 |
 |-----------|---------|------------------|
-| 1.x | 3.5+ | 2.11+ |
+| 1.x | 3.4+ | 2.11+ |
 
 请确保版本匹配，不兼容的版本可能导致功能异常。
 
