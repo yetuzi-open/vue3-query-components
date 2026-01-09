@@ -28,7 +28,12 @@
       "Bash(npx vitepress dev:*)",
       "Bash(npm install:*)",
       "Bash(npm run release:dry:*)",
-      "WebSearch"
+      "WebSearch",
+      "Bash(npm run dev)",
+      "Bash(npm run type-check:*)",
+      "Bash(tree:*)",
+      "Bash(git remote set-url:*)",
+      "Bash(git checkout:*)"
     ],
     "deny": [],
     "ask": []
