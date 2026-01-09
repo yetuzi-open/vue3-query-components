@@ -8,7 +8,12 @@
       "Bash(powershell:*)",
       "Bash(git restore:*)",
       "Bash(python:*)",
-      "Bash(git remote set-url:*)"
+      "Bash(git remote set-url:*)",
+      "Bash(npm run build)",
+      "Bash(npm run build:minor:*)",
+      "Bash(npm publish:*)",
+      "Bash(npm install:*)",
+      "Bash(git checkout:*)"
     ],
     "deny": [],
     "ask": []
