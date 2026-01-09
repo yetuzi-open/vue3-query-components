@@ -4,82 +4,82 @@ All notable changes to this project will be documented in this file. See [standa
 
 **仓库地址**：
 - [GitHub](https://github.com/yetuzi-open/vue3-query-components)
-- [Gitee](https://gitee.com/yetuzi_open/vue3-query-components)
+- [Gitee](https://gitee.com/yetuzi-open/vue3-query-components)
 
 ### 1.2.3 (2026-01-07)
 
 
 ### 🔧 修复
 
-* 替换 sass 为 sass-embedded 以解决 Dart Sass 弃用警告 ([fd53f58](https://gitee.com/yetuzi_open/vue3-query-components/commit/fd53f586dc38cab38bced43f726972377058ba56))
-* 修复文档站点 Element Plus 样式丢失问题 ([277a7f8](https://gitee.com/yetuzi_open/vue3-query-components/commit/277a7f8716412090419ee45b550ab5763be43072))
-* 修正文档中的代码导入路径 ([3faaf54](https://gitee.com/yetuzi_open/vue3-query-components/commit/3faaf541706357c18ce7b485f0efa4537efb378a))
+* 替换 sass 为 sass-embedded 以解决 Dart Sass 弃用警告 ([fd53f58](https://gitee.com/yetuzi-open/vue3-query-components/commit/fd53f586dc38cab38bced43f726972377058ba56))
+* 修复文档站点 Element Plus 样式丢失问题 ([277a7f8](https://gitee.com/yetuzi-open/vue3-query-components/commit/277a7f8716412090419ee45b550ab5763be43072))
+* 修正文档中的代码导入路径 ([3faaf54](https://gitee.com/yetuzi-open/vue3-query-components/commit/3faaf541706357c18ce7b485f0efa4537efb378a))
 
 
 ### 📝 文档
 
-* 补充 Element Plus 样式导入说明 ([03669e1](https://gitee.com/yetuzi_open/vue3-query-components/commit/03669e1a85972adcc470b6f686b2120c8075f9fe))
-* 更新测试示例以使用新的类型系统 ([2539e9b](https://gitee.com/yetuzi_open/vue3-query-components/commit/2539e9bf727e312d0e4c1a49ff751ed66c087c8b))
-* 更新组件文档和示例 ([e31de0a](https://gitee.com/yetuzi_open/vue3-query-components/commit/e31de0afde3da2c80691a6657a136d0696c9f13f))
-* 更正文档链接为 Gitee 仓库地址 ([5a310da](https://gitee.com/yetuzi_open/vue3-query-components/commit/5a310dae38e340f664a87835c06c22943c652991))
-* 添加项目开发指南文档 ([4d3129f](https://gitee.com/yetuzi_open/vue3-query-components/commit/4d3129fd23c094cdd467690cf3b2645fe736d81b))
-* 为组件文档添加 TypeScript 类型定义展示 ([226b97f](https://gitee.com/yetuzi_open/vue3-query-components/commit/226b97fae0c7cc673cfe5dbde9818d1e30902854))
-* 优化 CommonConfigProvider 文档文案 ([1602384](https://gitee.com/yetuzi_open/vue3-query-components/commit/1602384fbb15722291bdd0f304bd844aeed7a6b9))
-* 优化 CommonForm 和 CommonTable 类型定义 ([2222ead](https://gitee.com/yetuzi_open/vue3-query-components/commit/2222ead7d420ef9ffbc14975879f58e527a46aa1))
-* 优化文档内容 ([bde1543](https://gitee.com/yetuzi_open/vue3-query-components/commit/bde1543640be1633a02f3d4c5236de6c2acdb15c))
-* 优化项目文档和 README ([b2c6ce0](https://gitee.com/yetuzi_open/vue3-query-components/commit/b2c6ce0efb2531b7cfde9ab01b82f0b2eb0d0552))
+* 补充 Element Plus 样式导入说明 ([03669e1](https://gitee.com/yetuzi-open/vue3-query-components/commit/03669e1a85972adcc470b6f686b2120c8075f9fe))
+* 更新测试示例以使用新的类型系统 ([2539e9b](https://gitee.com/yetuzi-open/vue3-query-components/commit/2539e9bf727e312d0e4c1a49ff751ed66c087c8b))
+* 更新组件文档和示例 ([e31de0a](https://gitee.com/yetuzi-open/vue3-query-components/commit/e31de0afde3da2c80691a6657a136d0696c9f13f))
+* 更正文档链接为 Gitee 仓库地址 ([5a310da](https://gitee.com/yetuzi-open/vue3-query-components/commit/5a310dae38e340f664a87835c06c22943c652991))
+* 添加项目开发指南文档 ([4d3129f](https://gitee.com/yetuzi-open/vue3-query-components/commit/4d3129fd23c094cdd467690cf3b2645fe736d81b))
+* 为组件文档添加 TypeScript 类型定义展示 ([226b97f](https://gitee.com/yetuzi-open/vue3-query-components/commit/226b97fae0c7cc673cfe5dbde9818d1e30902854))
+* 优化 CommonConfigProvider 文档文案 ([1602384](https://gitee.com/yetuzi-open/vue3-query-components/commit/1602384fbb15722291bdd0f304bd844aeed7a6b9))
+* 优化 CommonForm 和 CommonTable 类型定义 ([2222ead](https://gitee.com/yetuzi-open/vue3-query-components/commit/2222ead7d420ef9ffbc14975879f58e527a46aa1))
+* 优化文档内容 ([bde1543](https://gitee.com/yetuzi-open/vue3-query-components/commit/bde1543640be1633a02f3d4c5236de6c2acdb15c))
+* 优化项目文档和 README ([b2c6ce0](https://gitee.com/yetuzi-open/vue3-query-components/commit/b2c6ce0efb2531b7cfde9ab01b82f0b2eb0d0552))
 
 
 ### ✨ 新增
 
-* 构建脚本自动更新 CHANGELOG ([6103810](https://gitee.com/yetuzi_open/vue3-query-components/commit/6103810cb157bb5cd0edb6ed8588338386bc5410))
-* 其他修改 ([9d64805](https://gitee.com/yetuzi_open/vue3-query-components/commit/9d64805c789bc194e3dc80992dc6e99aebaf3357))
-* 添加自动化版本管理系统 ([2b22910](https://gitee.com/yetuzi_open/vue3-query-components/commit/2b22910f5f8943c2ec3965635d5cf46b093e847d))
-* 文档站点集成组件库 CHANGELOG ([2f87c9c](https://gitee.com/yetuzi_open/vue3-query-components/commit/2f87c9cd0578982f14abecd98b0c006e44d71b56))
-* 优化文档站点开发体验 ([7a785a0](https://gitee.com/yetuzi_open/vue3-query-components/commit/7a785a0a02bba74eafcb9162a36df81ad83e6cc8))
-* 组件库 CSS 包含 Element Plus 样式 ([7bc10f2](https://gitee.com/yetuzi_open/vue3-query-components/commit/7bc10f2e2bd4e5f54655858aa0624f8896dccc82))
+* 构建脚本自动更新 CHANGELOG ([6103810](https://gitee.com/yetuzi-open/vue3-query-components/commit/6103810cb157bb5cd0edb6ed8588338386bc5410))
+* 其他修改 ([9d64805](https://gitee.com/yetuzi-open/vue3-query-components/commit/9d64805c789bc194e3dc80992dc6e99aebaf3357))
+* 添加自动化版本管理系统 ([2b22910](https://gitee.com/yetuzi-open/vue3-query-components/commit/2b22910f5f8943c2ec3965635d5cf46b093e847d))
+* 文档站点集成组件库 CHANGELOG ([2f87c9c](https://gitee.com/yetuzi-open/vue3-query-components/commit/2f87c9cd0578982f14abecd98b0c006e44d71b56))
+* 优化文档站点开发体验 ([7a785a0](https://gitee.com/yetuzi-open/vue3-query-components/commit/7a785a0a02bba74eafcb9162a36df81ad83e6cc8))
+* 组件库 CSS 包含 Element Plus 样式 ([7bc10f2](https://gitee.com/yetuzi-open/vue3-query-components/commit/7bc10f2e2bd4e5f54655858aa0624f8896dccc82))
 
 
 ### ♻️ 重构
 
-* 简化文档站点样式导入 ([909e9d0](https://gitee.com/yetuzi_open/vue3-query-components/commit/909e9d0dedf45ba1edca4a30b894c7bbce75cf0e))
-* 优化 CommonForm 类型命名 ([9af1d59](https://gitee.com/yetuzi_open/vue3-query-components/commit/9af1d5944ec407ae848ab6d7f351eba3938fd5e2))
-* 重构 CommonForm 类型系统 ([b04ccca](https://gitee.com/yetuzi_open/vue3-query-components/commit/b04cccacf8de2094de2b7d9f1cb26c54485afabd))
-* 重构 CommonTable 类型系统 ([802821c](https://gitee.com/yetuzi_open/vue3-query-components/commit/802821c050da8efdf19f95d090ff4ffffd480b49))
+* 简化文档站点样式导入 ([909e9d0](https://gitee.com/yetuzi-open/vue3-query-components/commit/909e9d0dedf45ba1edca4a30b894c7bbce75cf0e))
+* 优化 CommonForm 类型命名 ([9af1d59](https://gitee.com/yetuzi-open/vue3-query-components/commit/9af1d5944ec407ae848ab6d7f351eba3938fd5e2))
+* 重构 CommonForm 类型系统 ([b04ccca](https://gitee.com/yetuzi-open/vue3-query-components/commit/b04cccacf8de2094de2b7d9f1cb26c54485afabd))
+* 重构 CommonTable 类型系统 ([802821c](https://gitee.com/yetuzi-open/vue3-query-components/commit/802821c050da8efdf19f95d090ff4ffffd480b49))
 
 ### 1.2.2 (2026-01-07)
 
 
 ### ♻️ 重构
 
-* 优化 CommonForm 类型命名 ([9af1d59](https://gitee.com/yetuzi_open/vue3-query-components/commit/9af1d5944ec407ae848ab6d7f351eba3938fd5e2))
-* 重构 CommonForm 类型系统 ([b04ccca](https://gitee.com/yetuzi_open/vue3-query-components/commit/b04cccacf8de2094de2b7d9f1cb26c54485afabd))
-* 重构 CommonTable 类型系统 ([802821c](https://gitee.com/yetuzi_open/vue3-query-components/commit/802821c050da8efdf19f95d090ff4ffffd480b49))
+* 优化 CommonForm 类型命名 ([9af1d59](https://gitee.com/yetuzi-open/vue3-query-components/commit/9af1d5944ec407ae848ab6d7f351eba3938fd5e2))
+* 重构 CommonForm 类型系统 ([b04ccca](https://gitee.com/yetuzi-open/vue3-query-components/commit/b04cccacf8de2094de2b7d9f1cb26c54485afabd))
+* 重构 CommonTable 类型系统 ([802821c](https://gitee.com/yetuzi-open/vue3-query-components/commit/802821c050da8efdf19f95d090ff4ffffd480b49))
 
 
 ### 🔧 修复
 
-* 替换 sass 为 sass-embedded 以解决 Dart Sass 弃用警告 ([fd53f58](https://gitee.com/yetuzi_open/vue3-query-components/commit/fd53f586dc38cab38bced43f726972377058ba56))
-* 修正文档中的代码导入路径 ([3faaf54](https://gitee.com/yetuzi_open/vue3-query-components/commit/3faaf541706357c18ce7b485f0efa4537efb378a))
+* 替换 sass 为 sass-embedded 以解决 Dart Sass 弃用警告 ([fd53f58](https://gitee.com/yetuzi-open/vue3-query-components/commit/fd53f586dc38cab38bced43f726972377058ba56))
+* 修正文档中的代码导入路径 ([3faaf54](https://gitee.com/yetuzi-open/vue3-query-components/commit/3faaf541706357c18ce7b485f0efa4537efb378a))
 
 
 ### ✨ 新增
 
-* 添加自动化版本管理系统 ([2b22910](https://gitee.com/yetuzi_open/vue3-query-components/commit/2b22910f5f8943c2ec3965635d5cf46b093e847d))
-* 文档站点集成组件库 CHANGELOG ([2f87c9c](https://gitee.com/yetuzi_open/vue3-query-components/commit/2f87c9cd0578982f14abecd98b0c006e44d71b56))
-* 优化文档站点开发体验 ([7a785a0](https://gitee.com/yetuzi_open/vue3-query-components/commit/7a785a0a02bba74eafcb9162a36df81ad83e6cc8))
+* 添加自动化版本管理系统 ([2b22910](https://gitee.com/yetuzi-open/vue3-query-components/commit/2b22910f5f8943c2ec3965635d5cf46b093e847d))
+* 文档站点集成组件库 CHANGELOG ([2f87c9c](https://gitee.com/yetuzi-open/vue3-query-components/commit/2f87c9cd0578982f14abecd98b0c006e44d71b56))
+* 优化文档站点开发体验 ([7a785a0](https://gitee.com/yetuzi-open/vue3-query-components/commit/7a785a0a02bba74eafcb9162a36df81ad83e6cc8))
 
 
 ### 📝 文档
 
-* 更新测试示例以使用新的类型系统 ([2539e9b](https://gitee.com/yetuzi_open/vue3-query-components/commit/2539e9bf727e312d0e4c1a49ff751ed66c087c8b))
-* 更新组件文档和示例 ([e31de0a](https://gitee.com/yetuzi_open/vue3-query-components/commit/e31de0afde3da2c80691a6657a136d0696c9f13f))
-* 更正文档链接为 Gitee 仓库地址 ([5a310da](https://gitee.com/yetuzi_open/vue3-query-components/commit/5a310dae38e340f664a87835c06c22943c652991))
-* 添加项目开发指南文档 ([4d3129f](https://gitee.com/yetuzi_open/vue3-query-components/commit/4d3129fd23c094cdd467690cf3b2645fe736d81b))
-* 优化 CommonConfigProvider 文档文案 ([1602384](https://gitee.com/yetuzi_open/vue3-query-components/commit/1602384fbb15722291bdd0f304bd844aeed7a6b9))
-* 优化 CommonForm 和 CommonTable 类型定义 ([2222ead](https://gitee.com/yetuzi_open/vue3-query-components/commit/2222ead7d420ef9ffbc14975879f58e527a46aa1))
-* 优化文档内容 ([bde1543](https://gitee.com/yetuzi_open/vue3-query-components/commit/bde1543640be1633a02f3d4c5236de6c2acdb15c))
-* 优化项目文档和 README ([b2c6ce0](https://gitee.com/yetuzi_open/vue3-query-components/commit/b2c6ce0efb2531b7cfde9ab01b82f0b2eb0d0552))
+* 更新测试示例以使用新的类型系统 ([2539e9b](https://gitee.com/yetuzi-open/vue3-query-components/commit/2539e9bf727e312d0e4c1a49ff751ed66c087c8b))
+* 更新组件文档和示例 ([e31de0a](https://gitee.com/yetuzi-open/vue3-query-components/commit/e31de0afde3da2c80691a6657a136d0696c9f13f))
+* 更正文档链接为 Gitee 仓库地址 ([5a310da](https://gitee.com/yetuzi-open/vue3-query-components/commit/5a310dae38e340f664a87835c06c22943c652991))
+* 添加项目开发指南文档 ([4d3129f](https://gitee.com/yetuzi-open/vue3-query-components/commit/4d3129fd23c094cdd467690cf3b2645fe736d81b))
+* 优化 CommonConfigProvider 文档文案 ([1602384](https://gitee.com/yetuzi-open/vue3-query-components/commit/1602384fbb15722291bdd0f304bd844aeed7a6b9))
+* 优化 CommonForm 和 CommonTable 类型定义 ([2222ead](https://gitee.com/yetuzi-open/vue3-query-components/commit/2222ead7d420ef9ffbc14975879f58e527a46aa1))
+* 优化文档内容 ([bde1543](https://gitee.com/yetuzi-open/vue3-query-components/commit/bde1543640be1633a02f3d4c5236de6c2acdb15c))
+* 优化项目文档和 README ([b2c6ce0](https://gitee.com/yetuzi-open/vue3-query-components/commit/b2c6ce0efb2531b7cfde9ab01b82f0b2eb0d0552))
 
 ## [1.2.0] - 2025-01-06
 

@@ -59,7 +59,7 @@ export default defineConfig({
       },
       {
         text: 'Gitee',
-        link: 'https://gitee.com/yetuzi_open/vue3-query-components',
+        link: 'https://gitee.com/yetuzi-open/vue3-query-components',
       },
       {
         text: `v${version}`,

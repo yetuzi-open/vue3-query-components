@@ -419,7 +419,7 @@ dist/
 如有问题或建议，请提交 Issue：
 
 - [GitHub Issues](https://github.com/yetuzi-open/vue3-query-components/issues)
-- [Gitee Issues](https://gitee.com/yetuzi_open/vue3-query-components/issues)
+- [Gitee Issues](https://gitee.com/yetuzi-open/vue3-query-components/issues)
 
 ## 🗺️ 更新日志
 
