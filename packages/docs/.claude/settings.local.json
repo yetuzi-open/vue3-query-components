@@ -13,7 +13,9 @@
       "Bash(npm run build:minor:*)",
       "Bash(npm publish:*)",
       "Bash(npm install:*)",
-      "Bash(git checkout:*)"
+      "Bash(git checkout:*)",
+      "Bash(pnpm dev)",
+      "Bash(npm run dev)"
     ],
     "deny": [],
     "ask": []
