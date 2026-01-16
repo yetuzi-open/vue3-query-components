@@ -4,11 +4,11 @@ import { CommonForm } from "@yetuzi/vue3-query-components";
 const form = [
   {
     is: "input",
-    label: "用户名",
+    label: "Username",
     prop: "username",
     formItem: {
       rules: [
-        { required: true, message: "请输入用户名", trigger: "blur" },
+        { required: true, message: "Please enterUsername", trigger: "blur" },
         { min: 3, message: "长度至少3个字符", trigger: "blur" },
       ],
     },
@@ -19,7 +19,7 @@ const form = [
     prop: "password",
     formItem: {
       rules: [
-        { required: true, message: "请输入密码", trigger: "blur" },
+        { required: true, message: "Please enter密码", trigger: "blur" },
         { min: 6, message: "密码至少6位", trigger: "blur" },
       ],
     },
@@ -58,7 +58,7 @@ function handleSubmit(formData: any) {
 }
 
 function handleReset(formData: any) {
-  console.log("重置表单:", formData);
+  console.log("Reset表单:", formData);
 }
 
 

@@ -6,9 +6,9 @@ import { ElButton, ElMessage } from 'element-plus'
 const tableRef = ref<CommonTableExpose>()
 
 const tableData = [
-  { id: 1, name: '张三', status: 1, createTime: 1705278600000 },
-  { id: 2, name: '李四', status: 0, createTime: 1705377600000 },
-  { id: 3, name: '王五', status: 1, createTime: 1705454100000 },
+  { id: 1, name: 'Zhang San', status: 1, createTime: 1705278600000 },
+  { id: 2, name: 'Li Si', status: 0, createTime: 1705377600000 },
+  { id: 3, name: 'Wang Wu', status: 1, createTime: 1705454100000 },
   { id: 4, name: '赵六', status: 0, createTime: 1705540500000 },
   { id: 5, name: '孙七', status: 1, createTime: 1705626900000 },
 ]
@@ -16,14 +16,14 @@ const tableData = [
 const columns = [
   { type: 'selection', width: 55 },
   { type: 'index', width: 55 },
-  { prop: 'name', label: '姓名', sortable: true },
+  { prop: 'name', label: 'Name', sortable: true },
   {
     prop: 'status',
-    label: '状态',
+    label: 'Status',
     width: 100,
-    formatter: (row: { status: number }) => (row.status === 1 ? '启用' : '禁用'),
+    formatter: (row: { status: number }) => (row.status === 1 ? 'Enabled' : 'Disabled'),
   },
-  { prop: 'createTime', label: '创建时间', width: 180, type: 'dateTime' },
+  { prop: 'createTime', label: 'Create Time', width: 180, type: 'dateTime' },
 ]
 
 // 清空选择
@@ -32,7 +32,7 @@ function handleClearSelection() {
   ElMessage.info('已清空所有选择')
 }
 
-// 切换第一行选中状态
+// 切换第一行选中Status
 function handleToggleRow() {
   tableRef.value?.toggleRowSelection(tableData[0])
 }
@@ -57,7 +57,7 @@ function handleClearSort() {
 // 手动排序
 function handleSort() {
   tableRef.value?.sort('createTime', 'descending')
-  ElMessage.success('已按创建时间降序排列')
+  ElMessage.success('已按Create Time降序排列')
 }
 
 // 滚动到顶部

@@ -6,8 +6,8 @@ const a: CommonFormPropForm<any> = [
     {
         is: 'aaaaa',
         prop: 'name',
-        label: '用户名',
-        props: { placeholder: '请输入用户名' }
+        label: 'Username',
+        props: { placeholder: 'Please enterUsername' }
     }
 ]
 
@@ -17,30 +17,30 @@ console.log(ElButton)
 const fetch = async () => {
   return {
     list: [
-      { id: 1, name: '张三', status: 1, createTime: 1705278600000 },
-      { id: 2, name: '李四', status: 0, createTime: 1705377600000 },
+      { id: 1, name: 'Zhang San', status: 1, createTime: 1705278600000 },
+      { id: 2, name: 'Li Si', status: 0, createTime: 1705377600000 },
     ],
     total: 2
   }
 }
 
-// 查询表单配置
+// Search表单配置
 const form = [
   {
     is: 'input',
     prop: 'name',
-    label: '用户名',
-    props: { placeholder: '请输入用户名' }
+    label: 'Username',
+    props: { placeholder: 'Please enterUsername' }
   },
   {
     is: 'select',
     prop: 'status',
-    label: '状态',
+    label: 'Status',
     props: {
-      placeholder: '请选择状态',
+      placeholder: 'Please selectStatus',
       options: [
-        { value: 1, label: '启用' },
-        { value: 0, label: '禁用' }
+        { value: 1, label: 'Enabled' },
+        { value: 0, label: 'Disabled' }
       ]
     }
   }
@@ -49,13 +49,13 @@ const form = [
 // 表格列配置
 const columns = [
   { label: 'ID', prop: 'id' },
-  { label: '用户名', prop: 'name' },
+  { label: 'Username', prop: 'name' },
   {
-    label: '状态',
+    label: 'Status',
     prop: 'status',
-    formatter: (row: { status: number }) => row.status === 1 ? '启用' : '禁用'
+    formatter: (row: { status: number }) => row.status === 1 ? 'Enabled' : 'Disabled'
   },
-  { label: '创建时间', prop: 'createTime', type: 'dateTime' }
+  { label: 'Create Time', prop: 'createTime', type: 'dateTime' }
 ]
 </script>
 

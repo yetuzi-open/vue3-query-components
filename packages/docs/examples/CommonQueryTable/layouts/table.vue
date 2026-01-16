@@ -3,25 +3,25 @@ import { CommonQueryTable } from "@yetuzi/vue3-query-components";
 
 const layouts = ['table', 'pagination']
 
-// 模拟 API 请求
+// Mock API request
 const fetch = async () => {
   return {
     list: [
       {
         id: 1,
-        name: "张三",
+        name: "Zhang San",
         status: 1,
         createTime: 1705278600000,
       },
       {
         id: 2,
-        name: "李四",
+        name: "Li Si",
         status: 0,
         createTime: 1705377600000,
       },
       {
         id: 3,
-        name: "王五",
+        name: "Wang Wu",
         status: 1,
         createTime: 1705454100000,
       },
@@ -36,17 +36,17 @@ const columns = [
     prop: "id",
   },
   {
-    label: "用户名",
+    label: "Username",
     prop: "name",
   },
   {
-    label: "状态",
+    label: "Status",
     prop: "status",
     formatter: (row: { status: number }) =>
-      row.status === 1 ? "启用" : "禁用",
+      row.status === 1 ? "Enabled" : "Disabled",
   },
   {
-    label: "创建时间",
+    label: "Create Time",
     prop: "createTime",
     width: 180,
     type: "dateTime",

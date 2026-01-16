@@ -4,7 +4,7 @@ import { ElButton } from "element-plus";
 
 const tableData = [
   {
-    name: "张三",
+    name: "Zhang San",
     email: "zhangsan@example.com",
     phone: "13800138001",
     address: "北京市朝阳区建国路88号",
@@ -12,7 +12,7 @@ const tableData = [
     salary: "15000",
   },
   {
-    name: "李四",
+    name: "Li Si",
     email: "lisi@example.com",
     phone: "13800138002",
     address: "上海市浦东新区陆家嘴金融中心",
@@ -20,7 +20,7 @@ const tableData = [
     salary: "18000",
   },
   {
-    name: "王五",
+    name: "Wang Wu",
     email: "wangwu@example.com",
     phone: "13800138003",
     address: "广州市天河区珠江新城",
@@ -32,7 +32,7 @@ const tableData = [
 const columns = [
   {
     prop: "name",
-    label: "姓名",
+    label: "Name",
     width: 100,
     fixed: "left",
   },
@@ -64,7 +64,7 @@ const columns = [
   },
   {
     prop: "operation",
-    label: "操作",
+    label: "Operations",
     width: 150,
     fixed: "right",
   },
@@ -75,10 +75,10 @@ const columns = [
   <CommonTable :data="tableData" :columns="columns" border>
     <template #operation="{ row }">
       <el-button size="small" type="primary">
-        编辑
+        Edit
       </el-button>
       <el-button size="small" type="danger">
-        删除
+        Delete
       </el-button>
     </template>
   </CommonTable>

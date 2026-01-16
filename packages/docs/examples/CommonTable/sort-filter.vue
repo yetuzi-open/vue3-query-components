@@ -3,21 +3,21 @@ import { CommonTable } from "@yetuzi/vue3-query-components";
 
 const tableData = [
   {
-    name: "张三",
+    name: "Zhang San",
     age: 28,
     department: "技术部",
     salary: 15000,
     level: "P7",
   },
   {
-    name: "李四",
+    name: "Li Si",
     age: 32,
     department: "产品部",
     salary: 18000,
     level: "P8",
   },
   {
-    name: "王五",
+    name: "Wang Wu",
     age: 26,
     department: "设计部",
     salary: 12000,
@@ -35,7 +35,7 @@ const tableData = [
 const columns = [
   {
     prop: "name",
-    label: "姓名",
+    label: "Name",
     sortable: true,
   },
   {
