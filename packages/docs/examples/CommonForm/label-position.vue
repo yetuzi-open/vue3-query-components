@@ -3,7 +3,7 @@ import { CommonForm } from "@yetuzi/vue3-query-components";
 import { ref } from "vue";
 import { ElRadioGroup, ElRadio } from 'element-plus';
 
-const currentPosition = ref("right");
+const currentPosition = ref<"left" | "right" | "top">("right");
 
 const form = [
   {

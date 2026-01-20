@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import { CommonQueryTable } from "@yetuzi/vue3-query-components";
+import type { CommonQueryTableProps } from "@yetuzi/vue3-query-components";
 
-const layouts = ['table', 'pagination']
+const layouts: CommonQueryTableProps['layouts'] = ['table', 'pagination']
 
 // Mock API request
 const fetch = async () => {
