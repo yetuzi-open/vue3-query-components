@@ -44,7 +44,7 @@ CommonForm fully supports Element Plus form validation rules.
 
 | Parameter | Description | Type | Default |
 | --- | --- | --- | --- |
-| form | Form configuration array | `CommonFormPropForm<T>` | `[]` |
+| form | Form configuration array | `CommonFormItemArray<T>` | `[]` |
 | loading | Loading state | `boolean` | `false` |
 | inline | Inline form | `boolean` | `true` |
 

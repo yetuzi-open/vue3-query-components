@@ -72,7 +72,7 @@ title: CommonQueryTable
 | 参数 | 说明 | 类型 | 默认值 |
 | --- | --- | --- | --- |
 | fetch | 数据获取函数，接收查询参数并返回包含列表和总数的 Promise | `(params?: ListParam) => Promise<{ list: T[]; total: string \| number }>` | 必填 |
-| form | 表单配置数组，定义查询表单的字段和属性 | `CommonFormPropForm<T>` | `[]` |
+| form | 表单配置数组，定义查询表单的字段和属性 | `CommonFormItemArray<T>` | `[]` |
 | columns | 表格列配置，定义表格的列结构和展示方式 | `CommonTableColumn<T>` | 必填 |
 | layouts | 页面布局配置，控制页面中各个组件的显示顺序 | `Array<'header' \| 'form' \| 'toolbar' \| 'table' \| 'pagination' \| 'footer'>` | `['form', 'table', 'pagination']` |
 

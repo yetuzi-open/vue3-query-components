@@ -70,7 +70,7 @@ In the following example, when you select form items, the console will output.
 | Parameter | Description | Type | Default |
 | --- | --- | --- | --- |
 | fetch | Data fetch function, receives query parameters and returns a Promise containing list and total | `(params?: ListParam) => Promise<{ list: T[]; total: string \| number }>` | Required |
-| form | Form configuration array, defines fields and properties of query form | `CommonFormPropForm<T>` | `[]` |
+| form | Form configuration array, defines fields and properties of query form | `CommonFormItemArray<T>` | `[]` |
 | columns | Table column configuration, defines table column structure and display | `CommonTableColumn<T>` | Required |
 | layouts | Page layout configuration, controls display order of components on page | `Array<'header' \| 'form' \| 'toolbar' \| 'table' \| 'pagination' \| 'footer'>` | `['form', 'table', 'pagination']` |
 

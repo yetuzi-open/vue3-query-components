@@ -111,7 +111,7 @@ export const operationColumn: CommonTableColumn = {
 
 ```typescript
 // config/form.ts
-import type { CommonFormPropForm } from 'vue3-query-components'
+import type { CommonFormItemArray } from 'vue3-query-components'
 
 export const createTimeRange = {
   field: 'createTimeRange',
