@@ -10,11 +10,11 @@ const formRef = ref<CommonFormExpose>()
 const form = [
   {
     is: 'input' as const,
-    label: '姓名',
+    label: 'Name',
     prop: 'name',
     initialValue: '',
     formItem: {
-      rules: [{ required: true, message: '请输入姓名', trigger: 'blur' }],
+      rules: [{ required: true, message: 'Please enterName', trigger: 'blur' }],
     },
   },
   {
@@ -24,8 +24,8 @@ const form = [
     initialValue: '',
     formItem: {
       rules: [
-        { required: true, message: '请输入邮箱', trigger: 'blur' },
-        { type: 'email', message: '请输入正确的邮箱地址', trigger: 'blur' },
+        { required: true, message: 'Please enter邮箱', trigger: 'blur' },
+        { type: 'email', message: 'Please enter正确的邮箱地址', trigger: 'blur' },
       ],
     },
   },
@@ -45,17 +45,17 @@ async function handleValidate() {
 function handleValidateField() {
   formRef.value?.validateField('name', (errorMessage) => {
     if (errorMessage) {
-      ElMessage.error(`姓名字段验证失败：${errorMessage}`)
+      ElMessage.error(`Name字段验证失败：${errorMessage}`)
     } else {
-      ElMessage.success('姓名字段验证通过！')
+      ElMessage.success('Name字段验证通过！')
     }
   })
 }
 
-// 重置表单
+// Reset表单
 function handleReset() {
   formRef.value?.resetFields()
-  ElMessage.info('表单已重置')
+  ElMessage.info('表单已Reset')
 }
 
 // 清除验证信息
@@ -82,8 +82,8 @@ function handleGetFormData() {
 
     <div class="demo-actions">
       <el-button @click="handleValidate">验证表单</el-button>
-      <el-button @click="handleValidateField">验证姓名字段</el-button>
-      <el-button @click="handleReset">重置表单</el-button>
+      <el-button @click="handleValidateField">验证Name字段</el-button>
+      <el-button @click="handleReset">Reset表单</el-button>
       <el-button @click="handleClearValidate">清除验证</el-button>
       <el-button @click="handleScrollToField">滚动到邮箱</el-button>
       <el-button @click="handleGetFormData">获取表单数据</el-button>

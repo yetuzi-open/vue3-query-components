@@ -1,25 +1,25 @@
 <script setup lang="ts">
 import { CommonQueryTable } from "@yetuzi/vue3-query-components";
 
-// 模拟 API 请求
+// Mock API request
 const fetch = async () => {
   return {
     list: [
       {
         id: 1,
-        name: "张三",
+        name: "Zhang San",
         status: 1,
         createTime: 1705278600000,
       },
       {
         id: 2,
-        name: "李四",
+        name: "Li Si",
         status: 0,
         createTime: 1705377600000,
       },
       {
         id: 3,
-        name: "王五",
+        name: "Wang Wu",
         status: 1,
         createTime: 1705454100000,
       },
@@ -32,20 +32,20 @@ const form = [
   {
     is: "input",
     prop: "name",
-    label: "用户名",
+    label: "Username",
     props: {
-      placeholder: "请输入用户名",
+      placeholder: "Please enter username",
     },
   },
   {
     is: "select",
     prop: "status",
-    label: "状态",
+    label: "Status",
     props: {
-      placeholder: "请选择状态",
+      placeholder: "Please select status",
       options: [
-        { value: 1, label: "启用" },
-        { value: 0, label: "禁用" },
+        { value: 1, label: "Enabled" },
+        { value: 0, label: "Disabled" },
       ],
     },
   },
@@ -57,17 +57,17 @@ const columns = [
     prop: "id",
   },
   {
-    label: "用户名",
+    label: "Username",
     prop: "name",
   },
   {
-    label: "状态",
+    label: "Status",
     prop: "status",
     formatter: (row: { status: number }) =>
-      row.status === 1 ? "启用" : "禁用",
+      row.status === 1 ? "Enabled" : "Disabled",
   },
   {
-    label: "创建时间",
+    label: "Create Time",
     prop: "createTime",
     width: 180,
     type: "dateTime",
@@ -80,12 +80,12 @@ const columns = [
     :fetch="fetch"
     :form="form"
     :columns="columns"
-  > 
+  >
     <template #form-name>
-        在这里你可以随意定义组件
+        You can define custom components here
       </template>
       <template #table-status="{ value }">
-        {{ value === 1 ? "启用" : "禁用" }}
+        {{ value === 1 ? "Enabled" : "Disabled" }}
       </template>
   </CommonQueryTable>
 </template>

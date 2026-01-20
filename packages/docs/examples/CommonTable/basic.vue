@@ -5,19 +5,19 @@ import { ElButton } from "element-plus";
 const tableData = [
   {
     id: 1,
-    name: "张三",
+    name: "Zhang San",
     status: 1,
     createTime: 1705278600000,
   },
   {
     id: 2,
-    name: "李四",
+    name: "Li Si",
     status: 0,
     createTime: 1705377600000,
   },
   {
     id: 3,
-    name: "王五",
+    name: "Wang Wu",
     status: 1,
     createTime: 1705454100000,
   },
@@ -34,25 +34,25 @@ const columns = [
   },
   {
     prop: "name",
-    label: "姓名",
+    label: "Name",
     sortable: true,
   },
   {
     prop: "status",
-    label: "状态",
+    label: "Status",
     width: 100,
     formatter: (row: { status: number }) =>
-      row.status === 1 ? "启用" : "禁用",
+      row.status === 1 ? "Enabled" : "Disabled",
   },
   {
     prop: "createTime",
-    label: "创建时间",
+    label: "Create Time",
     width: 180,
     type: "dateTime",
   },
   {
     prop: "operation",
-    label: "操作",
+    label: "Operations",
     width: 180,
     fixed: "right",
   },
@@ -61,13 +61,9 @@ const columns = [
 
 <template>
   <CommonTable :data="tableData" :columns="columns">
-    <template #operation="{ row }">
-      <el-button text type="primary" @click="console.log('编辑', row)">
-        编辑
-      </el-button>
-      <el-button text type="danger" @click="console.log('删除', row)">
-        删除
-      </el-button>
+    <template #table-operation="{ row }">
+      <ElButton link type="primary" size="small">Edit</ElButton>
+      <ElButton link type="danger" size="small">Delete</ElButton>
     </template>
   </CommonTable>
 </template>

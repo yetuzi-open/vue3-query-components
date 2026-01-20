@@ -22,7 +22,7 @@ const baseForm = [
     label: "名称",
     prop: "name",
     formItem: {
-      rules: [{ required: true, message: "请输入名称" }],
+      rules: [{ required: true, message: "Please enter名称" }],
     },
   },
 ];
@@ -35,7 +35,7 @@ const companyFields = computed(() => {
         label: "公司名称",
         prop: "companyName",
         formItem: {
-          rules: [{ required: true, message: "请输入公司名称" }],
+          rules: [{ required: true, message: "Please enter公司名称" }],
         },
       },
     ];

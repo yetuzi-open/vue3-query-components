@@ -33,7 +33,12 @@
       "Bash(npm run type-check:*)",
       "Bash(tree:*)",
       "Bash(git remote set-url:*)",
-      "Bash(git checkout:*)"
+      "Bash(git checkout:*)",
+      "Bash(done:*)",
+      "Bash(npm uninstall:*)",
+      "Bash(find:*)",
+      "Bash(npm run build:patch:*)",
+      "Bash(npm publish:*)"
     ],
     "deny": [],
     "ask": []

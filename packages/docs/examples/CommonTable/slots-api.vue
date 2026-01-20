@@ -5,17 +5,17 @@ import { ElTag } from "element-plus";
 const tableData = [
   {
     id: 1,
-    name: "张三",
+    name: "Zhang San",
     status: 1,
   },
   {
     id: 2,
-    name: "李四",
+    name: "Li Si",
     status: 0,
   },
   {
     id: 3,
-    name: "王五",
+    name: "Wang Wu",
     status: 1,
   },
 ];
@@ -28,11 +28,11 @@ const columns = [
   },
   {
     prop: "name",
-    label: "姓名",
+    label: "Name",
   },
   {
     prop: "status",
-    label: "状态",
+    label: "Status",
   },
 ];
 </script>
@@ -42,7 +42,7 @@ const columns = [
     <!-- 使用 prop 名称作为插槽名，自定义列内容 -->
     <template #status="{ row }">
       <el-tag :type="row.status ? 'success' : 'danger'">
-        {{ row.status ? '启用' : '禁用' }}
+        {{ row.status ? 'Enabled' : 'Disabled' }}
       </el-tag>
     </template>
   </CommonTable>

@@ -4,11 +4,11 @@ import { CommonForm } from "@yetuzi/vue3-query-components";
 const form = [
   {
     is: "input",
-    label: "姓名",
+    label: "Name",
     prop: "name",
     formItem: {
       rules: [
-        { required: true, message: "请输入姓名", trigger: "blur" },
+        { required: true, message: "Please enterName", trigger: "blur" },
         { min: 2, max: 10, message: "长度在 2 到 10 个字符", trigger: "blur" },
       ],
     },
@@ -19,7 +19,7 @@ const form = [
     prop: "gender",
     initialValue: "",
     props: {
-      placeholder: "请选择性别",
+      placeholder: "Please select性别",
       options: [
         { value: "male", label: "男" },
         { value: "female", label: "女" },
@@ -33,7 +33,7 @@ const form = [
     prop: "birthday",
     props: {
       type: "date",
-      placeholder: "请选择生日",
+      placeholder: "Please select生日",
       clearable: true,
       format: "YYYY-MM-DD",
       valueFormat: "YYYY-MM-DD",
@@ -41,13 +41,13 @@ const form = [
   },
   {
     is: "radio",
-    label: "状态",
+    label: "Status",
     prop: "status",
     initialValue: 1,
     props: {
       options: [
-        { value: 1, label: "启用" },
-        { value: 0, label: "禁用" },
+        { value: 1, label: "Enabled" },
+        { value: 0, label: "Disabled" },
       ],
     },
   },
@@ -85,7 +85,7 @@ function handleSubmit(formData: any) {
 }
 
 function handleReset(formData: any) {
-  console.log("表单重置后数据:", formData);
+  console.log("表单Reset后数据:", formData);
 }
 </script>
 

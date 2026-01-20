@@ -8,10 +8,10 @@ const currentPosition = ref("right");
 const form = [
   {
     is: "input",
-    label: "用户名",
+    label: "Username",
     prop: "username",
     props: {
-      placeholder: "请输入用户名",
+      placeholder: "Please enterUsername",
     },
   },
   {
@@ -19,7 +19,7 @@ const form = [
     label: "城市",
     prop: "city",
     props: {
-      placeholder: "请选择城市",
+      placeholder: "Please select城市",
       options: [
         { value: "beijing", label: "北京" },
         { value: "shanghai", label: "上海" },
@@ -33,7 +33,7 @@ const form = [
     prop: "birthday",
     props: {
       type: "date",
-      placeholder: "请选择生日",
+      placeholder: "Please select生日",
     },
   },
 ];

@@ -1,10 +1,10 @@
-# 最佳实践
+# Best Practices
 
-本文档介绍使用 Vue3 Query Components 的最佳实践和常见模式。
+This document introduces best practices and common patterns for using Vue3 Query Components.
 
-## 1. 使用 CommonConfigProvider 统一配置
+## 1. Use CommonConfigProvider for Unified Configuration
 
-推荐在应用根组件中使用 CommonConfigProvider 进行全局配置：
+Recommended to use CommonConfigProvider in the application root component for global configuration:
 
 ```vue
 <!-- App.vue -->
@@ -22,11 +22,11 @@ const appConfig = ref<CommonConfig>({
   placeholder: '--',
   pagination: {
     defaultPageCount: 1,
-    defaultPageSize: 20  // 根据业务需求调整
+    defaultPageSize: 20  // Adjust according to business requirements
   },
   form: {
-    submitText: '查询',
-    resetText: '重置'
+    submitText: 'Search',
+    resetText: 'Reset'
   },
   table: {
     headerCellStyle: {
@@ -38,9 +38,9 @@ const appConfig = ref<CommonConfig>({
 </script>
 ```
 
-## 2. 封装通用的数据请求函数
+## 2. Encapsulate Generic Data Request Functions
 
-创建一个统一的数据请求函数，处理分页、排序等通用逻辑：
+Create a unified data request function to handle common logic like pagination and sorting:
 
 ```typescript
 // utils/request.ts
@@ -54,19 +54,19 @@ export interface FetchOptions<T = any> {
 
 export function createFetcher<T = any>(options: FetchOptions<T>) {
   return async (params: ListParam): Promise<ListResponse<T>> => {
-    // 转换请求参数
+    // Transform request parameters
     const requestParams = options.transform?.(params) || params
 
-    // 发起请求
+    // Make request
     const response = await options.api(requestParams)
 
-    // 转换响应数据
+    // Transform response data
     return options.transformResponse?.(response) || response
   }
 }
 ```
 
-使用示例：
+Usage example:
 
 ```typescript
 // api/user.ts
@@ -77,14 +77,14 @@ export const fetchUserList = createFetcher({
   api: userApi.getList,
   transform: (params) => ({
     ...params,
-    pageNum: params.pageNum - 1  // 后端页码从0开始
+    pageNum: params.pageNum - 1  // Backend page numbers start from 0
   })
 })
 ```
 
-## 3. 复用表单和表格配置
+## 3. Reuse Form and Table Configurations
 
-创建可复用的配置文件：
+Create reusable configuration files:
 
 ```typescript
 // config/table.ts
@@ -97,13 +97,13 @@ export const baseColumns: CommonTableColumn[] = [
   },
   {
     type: 'index',
-    label: '序号',
+    label: 'No.',
     width: 60
   }
 ]
 
 export const operationColumn: CommonTableColumn = {
-  label: '操作',
+  label: 'Operations',
   width: 150,
   fixed: 'right'
 }
@@ -115,22 +115,22 @@ import type { CommonFormItemArray } from 'vue3-query-components'
 
 export const createTimeRange = {
   field: 'createTimeRange',
-  label: '创建时间',
+  label: 'Create Time',
   type: 'date-picker' as const,
   props: {
     type: 'daterange',
-    rangeSeparator: '至',
-    startPlaceholder: '开始日期',
-    endPlaceholder: '结束日期',
+    rangeSeparator: 'to',
+    startPlaceholder: 'Start date',
+    endPlaceholder: 'End date',
     valueFormat: 'YYYY-MM-DD',
     clearable: true
   }
 }
 ```
 
-## 4. 使用组合式函数
+## 4. Use Composables
 
-创建可复用的组合式函数：
+Create reusable composables:
 
 ```typescript
 // composables/useQueryTable.ts
@@ -188,9 +188,9 @@ export function useQueryTable(fetchFn: (params: ListParam) => Promise<any>) {
 }
 ```
 
-## 5. 处理复杂的表单联动
+## 5. Handle Complex Form Dependencies
 
-使用 Composable 处理表单联动：
+Use Composable to handle form dependencies:
 
 ```typescript
 // composables/useFormDependency.ts
@@ -200,7 +200,7 @@ export function useFormDependency(formData: any) {
   const cityOptions = ref([])
   const districtOptions = ref([])
 
-  // 监听省份变化，加载城市
+  // Watch province changes, load cities
   watch(() => formData.province, async (province) => {
     if (province) {
       cityOptions.value = await fetchCities(province)
@@ -210,7 +210,7 @@ export function useFormDependency(formData: any) {
     }
   })
 
-  // 监听城市变化，加载区县
+  // Watch city changes, load districts
   watch(() => formData.city, async (city) => {
     if (city) {
       districtOptions.value = await fetchDistricts(city)
@@ -225,9 +225,9 @@ export function useFormDependency(formData: any) {
 }
 ```
 
-## 6. 自定义插槽的最佳实践
+## 6. Best Practices for Custom Slots
 
-创建可复用的操作列组件：
+Create reusable action column components:
 
 ```vue
 <!-- components/TableRowActions.vue -->
@@ -240,7 +240,7 @@ export function useFormDependency(formData: any) {
       link
       @click="$emit('edit', row)"
     >
-      编辑
+      Edit
     </common-button>
     <common-button
       v-if="showDelete"
@@ -249,7 +249,7 @@ export function useFormDependency(formData: any) {
       link
       @click="$emit('delete', row)"
     >
-      删除
+      Delete
     </common-button>
     <slot name="extra" :row="row" />
   </div>
@@ -271,7 +271,7 @@ defineEmits(['edit', 'delete'])
 </script>
 ```
 
-使用：
+Usage:
 
 ```vue
 <template>
@@ -289,7 +289,7 @@ defineEmits(['edit', 'delete'])
             link
             @click="handleDisable(row)"
           >
-            禁用
+            Disable
           </common-button>
         </template>
       </table-row-actions>
@@ -298,9 +298,9 @@ defineEmits(['edit', 'delete'])
 </template>
 ```
 
-## 7. 错误处理
+## 7. Error Handling
 
-统一处理请求错误：
+Unified request error handling:
 
 ```typescript
 // utils/errorHandler.ts
@@ -311,30 +311,30 @@ export function handleFetchError(error: any) {
     const { status, data } = error.response
     switch (status) {
       case 400:
-        ElMessage.error(data.message || '请求参数错误')
+        ElMessage.error(data.message || 'Invalid request parameters')
         break
       case 401:
-        ElMessage.error('登录已过期，请重新登录')
-        // 跳转到登录页
+        ElMessage.error('Login expired, please login again')
+        // Redirect to login page
         break
       case 403:
-        ElMessage.error('没有权限访问该资源')
+        ElMessage.error('No permission to access this resource')
         break
       case 500:
-        ElMessage.error('服务器错误，请稍后重试')
+        ElMessage.error('Server error, please try again later')
         break
       default:
-        ElMessage.error('请求失败')
+        ElMessage.error('Request failed')
     }
   } else {
-    ElMessage.error('网络错误，请检查网络连接')
+    ElMessage.error('Network error, please check your connection')
   }
 }
 ```
 
-## 8. 性能优化
+## 8. Performance Optimization
 
-1. **使用 computed 缓存计算属性**
+1. **Use computed to cache computed properties**
 
 ```typescript
 const columnConfig = computed(() => {
@@ -346,17 +346,17 @@ const columnConfig = computed(() => {
 })
 ```
 
-2. **防抖处理搜索**
+2. **Debounce search**
 
 ```typescript
 import { debounce } from 'lodash-es'
 
 const debouncedSearch = debounce((keyword: string) => {
-  // 执行搜索
+  // Execute search
 }, 300)
 ```
 
-3. **虚拟滚动处理大数据量**
+3. **Virtual scrolling for large data**
 
 ```vue
 <common-table
@@ -364,13 +364,13 @@ const debouncedSearch = debounce((keyword: string) => {
   :columns="columns"
   height="400"
 >
-  <!-- 使用虚拟滚动 -->
+  <!-- Use virtual scrolling -->
 </common-table>
 ```
 
-## 9. 类型安全
+## 9. Type Safety
 
-充分利用 TypeScript 的类型检查：
+Make full use of TypeScript's type checking:
 
 ```typescript
 interface User {
@@ -386,19 +386,19 @@ type UserListResponse = ListResponse<User>
 const columns: CommonTableColumn<User>[] = [
   {
     prop: 'name',
-    label: '姓名'
+    label: 'Name'
   },
   {
     prop: 'status',
-    label: '状态',
-    formatter: (row: User) => row.status === 1 ? '启用' : '禁用'
+    label: 'Status',
+    formatter: (row: User) => row.status === 1 ? 'Enabled' : 'Disabled'
   }
 ]
 ```
 
-## 10. 测试策略
+## 10. Testing Strategy
 
-为组件编写单元测试：
+Write unit tests for components:
 
 ```typescript
 // tests/components/CommonQueryTable.spec.ts
@@ -429,7 +429,7 @@ describe('CommonQueryTable', () => {
       }
     })
 
-    // 触发搜索
+    // Trigger search
     await wrapper.find('[data-testid="search-button"]').trigger('click')
 
     expect(mockFetch).toHaveBeenCalled()

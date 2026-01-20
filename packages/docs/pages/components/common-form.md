@@ -58,7 +58,7 @@ CommonForm 组件基于 Element Plus Form 进行了二次封装，除了以下�
 
 | 参数 | 说明 | 类型 | 默认值 |
 | --- | --- | --- | --- |
-| form | 表单配置数组，定义表单的字段和属性 | `CommonFormPropForm<T>` | `[]` |
+| form | 表单配置数组，定义表单的字段和属性 | `CommonFormItemArray<T>` | `[]` |
 | loading | 加载状态，支持 v-model 双向绑定 | `boolean` | `false` |
 | inline | 是否为行内表单 | `boolean` | `true` |
 

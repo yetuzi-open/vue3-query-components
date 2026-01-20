@@ -7,7 +7,7 @@ const dynamicConfig = reactive({
   placeholder: '--',
   form: {
     submitText: '保存',
-    resetText: '重置',
+    resetText: 'Reset',
     formItem: {
       components: {
         width: '260px'
@@ -32,7 +32,7 @@ const formConfig = [
   },
   {
     is: 'input',
-    label: '重置按钮文本',
+    label: 'Reset按钮文本',
     prop: 'resetText',
     initialValue: dynamicConfig.form.resetText,
   },
@@ -48,7 +48,7 @@ const formConfig = [
 const tableData = [
   {
     id: 1,
-    name: '张三',
+    name: 'Zhang San',
     age: 25,
     email: 'zhangsan@example.com'
   },
@@ -60,7 +60,7 @@ const tableData = [
   },
   {
     id: 3,
-    name: '王五',
+    name: 'Wang Wu',
     age: 30,
     email: ''
   },
@@ -75,7 +75,7 @@ const tableData = [
 // 表格列配置
 const tableColumns = [
   { prop: 'id', label: 'ID', width: 80 },
-  { prop: 'name', label: '姓名', width: 120 },
+  { prop: 'name', label: 'Name', width: 120 },
   { prop: 'age', label: '年龄', width: 80 },
   { prop: 'email', label: '邮箱' }
 ]

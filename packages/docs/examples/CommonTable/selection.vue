@@ -10,9 +10,9 @@ const handleSelectionChange = (selection: any[]) => {
 };
 
 const tableData = [
-  { id: 1, name: "张三", department: "技术部" },
-  { id: 2, name: "李四", department: "产品部" },
-  { id: 3, name: "王五", department: "设计部" },
+  { id: 1, name: "Zhang San", department: "技术部" },
+  { id: 2, name: "Li Si", department: "产品部" },
+  { id: 3, name: "Wang Wu", department: "设计部" },
 ];
 
 const columns = [
@@ -22,7 +22,7 @@ const columns = [
   },
   {
     prop: "name",
-    label: "姓名",
+    label: "Name",
   },
   {
     prop: "department",

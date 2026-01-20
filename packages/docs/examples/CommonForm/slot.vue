@@ -5,10 +5,10 @@ import { ElRate, ElSlider, ElColorPicker, ElInput } from 'element-plus';
 const form = [
   {
     is: "input",
-    label: "姓名",
+    label: "Name",
     prop: "name",
     props: {
-      placeholder: "请输入姓名",
+      placeholder: "Please enterName",
     },
   },
   {
@@ -16,7 +16,7 @@ const form = [
     label: "邮箱",
     prop: "email",
     props: {
-      placeholder: "请输入邮箱",
+      placeholder: "Please enter邮箱",
       type: "email",
     },
   },
@@ -42,7 +42,7 @@ function handleSubmit(formData: any) {
 }
 
 function handleReset(formData: any) {
-  console.log("表单重置后数据:", formData);
+  console.log("表单Reset后数据:", formData);
 }
 </script>
 
