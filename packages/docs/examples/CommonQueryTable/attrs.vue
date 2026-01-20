@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { CommonQueryTable } from "@yetuzi/vue3-query-components";
+import type { CommonTableArrayColumns } from "@yetuzi/vue3-query-components";
 
 // Mock API request
 const fetch = async () => {
@@ -51,7 +52,7 @@ const form = [
   },
 ];
 
-const columns = [
+const columns: CommonTableArrayColumns<any> = [
   {
     type: 'selection'
   },
