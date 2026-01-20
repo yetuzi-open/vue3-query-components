@@ -36,7 +36,9 @@
       "Bash(git checkout:*)",
       "Bash(done:*)",
       "Bash(npm uninstall:*)",
-      "Bash(find:*)"
+      "Bash(find:*)",
+      "Bash(npm run build:patch:*)",
+      "Bash(npm publish:*)"
     ],
     "deny": [],
     "ask": []

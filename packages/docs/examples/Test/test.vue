@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { CommonQueryTable, CommonForm, CommonConfigProvider, type CommonFormPropForm } from '@components-src'
+import { CommonQueryTable, CommonForm, CommonConfigProvider, type CommonFormItemArray } from '@components-src'
 import { ElButton } from 'element-plus'
 
-const a: CommonFormPropForm<any> = [
+const a: CommonFormItemArray<any> = [
     {
         is: 'aaaaa',
         prop: 'name',
