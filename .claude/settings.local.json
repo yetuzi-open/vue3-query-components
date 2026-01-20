@@ -38,7 +38,9 @@
       "Bash(npm uninstall:*)",
       "Bash(find:*)",
       "Bash(npm run build:patch:*)",
-      "Bash(npm publish:*)"
+      "Bash(npm publish:*)",
+      "mcp__web-reader__webReader",
+      "Bash(npm update:*)"
     ],
     "deny": [],
     "ask": []
