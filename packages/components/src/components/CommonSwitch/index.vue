@@ -34,7 +34,7 @@ const style = computed(() => {
 })
 
 defineOptions({
-  name: 'CommonCheckbox',
+  name: 'CommonSwitch',
 })
 </script>
 

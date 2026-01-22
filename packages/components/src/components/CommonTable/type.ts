@@ -199,6 +199,43 @@ interface TableColumnTypeDateTime<T extends AnyObject> extends TableColumnBase<T
 }
 
 /**
+ * 字典列类型
+ * 根据配置的字典选项，将值转换为对应的标签显示
+ *
+ * @typeParam T - 表格数据行类型
+ *
+ * @example 使用 options
+ * ```ts
+ * const dictColumn: TableColumnTypeDict<UserData> = {
+ *   type: 'dict',
+ *   prop: 'status',
+ *   label: '状态',
+ *   options: [
+ *     { label: '启用', value: 1 },
+ *     { label: '禁用', value: 0 }
+ *   ]
+ * }
+ * ```
+ *
+ * @example 使用 dictName
+ * ```ts
+ * const dictColumn: TableColumnTypeDict<UserData> = {
+ *   type: 'dict',
+ *   prop: 'gender',
+ *   label: '性别',
+ *   dictName: 'gender'
+ * }
+ * ```
+ */
+export interface TableColumnTypeDict<T extends AnyObject> extends TableColumnBase<T> {
+  type: 'dict'
+  /** 字典选项列表 */
+  options?: Array<{ label: string; value: any }>
+  /** 字典名称，用于从全局字典服务获取选项 */
+  dictName?: string
+}
+
+/**
  * 表格列定义根类型
  * 包含所有列类型的联合类型
  *
@@ -211,6 +248,7 @@ export type CommonTableColumnRoot<T extends AnyObject> =
   | TableColumnTypeExpand<T>
   | TableColumnTypeDate<T>
   | TableColumnTypeDateTime<T>
+  | TableColumnTypeDict<T>
 
 /**
  * 表格列类型标识
@@ -247,31 +285,6 @@ type CommonTableObjectColumns<T extends AnyObject> = Record<
   keyof T | (string & {}),
   CommonTableColumnRoot<T>
 >
-
-/**
- * CommonTable 组件实例暴露类型
- * 提供 Element Plus Table 实例访问
- *
- * @example
- * ```vue
- * <script setup lang="ts">
- * import { ref } from 'vue'
- *
- * const tableRef = ref<CommonTableInstance>()
- *
- * const scrollToBottom = () => {
- *   tableRef.value?.elTableRef.value?.scrollTo({
- *     top: 10000,
- *     behavior: 'smooth'
- *   })
- * }
- * </script>
- * ```
- */
-export interface CommonTableInstance {
-  /** ElTable 组件实例引用 */
-  elTableRef: Ref<TableInstance | undefined>
-}
 
 /**
  * CommonTable 暴露给父组件的实例类型

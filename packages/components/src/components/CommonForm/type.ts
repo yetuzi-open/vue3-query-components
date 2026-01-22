@@ -4,7 +4,10 @@ import type { ExtractPropTypes } from 'vue'
 import type {
   CommonSelectProps,
   CommonInputProps,
+  CommonInputNumberProps,
   CommonDatePickerProps,
+  CommonTimePickerProps,
+  CommonCascaderProps,
   CommonRadioProps,
   CommonCheckboxProps,
   CommonSwitchProps,
@@ -49,7 +52,10 @@ export interface CommonFormProps<T extends AnyObject> extends ExtractPropTypes<F
 export type CommonFormItemArray<T extends AnyObject> = Array<
   | CommonFormSelectItem<T>
   | CommonFormInputItem<T>
+  | CommonFormInputNumberItem<T>
   | CommonFormDatePickerItem<T>
+  | CommonFormTimePickerItem<T>
+  | CommonFormCascaderItem<T>
   | CommonFormRadioItem<T>
   | CommonFormCustomItem<T>
   | CommonFormCheckboxItem<T>
@@ -96,7 +102,7 @@ export type CommonFormData<T extends AnyObject> = T & Record<string, any>
 interface CommonFormItemBase<T, P, D extends AnyObject, V = any> {
   /**
    * 组件类型标识
-   * - 内置组件：'input' | 'select' | 'date-picker' | 'radio' | 'check-box' | 'switch'
+   * - 内置组件：'input' | 'input-number' | 'select' | 'date-picker' | 'time-picker' | 'cascader' | 'radio' | 'check-box' | 'switch'
    * - 自定义组件：直接传入组件对象
    */
   is: T | (string & {})
@@ -157,6 +163,28 @@ export interface CommonFormInputItem<T extends AnyObject>
   extends CommonFormItemBase<'input', CommonInputProps, T> {}
 
 /**
+ * 数字输入框组件表单项
+ *
+ * @typeParam T - 表单数据对象类型
+ *
+ * @example
+ * ```ts
+ * const inputNumberItem: CommonFormInputNumberItem<UserData> = {
+ *   is: 'input-number',
+ *   prop: 'age',
+ *   label: '年龄',
+ *   props: {
+ *     min: 0,
+ *     max: 150,
+ *     step: 1
+ *   }
+ * }
+ * ```
+ */
+export interface CommonFormInputNumberItem<T extends AnyObject>
+  extends CommonFormItemBase<'input-number', CommonInputNumberProps, T> {}
+
+/**
  * 日期选择器组件表单项
  *
  * @typeParam T - 表单数据对象类型
@@ -176,6 +204,51 @@ export interface CommonFormInputItem<T extends AnyObject>
  */
 export interface CommonFormDatePickerItem<T extends AnyObject>
   extends CommonFormItemBase<'date-picker', CommonDatePickerProps, T> {}
+
+/**
+ * 时间选择器组件表单项
+ *
+ * @typeParam T - 表单数据对象类型
+ *
+ * @example
+ * ```ts
+ * const timeItem: CommonFormTimePickerItem<UserData> = {
+ *   is: 'time-picker',
+ *   prop: 'startTime',
+ *   label: '开始时间',
+ *   props: {
+ *     placeholder: '请选择时间'
+ *   }
+ * }
+ * ```
+ */
+export interface CommonFormTimePickerItem<T extends AnyObject>
+  extends CommonFormItemBase<'time-picker', CommonTimePickerProps, T> {}
+
+/**
+ * 级联选择器组件表单项
+ *
+ * @typeParam T - 表单数据对象类型
+ *
+ * @example
+ * ```ts
+ * const cascaderItem: CommonFormCascaderItem<UserData> = {
+ *   is: 'cascader',
+ *   prop: 'region',
+ *   label: '地区',
+ *   props: {
+ *     options: regionOptions,
+ *     props: {
+ *       value: 'code',
+ *       label: 'name',
+ *       children: 'children'
+ *     }
+ *   }
+ * }
+ * ```
+ */
+export interface CommonFormCascaderItem<T extends AnyObject>
+  extends CommonFormItemBase<'cascader', CommonCascaderProps, T> {}
 
 /**
  * 单选框组件表单项

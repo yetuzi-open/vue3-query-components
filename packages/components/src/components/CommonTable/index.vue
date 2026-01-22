@@ -65,7 +65,7 @@ const arrayColumns = computed(() => {
   // 处理特殊列类型的默认配置
   return columns.map((item) => {
     if (item.type) {
-      const supplementConfig = getColumnSupplementType(item.type)
+      const supplementConfig = getColumnSupplementType(item.type, item)
       if (supplementConfig) {
         return Object.assign(supplementConfig, {
           ...item,

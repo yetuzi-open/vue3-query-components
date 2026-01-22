@@ -5,6 +5,8 @@ title: CommonConfigProvider
 
 # CommonConfigProvider 全局配置
 
+<!-- <demo vue="Test/test.vue" ssg="true"/> -->
+
 提供全局配置功能，包括分页默认值、表单文本、表格样式等。
 
 ## 基础用法
