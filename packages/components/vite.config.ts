@@ -3,6 +3,13 @@ import vue from "@vitejs/plugin-vue";
 import { resolve } from "path";
 import dts from "vite-plugin-dts";
 import ElementPlus from "unplugin-element-plus/vite";
+import { readFileSync } from "fs";
+
+// 读取当前版本号
+const packageJson = JSON.parse(
+  readFileSync(resolve(__dirname, "package.json"), "utf8"),
+);
+const currentVersion = packageJson.version;
 
 export default defineConfig({
   plugins: [
@@ -108,5 +115,6 @@ export default defineConfig({
     __VUE_OPTIONS_API__: true,
     __VUE_PROD_DEVTOOLS__: false,
     __VUE_PROD_HYDRATION_MISMATCH_DETAILS__: false,
+    __PACKAGE_VERSION__: JSON.stringify(currentVersion),
   },
 });

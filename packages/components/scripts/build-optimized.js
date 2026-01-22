@@ -89,6 +89,26 @@ try {
     `'${currentVersion}'`,
   );
 
+  // 同时替换可能存在的旧版本号（当 Vite 使用了 define 配置时）
+  // 查找类似 const Kc = "1.4.0", kc = 的模式并替换（version 导出语句）
+  // 这个模式是由 Vite 将 export const version: string = '__PACKAGE_VERSION__' 编译后生成的
+  jsContent = jsContent.replace(
+    /const\s+(\w+)\s*=\s*"(\d+\.\d+\.\d+(-[\w.]+)?)"/g,
+    (match, varName, oldVersion) => {
+      // 检查这行后面是否还有同一个变量的引用（如 const Kc = "1.4.0", kc = ...）
+      // 如果是，则这是 version 导出语句，需要替换
+      const lineStart = jsContent.indexOf(match);
+      const lineEnd = jsContent.indexOf("\n", lineStart);
+      const line = jsContent.substring(lineStart, lineEnd);
+
+      // 如果行中包含逗号且逗号后有小写字母开头的同名变量，则替换
+      if (line.includes(",") && line.includes(`${varName.toLowerCase()} =`)) {
+        return `const ${varName} = "${currentVersion}"`;
+      }
+      return match;
+    },
+  );
+
   // 移除 index.css 导入（CSS 会被单独输出到 dist/index.css）
   // 注意：保留 Element Plus 的样式导入，让 unplugin-element-plus 处理并合并到 CSS
   const indexCssImportRegex = /import\s+['"]\.\/index\.css['"]\s*;?\s*/g;
