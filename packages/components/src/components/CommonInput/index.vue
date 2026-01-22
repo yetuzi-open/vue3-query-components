@@ -14,10 +14,7 @@ const emit = defineEmits<{
 }>()
 
 /** 输入框值，支持v-model双向绑定 */
-const modelValue = defineModel<string>({
-  /** 默认空字符串 */
-  default: '',
-})
+const modelValue = defineModel<string>()
 
 const slots: Slots = useSlots()
 
