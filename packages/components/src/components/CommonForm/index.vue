@@ -7,7 +7,10 @@ import type { CommonFormProps, CommonFormData, CommonFormExpose, CommonFormItemA
 import {
   CommonSelect,
   CommonInput,
+  CommonInputNumber,
   CommonDatePicker,
+  CommonTimePicker,
+  CommonCascader,
   CommonRadio,
   getCommonProviderConfig,
   CommonCheckbox,
@@ -34,7 +37,10 @@ const props = withDefaults(defineProps<CommonFormProps<T>>(), {
 const componentMap = new Map<string, Component>([
   ['select', CommonSelect],
   ['input', CommonInput],
+  ['input-number', CommonInputNumber],
   ['date-picker', CommonDatePicker],
+  ['time-picker', CommonTimePicker],
+  ['cascader', CommonCascader],
   ['radio', CommonRadio],
   ['check-box', CommonCheckbox],
   ['switch', CommonSwitch],
