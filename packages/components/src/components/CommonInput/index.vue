@@ -1,6 +1,9 @@
 <script setup lang="ts">
 import { ElInput } from 'element-plus'
 import type { CommonInputProps } from './type'
+import { useSlots } from 'vue'
+import type { Slots } from 'vue'
+
 /** 组件Props定义，使用运行时定义避免类型问题 */
 const props = defineProps<CommonInputProps>()
 
@@ -15,6 +18,8 @@ const modelValue = defineModel<string>({
   /** 默认空字符串 */
   default: '',
 })
+
+const slots: Slots = useSlots()
 
 /**
  * 回车键处理函数
@@ -38,8 +43,8 @@ defineOptions({
 
 <template>
   <el-input v-bind="props" v-model="modelValue" @keydown.enter="handleEnter">
-    <template v-for="(_, name) in $slots" :key="name" #[name]="scoped">
-      <slot :name="name" v-bind="scoped" />
+    <template v-for="(_, slotName) in slots" :key="slotName" #[slotName]="slotData">
+      <slot :name="slotName" v-bind="slotData" />
     </template>
   </el-input>
 </template>

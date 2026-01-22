@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { CommonTable } from "@yetuzi/vue3-query-components";
+import type { CommonTableArrayColumns } from "@yetuzi/vue3-query-components";
 
 const tableData = [
   {
@@ -32,7 +33,7 @@ const tableData = [
   },
 ];
 
-const columns = [
+const columns: CommonTableArrayColumns<any> = [
   {
     prop: "name",
     label: "Name",

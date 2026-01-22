@@ -1,7 +1,9 @@
 <script setup lang="ts">
 import { CommonQueryTable } from "@yetuzi/vue3-query-components";
+import type { CommonQueryTableProps } from "@yetuzi/vue3-query-components";
 
-const layouts = ["form", "table", "pagination", "footer"];
+
+const layouts: CommonQueryTableProps['layouts'] = ["form", "table", "pagination", "footer"];
 
 // Mock API request
 const fetch = async () => {

@@ -5,7 +5,6 @@ import { computed, ref, watch, useAttrs, getCurrentInstance } from 'vue'
 import { getCommonProviderConfig, getFirstValidValue } from '../../index'
 import type { AnyObject } from '../../index'
 import type { TableInstance } from 'element-plus'
-import { cloneDeep } from 'lodash-es'
 import { getColumnSupplementType } from './config'
 
 /** 全局配置对象 */
@@ -43,21 +42,27 @@ watch(
 
 /**
  * 列配置计算属性
+ *
  * 处理两种列配置格式：
  * 1. 数组格式：直接使用
  * 2. 对象格式：转换为数组格式
+ *
  * 同时处理特殊列类型（如索引、选择框等）的默认配置合并
+ *
+ * @returns 标准化后的列配置数组
  */
 const arrayColumns = computed(() => {
-  let columns = cloneDeep(props.columns)
+  let columns = props.columns
+
+  // 对象格式转数组格式
   if (!Array.isArray(columns)) {
-    columns = Object.entries(columns).map(([key, value]) => {
-      return {
-        ...value,
-        prop: key,
-      }
-    })
+    columns = Object.entries(columns).map(([key, value]) => ({
+      ...value,
+      prop: key,
+    }))
   }
+
+  // 处理特殊列类型的默认配置
   return columns.map((item) => {
     if (item.type) {
       const supplementConfig = getColumnSupplementType(item.type)
@@ -87,7 +92,7 @@ function changeRef(el?: any) {
 defineExpose<CommonTableExpose>()
 
 defineOptions({
-  name: 'ConnomTable',
+  name: 'CommonTable',
 })
 
 </script>

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { CommonTable, type CommonTableExpose } from '@yetuzi/vue3-query-components'
+import { CommonTable, type CommonTableExpose, type CommonTableArrayColumns } from '@yetuzi/vue3-query-components'
 import { ElButton, ElMessage } from 'element-plus'
 
 const tableRef = ref<CommonTableExpose>()
@@ -13,7 +13,7 @@ const tableData = [
   { id: 5, name: '孙七', status: 1, createTime: 1705626900000 },
 ]
 
-const columns = [
+const columns: CommonTableArrayColumns<any> = [
   { type: 'selection', width: 55 },
   { type: 'index', width: 55 },
   { prop: 'name', label: 'Name', sortable: true },

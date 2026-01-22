@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import { CommonTable } from "@yetuzi/vue3-query-components";
+import type { CommonTableArrayColumns } from "@yetuzi/vue3-query-components";
 import { ElButton } from "element-plus";
 
 const multipleSelection = ref([]);
@@ -15,7 +16,7 @@ const tableData = [
   { id: 3, name: "Wang Wu", department: "设计部" },
 ];
 
-const columns = [
+const columns: CommonTableArrayColumns<any> = [
   {
     type: "selection",
     width: 55,

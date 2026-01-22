@@ -1,8 +1,10 @@
 <script setup lang="ts">
 import { CommonQueryTable } from "@yetuzi/vue3-query-components";
 import { ElButton } from 'element-plus'
+import type { CommonQueryTableProps } from "@yetuzi/vue3-query-components";
 
-const layouts = ["form", "toolbar", "table", "pagination"];
+
+const layouts: CommonQueryTableProps['layouts'] = ["form", "toolbar", "table", "pagination"];
 
 // Mock API request
 const fetch = async () => {
