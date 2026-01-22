@@ -42,7 +42,8 @@
       "mcp__web-reader__webReader",
       "Bash(npm update:*)",
       "Bash(npx vue-tsc:*)",
-      "Bash(pnpm dev:*)"
+      "Bash(pnpm dev:*)",
+      "Bash(npm version minor:*)"
     ],
     "deny": [],
     "ask": []
