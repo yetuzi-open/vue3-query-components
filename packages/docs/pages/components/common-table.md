@@ -36,6 +36,23 @@ title: CommonTable
 
 <demo vue="CommonTable/sort-filter.vue" ssg="true"/>
 
+## 列类型
+
+CommonTable 提供了多种内置列类型，通过设置 `type` 属性即可使用：
+
+### 支持的列类型
+
+| 类型 | 说明 | 示例 |
+| --- | --- | --- |
+| `selection` | 多选列，显示复选框 | `{ type: 'selection' }` |
+| `index` | 序号列，自动显示行号 | `{ type: 'index' }` |
+| `expand` | 展开列，支持展开额外内容 | `{ type: 'expand' }` |
+| `date` | 日期列，自动格式为 YYYY-MM-DD | `{ type: 'date', prop: 'birthDate' }` |
+| `dateTime` | 日期时间列，自动格式为 YYYY-MM-DD HH:mm:ss | `{ type: 'dateTime', prop: 'createTime' }` |
+| `dict` | 字典列，将值映射为文本 | `{ type: 'dict', prop: 'status', options: [...] }` |
+
+<demo vue="CommonTable/column-types.vue" ssg="true"/>
+
 ## API
 
 ### Props
@@ -56,13 +73,17 @@ CommonTable 组件基于 Element Plus Table 进行了二次封装，除了以下
 ```typescript
 interface CommonTableColumn {
   // 列类型
-  type?: 'selection' | 'index' | 'expand' | 'date' | 'dateTime'
+  type?: 'selection' | 'index' | 'expand' | 'date' | 'dateTime' | 'dict'
 
   // 基本属性
   prop?: string              // 列字段名
   label?: string             // 列标题
   width?: string | number    // 列宽度
   fixed?: boolean | 'left' | 'right'  // 固定列
+
+  // dict 类型专属
+  options?: Array<{ label: string; value: any }>  // 字典选项
+  dictName?: string  // 字典名称（用于从全局字典服务获取）
 }
 ```
 
@@ -75,6 +96,7 @@ interface CommonTableColumn {
 | `expand` | 展开列 | 支持展开/折叠行内容 |
 | `date` | 日期列 | 自动格式化日期戳为 YYYY-MM-DD |
 | `dateTime` | 日期时间列 | 自动格式化时间戳为 YYYY-MM-DD HH:mm:ss |
+| `dict` | 字典列 | 将数值映射为对应的文本标签 |
 
 > 💡 **提示**：CommonTable 的 Column 继承自 Element Plus 的 TableColumnCtx，支持所有原生属性。详细配置请参考 [Element Plus Table 文档](https://element-plus.org/zh-CN/component/table.html#table-column-attributes)。
 
@@ -150,6 +172,7 @@ type CommonTableColumnRoot<T extends AnyObject> =
   | TableColumnTypeExpand<T>     // 展开列
   | TableColumnTypeDate<T>       // 日期列
   | TableColumnTypeDateTime<T>   // 日期时间列
+  | TableColumnTypeDict<T>       // 字典列
 ```
 
 ### 特殊列类型
@@ -181,6 +204,15 @@ interface TableColumnTypeDate<T extends AnyObject> {
 interface TableColumnTypeDateTime<T extends AnyObject> {
   type: 'dateTime'
 }
+
+/** 字典列类型 */
+interface TableColumnTypeDict<T extends AnyObject> {
+  type: 'dict'
+  /** 字典选项列表 */
+  options?: Array<{ label: string; value: any }>
+  /** 字典名称，用于从全局字典服务获取选项 */
+  dictName?: string
+}
 ```
 
 ### CommonTableInstance
@@ -209,14 +241,22 @@ interface UserData {
   id: number
   name: string
   email: string
+  status: number
   createTime: number
 }
+
+// 定义字典选项
+const statusOptions = [
+  { label: '启用', value: 1 },
+  { label: '禁用', value: 0 },
+]
 
 // 定义列配置
 const columns: CommonTableArrayColumns<UserData> = [
   { prop: 'id', label: 'ID', type: 'index' },
   { prop: 'name', label: '姓名' },
   { prop: 'email', label: '邮箱' },
+  { prop: 'status', label: '状态', type: 'dict', options: statusOptions },
   { prop: 'createTime', label: '创建时间', type: 'dateTime' },
 ]
 
@@ -225,4 +265,27 @@ const tableProps: CommonTableProps<UserData> = {
   columns,
   data: []
 }
+```
+
+### 注册自定义列类型
+
+如果你需要自定义列类型，可以使用 `registerColumnTypeConfig` 函数：
+
+```typescript
+import { registerColumnTypeConfig } from '@yetuzi/vue3-query-components'
+
+// 注册自定义货币列类型
+registerColumnTypeConfig('currency', (originalColumn) => ({
+  width: '120px',
+  formatter: (row, column, cellValue) => `¥${cellValue.toFixed(2)}`
+}))
+
+// 使用自定义列类型
+const columns = [
+  {
+    prop: 'price',
+    label: '价格',
+    type: 'currency'  // 使用自定义类型
+  }
+]
 ```
