@@ -47,9 +47,9 @@ CommonTable 提供了多种内置列类型，通过设置 `type` 属性即可使
 | `selection` | 多选列，显示复选框 | `{ type: 'selection' }` |
 | `index` | 序号列，自动显示行号 | `{ type: 'index' }` |
 | `expand` | 展开列，支持展开额外内容 | `{ type: 'expand' }` |
-| `date` | 日期列，自动格式为 YYYY-MM-DD | `{ type: 'date', prop: 'birthDate' }` |
-| `dateTime` | 日期时间列，自动格式为 YYYY-MM-DD HH:mm:ss | `{ type: 'dateTime', prop: 'createTime' }` |
-| `dict` | 字典列，将值映射为文本 | `{ type: 'dict', prop: 'status', options: [...] }` |
+| `date` | 日期列，自动格式为 YYYY-MM-DD | `{ type: 'date',  }` |
+| `dateTime` | 日期时间列，自动格式为 YYYY-MM-DD HH:mm:ss | `{ type: 'dateTime' }` |
+| `dict` | 字典列，将值映射为文本 | `{ type: 'dict', options: [...] }` |
 
 <demo vue="CommonTable/column-types.vue" ssg="true"/>
 
