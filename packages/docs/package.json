@@ -28,6 +28,6 @@
     "vitepress-demo-plugin": "^1.5.1"
   },
   "volta": {
-    "node": "25.4.0"
+    "node": "20.19.0"
   }
 }
