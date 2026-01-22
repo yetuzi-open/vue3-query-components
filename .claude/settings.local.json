@@ -40,7 +40,9 @@
       "Bash(npm run build:patch:*)",
       "Bash(npm publish:*)",
       "mcp__web-reader__webReader",
-      "Bash(npm update:*)"
+      "Bash(npm update:*)",
+      "Bash(npx vue-tsc:*)",
+      "Bash(pnpm dev:*)"
     ],
     "deny": [],
     "ask": []
