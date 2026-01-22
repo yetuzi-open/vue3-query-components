@@ -21,7 +21,7 @@
     "CHANGELOG.md"
   ],
   "scripts": {
-    "dev": "vite build --watch",
+    "dev": "node scripts/dev-watch.js",
     "build": "node scripts/build-optimized.js",
     "build:legacy": "node scripts/build.js",
     "build:patch": "node scripts/build.js patch",
