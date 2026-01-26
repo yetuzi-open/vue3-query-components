@@ -2,7 +2,7 @@
 import { CommonQueryTable } from '@yetuzi/vue3-query-components'
 import type { CommonQueryTableExpose } from '@yetuzi/vue3-query-components'
 import { ref } from 'vue'
-import { ElMessage } from 'element-plus'
+import { ElMessage, ElButton } from 'element-plus'
 
 // ========== 数据类型定义 ==========
 interface UserData {
