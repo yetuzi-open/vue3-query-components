@@ -103,7 +103,37 @@ CommonQueryTable 内置了完整的分页功能，支持自定义分页参数和
 
 :::
 
-以下例子中，当你选择表单项时，控制台会有输出。
+### 属性透传示例
+
+向内部组件传递额外属性，例如设置表单为非行内模式：
+
+```vue
+<CommonQueryTable
+  :form-inline="false"
+  ...
+/>
+```
+
+### 事件透传示例
+
+监听内部组件的事件，例如监听表格选择变化：
+
+```vue
+<script setup>
+function handleSelectionChange(selection) {
+  console.log('Selected items:', selection)
+}
+</script>
+
+<template>
+  <CommonQueryTable
+    @table-selection-change="handleSelectionChange"
+    ...
+  />
+</template>
+```
+
+以下完整示例展示了属性透传和事件透传的实际使用：
 
 <demo vue="CommonQueryTable/attrs.vue" ssg="true" />
 
@@ -145,18 +175,7 @@ CommonQueryTable 内置了完整的分页功能，支持自定义分页参数和
 - `table-status` - 向表格组件传递 status 插槽
 - `pagination-sizes` - 向分页组件传递 sizes 插槽
 
-### 事件透传
-
-支持通过 `@组件名-事件名` 的方式监听内部组件事件：
-
-| 事件名 | 说明 | 回调参数 |
-| --- | --- | --- |
-| @table-selection-change | 表格选择变化时触发 | `selection` |
-| @form-submit | 表单提交时触发 | `formData` |
-| @form-reset | 表单重置时触发 | - |
-| @pagination-change | 分页变化时触发 | `{ pageNo, pageSize }` |
-
-## 实例方法
+### Exposes
 
 组件暴露了以下方法，可以通过 ref 调用：
 
@@ -166,8 +185,6 @@ CommonQueryTable 内置了完整的分页功能，支持自定义分页参数和
 | reset | 重置查询条件和分页 | - | `void` |
 | getFormData | 获取当前表单数据 | - | `Partial<T>` |
 | getSelectionRows | 获取表格选中的行数据 | - | `T[]` |
-
-<demo vue="CommonQueryTable/instance-methods.vue" ssg="true"/>
 
 ## TypeScript 类型
 
