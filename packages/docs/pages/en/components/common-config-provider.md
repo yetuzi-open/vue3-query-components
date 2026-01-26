@@ -92,11 +92,11 @@ Configuration supports reactive updates and can be dynamically adjusted based on
 
 #### Default Configuration
 
-<<< ../../../components/src/index.ts#config
+<<< ../../../../components/src/index.ts#config
 
 #### TypeScript Type Definition
 
-<<< ../../../components/src/types/index.ts#config
+<<< ../../../../components/src/types/index.ts#config
 
 #### Configuration Items Description
 
