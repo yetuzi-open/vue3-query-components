@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { CommonQueryTableProps } from './type'
+import type { CommonQueryTableProps, CommonQueryTableExpose } from './type'
 import {
   CommonTable,
   CommonPagination,
@@ -10,27 +10,29 @@ import {
   useGetComponentsChildrenSlots,
   useGetComponentsChildrenAttrs
 } from '../../index'
-import type { PaginationParam, CommonFormExpose } from '../../index'
+import type { PaginationParam, CommonFormExpose, CommonTableExpose } from '../../index'
 import { useRequest } from 'vue-hooks-plus'
-import { ref } from 'vue'
+import { ref, useSlots } from 'vue'
 import { ElLoading } from 'element-plus'
 
 const vLoading = ElLoading.directive
 
 /** 组件Props定义，提供默认值 */
 const props = withDefaults(defineProps<CommonQueryTableProps>(), {
-  /** 默认布局顺序：表单 -> 表格 -> 分页 */
-  layouts() {
-    return ['form', 'table', 'pagination']
-  },
   /** 默认空表单配置 */
   form() {
     return []
   },
 })
 
+/** 获取当前组件的插槽 */
+const slots = useSlots()
+
 /** CommonForm组件引用，用于获取表单数据 */
-const CommonFormRef = ref<CommonFormExpose[]>()
+const CommonFormRef = ref<CommonFormExpose>()
+
+/** CommonTable组件引用，用于获取表格选中的行 */
+const CommonTableRef = ref<CommonTableExpose>()
 
 /** 获取子组件插槽，支持向内部组件传递插槽 */
 const childrenSlots = useGetComponentsChildrenSlots(['table', 'form', 'pagination'])
@@ -121,7 +123,7 @@ function handlePaginationChange(event: PaginationParam) {
  * 合并分页参数和表单查询参数，过滤空值后发起请求
  */
 function fetchListData() {
-  const formData = CommonFormRef.value?.[0]?.formData || {}
+  const formData = CommonFormRef.value?.formData || {}
   run(
     filterNullAndUndefined({
       ...page,
@@ -130,47 +132,106 @@ function fetchListData() {
   )
 }
 
+/**
+ * 刷新列表数据
+ * 使用当前查询条件和分页参数重新请求数据
+ */
+function refresh() {
+  fetchListData()
+}
+
+/**
+ * 重置查询条件和分页
+ * 重置表单字段到初始值，重置分页到第一页，并重新请求数据
+ */
+function reset() {
+  // 重置表单
+  CommonFormRef.value?.resetFields()
+  // 重置分页
+  resetPage()
+  // 重新请求数据（会在分页重置的 watch 中触发，或者直接调用）
+  fetchListData()
+}
+
+/**
+ * 获取表单数据
+ * @returns 当前表单的值对象
+ */
+function getFormData() {
+  return CommonFormRef.value?.formData || {}
+}
+
+/**
+ * 获取表格选中的行数据
+ * @returns 选中的行数据数组
+ */
+function getSelectionRows() {
+  return CommonTableRef.value?.getSelectionRows() || []
+}
 
 defineOptions({
   name: 'CommonQueryTable',
 })
 
-defineExpose({
-
+defineExpose<CommonQueryTableExpose>({
+  refresh,
+  reset,
+  getFormData,
+  getSelectionRows,
 })
 
 </script>
 
 <template>
   <div class="common-query-table">
-    <!-- TODO 全部设置成 vnode 的形式，再从插槽中传递给父组件 -->
-    <div :class="[`common-query-table-${layout}`]" v-for="layout in layouts" :key="layout">
-      <slot :name="layout">
-        <template v-if="layout === 'form'">
-          <CommonForm ref="CommonFormRef" inline :form="form" v-bind="childrenAttrs.form" v-model:loading="loading" @submit="handleFormSubmit"
-            @reset="handleFormReset">
-            <template v-for="(name, key) in childrenSlots?.[layout]" :key="key" #[key]="scoped">
-              <slot :name="name" v-bind="scoped"> </slot>
-            </template>
-          </CommonForm>
-        </template>
-        <template v-else-if="layout === 'table'">
-          <CommonTable v-bind="childrenAttrs.table" :columns="columns" :data="data?.list" v-loading="loading">
-            <template v-for="(name, key) in childrenSlots?.[layout]" :key="key" #[key]="scoped">
-              <slot :name="name" v-bind="scoped"> </slot>
-            </template>
-          </CommonTable>
-        </template>
-        <template v-else-if="layout === 'pagination'">
-          <CommonPagination v-bind="childrenAttrs.pagination" v-model:page-no="page.pageNo" v-model:page-size="page.pageSize" :total="Number(data?.total)"
-            @change="handlePaginationChange">
-            <template v-for="(name, key) in childrenSlots?.[layout]" :key="key" #[key]="scoped">
-              <slot :name="name" v-bind="scoped"> </slot>
-            </template>
-          </CommonPagination>
-        </template>
-        <slot v-else :name="layout"></slot>
+    <!-- Header 区域 -->
+    <div v-if="slots.header" class="common-query-table-header">
+      <slot name="header"></slot>
+    </div>
+
+    <!-- Form 表单区域 -->
+    <div v-if="slots.form || form.length > 0" class="common-query-table-form">
+      <slot name="form">
+        <CommonForm ref="CommonFormRef" inline :form="form" v-bind="childrenAttrs.form" v-model:loading="loading" @submit="handleFormSubmit"
+          @reset="handleFormReset">
+          <template v-for="(name, key) in childrenSlots?.form" :key="key" #[key]="scoped">
+            <slot :name="name" v-bind="scoped"> </slot>
+          </template>
+        </CommonForm>
       </slot>
+    </div>
+
+    <!-- Toolbar 工具栏区域 -->
+    <div v-if="slots.toolbar" class="common-query-table-toolbar">
+      <slot name="toolbar"></slot>
+    </div>
+
+    <!-- Table 表格区域 -->
+    <div class="common-query-table-table">
+      <slot name="table">
+        <CommonTable ref="CommonTableRef" v-bind="childrenAttrs.table" :columns="columns" :data="data?.list" v-loading="loading">
+          <template v-for="(name, key) in childrenSlots?.table" :key="key" #[key]="scoped">
+            <slot :name="name" v-bind="scoped"> </slot>
+          </template>
+        </CommonTable>
+      </slot>
+    </div>
+
+    <!-- Pagination 分页区域 -->
+    <div v-if="slots.pagination || data?.total" class="common-query-table-pagination">
+      <slot name="pagination">
+        <CommonPagination v-bind="childrenAttrs.pagination" v-model:page-no="page.pageNo" v-model:page-size="page.pageSize" :total="Number(data?.total)"
+          @change="handlePaginationChange">
+          <template v-for="(name, key) in childrenSlots?.pagination" :key="key" #[key]="scoped">
+            <slot :name="name" v-bind="scoped"> </slot>
+          </template>
+        </CommonPagination>
+      </slot>
+    </div>
+
+    <!-- Footer 底部区域 -->
+    <div v-if="slots.footer" class="common-query-table-footer">
+      <slot name="footer"></slot>
     </div>
   </div>
 </template>
