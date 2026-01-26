@@ -96,10 +96,15 @@ export type CommonTableArrayColumns<T extends AnyObject> = Array<CommonTableColu
 interface TableColumnBase<T extends AnyObject>
   extends Partial<Omit<TableColumnCtx<T>, 'prop' | 'type'>> {
   /** 列字段名，支持数据类型的 key 或任意字符串 */
-  prop: keyof T | (string & {})
+  prop?: keyof T | (string & {})
   /** 列类型 */
-  type?: TableColumnType | (string & {})
+  type?: CommonTableColumnType | (string & {})
 }
+
+interface TableColumnTypeDefault<T extends AnyObject> extends OptionalFields<TableColumnBase<T>, 'prop'> {
+  type: 'default'
+}
+
 
 /**
  * 索引列类型
@@ -243,6 +248,7 @@ export interface TableColumnTypeDict<T extends AnyObject> extends TableColumnBas
  */
 export type CommonTableColumnRoot<T extends AnyObject> =
   | TableColumnBase<T>
+  | TableColumnTypeDefault<T>
   | TableColumnTypeIndex<T>
   | TableColumnTypeSelection<T>
   | TableColumnTypeExpand<T>
@@ -256,7 +262,7 @@ export type CommonTableColumnRoot<T extends AnyObject> =
  *
  * @example
  * ```ts
- * let columnType: TableColumnType
+ * let columnType: CommonTableColumnType
  *
  * columnType = 'index'      // ✓ 索引列
  * columnType = 'selection'  // ✓ 选择列
@@ -265,7 +271,7 @@ export type CommonTableColumnRoot<T extends AnyObject> =
  * columnType = 'dateTime'   // ✓ 日期时间列
  * ```
  */
-export type TableColumnType = Extract<CommonTableColumnRoot<AnyObject>, { type: any }>['type']
+export type CommonTableColumnType = Extract<CommonTableColumnRoot<AnyObject>, { type: any }>['type']
 
 /**
  * 表格列对象形式类型

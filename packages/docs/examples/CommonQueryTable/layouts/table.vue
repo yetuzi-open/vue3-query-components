@@ -1,8 +1,5 @@
 <script setup lang="ts">
 import { CommonQueryTable } from "@yetuzi/vue3-query-components";
-import type { CommonQueryTableProps } from "@yetuzi/vue3-query-components";
-
-const layouts: CommonQueryTableProps['layouts'] = ['table', 'pagination']
 
 // Mock API request
 const fetch = async () => {
@@ -56,5 +53,6 @@ const columns = [
 </script>
 
 <template>
-  <CommonQueryTable :layouts="layouts" :fetch="fetch" :columns="columns" />
+  <!-- 不传 form prop，只显示表格和分页 -->
+  <CommonQueryTable :fetch="fetch" :columns="columns" />
 </template>

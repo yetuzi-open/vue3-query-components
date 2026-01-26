@@ -2,23 +2,31 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
-## [1.4.5](https://github.com/yetuzi-open/vue3-query-components/compare/v1.4.4...v1.4.5) (2026-01-22)
+### [1.4.5](https://github.com/yetuzi-open/vue3-query-components/compare/v1.4.4...v1.4.5) (2026-01-26)
 
 
 ### ✨ 新增
 
-* 添加自动发布脚本，支持自动创建 git tag ([f80ae0f](https://github.com/yetuzi-open/vue3-query-components/commit/f80ae0f))
+* 添加自动发布脚本，支持自动创建 git tag ([f80ae0f](https://github.com/yetuzi-open/vue3-query-components/commit/f80ae0fc3a6b5390d3a9e0696f08d3a772351b66))
+
+
+### ♻️ 重构
+
+* 重构 CommonTable 列类型配置处理方式 ([47a773c](https://github.com/yetuzi-open/vue3-query-components/commit/47a773c1b33c474915f0742ec3e3279faf8f75e9))
 
 
 ### 🔧 修复
 
-* 修复构建时版本号替换问题 ([cf5af63](https://github.com/yetuzi-open/vue3-query-components/commit/cf5af63))
+* 修复 CommonTable 列类型处理的潜在运行时错误 ([cb9e34b](https://github.com/yetuzi-open/vue3-query-components/commit/cb9e34be0b6cefc2671b7217620304e47cdcde4f))
+* 修复构建后 dist/node_modules 导致 VitePress 加载失败的问题 ([c4accbc](https://github.com/yetuzi-open/vue3-query-components/commit/c4accbc632d71c878e8ea0a7527ddc44e06b1fde))
 
 
 ### 📝 文档
 
-* 优化组件文档示例 ([e76a339](https://github.com/yetuzi-open/vue3-query-components/commit/e76a339))
-
+* 更新 CommonTable 文档，移除自定义列类型注册相关内容 ([2ef6793](https://github.com/yetuzi-open/vue3-query-components/commit/2ef679376016b4e949215894683d09ed4aa1dc21))
+* 清理 CommonTable 文档中未使用的 dictName 字段说明 ([7769074](https://github.com/yetuzi-open/vue3-query-components/commit/77690740d774a3b60380c0eee523a5efd38c1ff7))
+* 修复 CHANGELOG.md，移除重复的更新内容 ([846c887](https://github.com/yetuzi-open/vue3-query-components/commit/846c8870e17e9544c6b5f9a9e9c0da5faed4a189))
+* CommonQueryTable 新增分页配置章节和示例 ([a5281e1](https://github.com/yetuzi-open/vue3-query-components/commit/a5281e1b0ccdb8953295b378b523d5b2eb7ccc26))
 
 ## [1.4.4](https://github.com/yetuzi-open/vue3-query-components/compare/v1.4.1...v1.4.4) (2026-01-22)
 

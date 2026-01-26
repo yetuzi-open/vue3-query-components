@@ -151,6 +151,15 @@ try {
   console.log(`- dist/index.css     (${cssSize} KB) - 样式文件`);
   console.log(`- dist/version-info.json - 版本信息`);
 
+  // 清理 dist/node_modules 目录（vite-plugin-dts 可能会创建）
+  const distNodeModulesPath = path.resolve(process.cwd(), "dist/node_modules");
+  if (existsSync(distNodeModulesPath)) {
+    console.log("");
+    console.log("🧹 清理 dist/node_modules 目录...");
+    rmSync(distNodeModulesPath, { recursive: true, force: true });
+    console.log("   ✅ 已删除 dist/node_modules");
+  }
+
   // 生成版本信息（供 docs 使用）
   try {
     console.log("");

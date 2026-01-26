@@ -1,11 +1,11 @@
 <script setup lang="ts" generic="T extends AnyObject">
 import { ElTable, ElEmpty, ElTableColumn } from 'element-plus'
-import type { CommonTableProps, CommonTableExpose } from './type'
+import type { CommonTableProps, CommonTableExpose, CommonTableColumnType } from './type'
 import { computed, ref, watch, useAttrs, getCurrentInstance } from 'vue'
 import { getCommonProviderConfig, getFirstValidValue } from '../../index'
 import type { AnyObject } from '../../index'
 import type { TableInstance } from 'element-plus'
-import { getColumnSupplementType } from './config'
+import { builtinColumnTypeFactories } from './config'
 
 /** 全局配置对象 */
 const config = getCommonProviderConfig()
@@ -64,8 +64,8 @@ const arrayColumns = computed(() => {
 
   // 处理特殊列类型的默认配置
   return columns.map((item) => {
-    if (item.type) {
-      const supplementConfig = getColumnSupplementType(item.type, item)
+    if ( item.type && item.type in builtinColumnTypeFactories) {
+      const supplementConfig = builtinColumnTypeFactories[item.type as CommonTableColumnType](item as any)
       if (supplementConfig) {
         return Object.assign(supplementConfig, {
           ...item,

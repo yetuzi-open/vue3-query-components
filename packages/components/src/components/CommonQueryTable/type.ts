@@ -19,20 +19,33 @@ export interface CommonQueryTableProps<T extends AnyObject = AnyObject> {
    * 定义表格的列结构和展示方式
    */
   columns: CommonTableColumn<T>
-
-  /**
-   * 页面布局配置
-   * 控制页面中各个组件的显示顺序
-   * @default ['form', 'table', 'pagination']
-   */
-  layouts?: Array<CommonQueryTableLayoutsUnite>
 }
 
-/** 布局名 联合类型 */
-export type CommonQueryTableLayoutsUnite =
-  | 'header'
-  | 'form'
-  | 'toolbar'
-  | 'table'
-  | 'pagination'
-  | 'footer'
+/**
+ * CommonQueryTable 组件实例方法
+ */
+export interface CommonQueryTableExpose<T = AnyObject> {
+  /**
+   * 刷新列表数据
+   * 使用当前查询条件和分页参数重新请求数据
+   */
+  refresh: () => void
+
+  /**
+   * 重置查询条件和分页
+   * 重置表单字段到初始值，重置分页到第一页，并重新请求数据
+   */
+  reset: () => void
+
+  /**
+   * 获取表单数据
+   * @returns 当前表单的值对象
+   */
+  getFormData: () => Partial<T>
+
+  /**
+   * 获取表格选中的行数据
+   * @returns 选中的行数据数组
+   */
+  getSelectionRows: () => T[]
+}
