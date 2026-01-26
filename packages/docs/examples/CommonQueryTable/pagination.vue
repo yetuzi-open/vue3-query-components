@@ -8,8 +8,6 @@ const currentPagination = ref({ pageNo: 1, pageSize: 10 });
 
 // Mock API request
 const fetch = async (params: any) => {
-  console.log('Fetch with params:', params);
-
   // 模拟网络延迟
   await new Promise(resolve => setTimeout(resolve, 500));
 

@@ -124,6 +124,19 @@ Supports listening to internal component events via `@componentName-eventName`:
 | @form-reset | Triggered when form is reset | - |
 | @pagination-change | Triggered when pagination changes | `{ pageNo, pageSize }` |
 
+## Instance Methods
+
+The component exposes the following methods that can be called via ref:
+
+| Method | Description | Parameters | Return Value |
+| --- | --- | --- | --- |
+| refresh | Refresh list data | - | `void` |
+| reset | Reset query conditions and pagination | - | `void` |
+| getFormData | Get current form data | - | `Partial<T>` |
+| getSelectionRows | Get selected row data from table | - | `T[]` |
+
+<demo vue="CommonQueryTable/instance-methods.vue" ssg="true"/>
+
 ## TypeScript Types
 
 The component exports the following TypeScript type definitions for direct use in your project:
@@ -140,6 +153,26 @@ interface CommonQueryTableProps<T extends AnyObject = AnyObject> {
 
   /** Table column configuration */
   columns: CommonTableColumn<T>
+}
+```
+
+### CommonQueryTableExpose
+
+Type definition for component instance, used for ref type annotation:
+
+```typescript
+interface CommonQueryTableExpose<T = AnyObject> {
+  /** Refresh list data */
+  refresh: () => void
+
+  /** Reset query conditions and pagination */
+  reset: () => void
+
+  /** Get form data */
+  getFormData: () => Partial<T>
+
+  /** Get selected row data from table */
+  getSelectionRows: () => T[]
 }
 ```
 

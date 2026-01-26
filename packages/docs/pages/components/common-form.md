@@ -64,7 +64,7 @@ CommonForm 组件基于 Element Plus Form 进行了二次封装，除了以下�
 
 > 💡 **提示**：除了上述自定义属性外，CommonForm 支持所有 Element Plus Form 的原生属性，如 `labelWidth`、`labelPosition`、`size`、`disabled` 等。详细属性请参考 [Element Plus Form 文档](https://element-plus.org/zh-CN/component/form.html)。
 
-### Form 配置项
+#### Form 配置项
 
 每个表单项支持以下配置：
 
