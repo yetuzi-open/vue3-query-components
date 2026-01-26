@@ -10,27 +10,39 @@ A highly integrated query page component that includes form queries, table displ
 
 <demo vue="CommonQueryTable/basic.vue" ssg="true"/>
 
-## Layout Configuration
+## Slot Layout
 
-Control page layout via `layouts` property. Supports the following layout components:
+The component provides 6 layout slots, control the page layout through slot content:
 
-`['header', 'form', 'toolbar', 'table', 'pagination', 'footer']`
+- `header` - Header area
+- `form` - Form query area
+- `toolbar` - Toolbar area
+- `table` - Table area (default display)
+- `pagination` - Pagination area
+- `footer` - Footer area
+
+::: tip Slot Display Rules
+- `header`, `toolbar`, `footer`: Displayed only when slot content is provided
+- `form`: Displayed when slot content is provided or form configuration exists
+- `table`: Always displayed by default
+- `pagination`: Displayed when slot content is provided or has data (total > 0)
+:::
 
 ### Table with Pagination
 
-Table with pagination functionality, suitable for pure data display.
+Display only table and pagination without `form` prop.
 
 <demo vue="CommonQueryTable/layouts/table.vue" ssg="true"/>
 
 ### Toolbar
 
-Added toolbar section, suitable for operations on entire table data such as add, delete, etc.
+Add operation buttons via `toolbar` slot.
 
 <demo vue="CommonQueryTable/layouts/toolbar.vue" ssg="true"/>
 
 ### Footer Content
 
-Display additional information.
+Display additional information via `footer` slot.
 
 <demo vue="CommonQueryTable/layouts/footer.vue" ssg="true"/>
 
@@ -72,8 +84,6 @@ In the following example, when you select form items, the console will output.
 | fetch | Data fetch function, receives query parameters and returns a Promise containing list and total | `(params?: ListParam) => Promise<{ list: T[]; total: string \| number }>` | Required |
 | form | Form configuration array, defines fields and properties of query form | `CommonFormItemArray<T>` | `[]` |
 | columns | Table column configuration, defines table column structure and display | `CommonTableColumn<T>` | Required |
-| layouts | Page layout configuration, controls display order of components on page | `Array<'header' \| 'form' \| 'toolbar' \| 'table' \| 'pagination' \| 'footer'>` | `['form', 'table', 'pagination']` |
-
 ### Slots
 
 #### Layout Slots
@@ -130,23 +140,7 @@ interface CommonQueryTableProps<T extends AnyObject = AnyObject> {
 
   /** Table column configuration */
   columns: CommonTableColumn<T>
-
-  /** Page layout configuration */
-  layouts?: Array<CommonQueryTableLayoutsUnite>
 }
-```
-
-### CommonQueryTableLayoutsUnite
-
-```typescript
-/** Layout name union type */
-type CommonQueryTableLayoutsUnite =
-  | 'header'    // Header area
-  | 'form'      // Form area
-  | 'toolbar'   // Toolbar area
-  | 'table'     // Table area
-  | 'pagination' // Pagination area
-  | 'footer'    // Footer area
 ```
 
 ### ListParam
@@ -172,7 +166,6 @@ type PaginationParam = {
 ```typescript
 import type {
   CommonQueryTableProps,
-  CommonQueryTableLayoutsUnite,
   ListParam,
 } from '@yetuzi/vue3-query-components'
 

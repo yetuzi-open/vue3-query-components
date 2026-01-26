@@ -12,27 +12,39 @@ title: CommonQueryTable
 
 <demo vue="CommonQueryTable/basic.vue" ssg="true" />
 
-## 布局配置
+## 插槽布局
 
-可通过 `layouts` 属性控制页面布局，支持以下布局组件：
+组件提供了 6 个布局插槽，通过插槽内容来控制页面布局：
 
-`['header', 'form', 'toolbar', 'table', 'pagination', 'footer']`
+- `header` - 头部区域
+- `form` - 表单查询区域
+- `toolbar` - 工具栏区域
+- `table` - 表格区域（默认显示）
+- `pagination` - 分页区域
+- `footer` - 底部区域
+
+::: tip 插槽显示规则
+- `header`、`toolbar`、`footer`：只在提供插槽内容时显示
+- `form`：在提供插槽内容或有表单配置时显示
+- `table`：默认始终显示
+- `pagination`：在提供插槽内容或有数据（total > 0）时显示
+:::
 
 ### 纯表格分页展示
 
-表格带分页功能，适合纯数据的展示。
+不传 `form` 属性，只显示表格和分页。
 
 <demo vue="CommonQueryTable/layouts/table.vue" ssg="true" />
 
 ### 操作栏
 
-增加了操作栏目，适合对整个表格数据的操作，如新增、删除等。
+通过 `toolbar` 插槽添加操作按钮。
 
 <demo vue="CommonQueryTable/layouts/toolbar.vue" ssg="true" />
 
 ### 底部展示内容
 
-展示一些额外信息。
+通过 `footer` 插槽展示额外信息。
 
 <demo vue="CommonQueryTable/layouts/footer.vue" ssg="true" />
 
@@ -50,7 +62,7 @@ CommonQueryTable 内置了完整的分页功能，支持自定义分页参数和
 
 ### 分页属性
 
-通过 `pagination-*` 前缀的属性可以自定义分页组件的行为，比如：
+通过 `pagination-*` 前缀的属性可以自定义分页组件的行为，比如 ：
 
 | 属性 | 说明 | 类型 | 默认值 |
 | --- | --- | --- | --- |
@@ -104,23 +116,20 @@ CommonQueryTable 内置了完整的分页功能，支持自定义分页参数和
 | fetch | 数据获取函数，接收查询参数并返回包含列表和总数的 Promise | `(params?: ListParam) => Promise<{ list: T[]; total: string \| number }>` | 必填 |
 | form | 表单配置数组，定义查询表单的字段和属性 | `CommonFormItemArray<T>` | `[]` |
 | columns | 表格列配置，定义表格的列结构和展示方式 | `CommonTableColumn<T>` | 必填 |
-| layouts | 页面布局配置，控制页面中各个组件的显示顺序 | `Array<'header' \| 'form' \| 'toolbar' \| 'table' \| 'pagination' \| 'footer'>` | `['form', 'table', 'pagination']` |
 | pagination-* | 分页组件属性透传，详见[分页配置](#分页配置)章节 | - | - |
 
 ### Slots
 
 #### 布局插槽
 
-CommonQueryTable 支持通过布局插槽向内部组件传递内容：
-
-| 名称 | 说明 | 作用对象 |
+| 名称 | 说明 | 显示条件 |
 | --- | --- | --- |
-| header | 头部区域插槽 | 页面头部 |
-| form | 表单区域插槽 | 查询表单组件 |
-| toolbar | 工具栏插槽 | 表格工具栏 |
-| table | 表格区域插槽 | 数据表格组件 |
-| pagination | 分页区域插槽 | 分页组件 |
-| footer | 底部区域插槽 | 页面底部 |
+| header | 头部区域插槽 | 插槽有内容时显示 |
+| form | 表单区域插槽 | 插槽有内容或有表单配置时显示 |
+| toolbar | 工具栏插槽 | 插槽有内容时显示 |
+| table | 表格区域插槽 | 默认始终显示 |
+| pagination | 分页区域插槽 | 插槽有内容或有数据（total > 0）时显示 |
+| footer | 底部区域插槽 | 插槽有内容时显示 |
 
 #### 子组件插槽传递
 
@@ -163,23 +172,7 @@ interface CommonQueryTableProps<T extends AnyObject = AnyObject> {
 
   /** 表格列配置 */
   columns: CommonTableColumn<T>
-
-  /** 页面布局配置 */
-  layouts?: Array<CommonQueryTableLayoutsUnite>
 }
-```
-
-### CommonQueryTableLayoutsUnite
-
-```typescript
-/** 布局名联合类型 */
-type CommonQueryTableLayoutsUnite =
-  | 'header'    // 头部区域
-  | 'form'      // 表单区域
-  | 'toolbar'   // 工具栏区域
-  | 'table'     // 表格区域
-  | 'pagination' // 分页区域
-  | 'footer'    // 底部区域
 ```
 
 ### ListParam
@@ -205,7 +198,6 @@ type PaginationParam = {
 ```typescript
 import type {
   CommonQueryTableProps,
-  CommonQueryTableLayoutsUnite,
   ListParam,
 } from '@yetuzi/vue3-query-components'
 
