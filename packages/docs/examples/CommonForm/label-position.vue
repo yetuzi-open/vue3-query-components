@@ -44,9 +44,9 @@ const form = [
     <div class="control-panel">
       <span>标签位置：</span>
       <el-radio-group v-model="currentPosition">
-        <el-radio label="left">左对齐</el-radio>
-        <el-radio label="right">右对齐</el-radio>
-        <el-radio label="top">顶部对齐</el-radio>
+        <el-radio value="left">左对齐</el-radio>
+        <el-radio value="right">右对齐</el-radio>
+        <el-radio value="top">顶部对齐</el-radio>
       </el-radio-group>
     </div>
 
