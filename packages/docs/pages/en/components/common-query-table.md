@@ -46,6 +46,36 @@ Display additional information via `footer` slot.
 
 <demo vue="CommonQueryTable/layouts/footer.vue" ssg="true"/>
 
+## Pagination Configuration
+
+CommonQueryTable has built-in complete pagination functionality, supporting custom pagination parameters and styles.
+
+::: tip Pagination Notes
+- Global default page number and page size can be set via `CommonConfigProvider` component
+- Pagination component will automatically display when the returned `total` from the API is greater than the page size
+- Pagination parameters `pageNo` and `pageSize` are automatically passed to the `fetch` function
+:::
+
+<demo vue="CommonQueryTable/pagination.vue" ssg="true"/>
+
+### Pagination Props
+
+Customize pagination component behavior via `pagination-*` prefixed attributes:
+
+| Attribute | Description | Type | Default |
+| --- | --- | --- | --- |
+| `pagination-page-size` | Array of page size options | `number[]` | `[10, 20, 50, 100]` |
+| `pagination-default-page-size` | Default page size | `number` | `10` |
+| `pagination-layout` | Pagination component layout | `string` | `'total, sizes, prev, pager, next, jumper'` |
+| `pagination-background` | Whether to show background color | `boolean` | `true` |
+| `pagination-page-count` | Total page count (usually calculated from total) | `number` | - |
+
+### Pagination Events
+
+| Event | Description | Callback Parameters |
+| --- | --- | --- |
+| `@pagination-change` | Triggered when pagination changes | `{ pageNo: number, pageSize: number }` |
+
 ## Slot Pass-through
 
 In actual use, you may need to use slot functionality on the `form` or `table` components under `CommonQueryTable`.
@@ -71,7 +101,37 @@ Although the component provides some default attributes, it cannot meet all requ
 
 :::
 
-In the following example, when you select form items, the console will output.
+### Attribute Pass-through Example
+
+Pass additional attributes to internal components, for example, setting form to non-inline mode:
+
+```vue
+<CommonQueryTable
+  :form-inline="false"
+  ...
+/>
+```
+
+### Event Pass-through Example
+
+Listen to internal component events, for example, listening to table selection changes:
+
+```vue
+<script setup>
+function handleSelectionChange(selection) {
+  console.log('Selected items:', selection)
+}
+</script>
+
+<template>
+  <CommonQueryTable
+    @table-selection-change="handleSelectionChange"
+    ...
+  />
+</template>
+```
+
+The following complete example shows the actual usage of attribute pass-through and event pass-through:
 
 <demo vue="CommonQueryTable/attrs.vue" ssg="true"/>
 
@@ -84,6 +144,8 @@ In the following example, when you select form items, the console will output.
 | fetch | Data fetch function, receives query parameters and returns a Promise containing list and total | `(params?: ListParam) => Promise<{ list: T[]; total: string \| number }>` | Required |
 | form | Form configuration array, defines fields and properties of query form | `CommonFormItemArray<T>` | `[]` |
 | columns | Table column configuration, defines table column structure and display | `CommonTableColumn<T>` | Required |
+| pagination-* | Pagination component attribute pass-through, see [Pagination Configuration](#pagination-configuration) section | - | - |
+
 ### Slots
 
 #### Layout Slots
@@ -113,18 +175,7 @@ Pass slots to internal components via prefix:
 - `table-status` - Pass status slot to table component
 - `pagination-sizes` - Pass sizes slot to pagination component
 
-### Event Pass-through
-
-Supports listening to internal component events via `@componentName-eventName`:
-
-| Event Name | Description | Callback Parameters |
-| --- | --- | --- |
-| @table-selection-change | Triggered when table selection changes | `selection` |
-| @form-submit | Triggered when form is submitted | `formData` |
-| @form-reset | Triggered when form is reset | - |
-| @pagination-change | Triggered when pagination changes | `{ pageNo, pageSize }` |
-
-## Instance Methods
+### Exposes
 
 The component exposes the following methods that can be called via ref:
 
@@ -134,8 +185,6 @@ The component exposes the following methods that can be called via ref:
 | reset | Reset query conditions and pagination | - | `void` |
 | getFormData | Get current form data | - | `Partial<T>` |
 | getSelectionRows | Get selected row data from table | - | `T[]` |
-
-<demo vue="CommonQueryTable/instance-methods.vue" ssg="true"/>
 
 ## TypeScript Types
 
