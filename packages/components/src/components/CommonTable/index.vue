@@ -5,7 +5,7 @@ import { computed, ref, watch, useAttrs, getCurrentInstance } from 'vue'
 import { getCommonProviderConfig, getFirstValidValue } from '../../index'
 import type { AnyObject } from '../../index'
 import type { TableInstance } from 'element-plus'
-import { getColumnSupplementType } from './config'
+import { builtinColumnTypeFactories } from './config'
 
 /** 全局配置对象 */
 const config = getCommonProviderConfig()
@@ -65,7 +65,7 @@ const arrayColumns = computed(() => {
   // 处理特殊列类型的默认配置
   return columns.map((item) => {
     if (item.type) {
-      const supplementConfig = getColumnSupplementType(item.type, item)
+      const supplementConfig = builtinColumnTypeFactories[item.type](item as any)
       if (supplementConfig) {
         return Object.assign(supplementConfig, {
           ...item,
