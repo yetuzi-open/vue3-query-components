@@ -12,7 +12,7 @@ import {
 } from '../../index'
 import type { PaginationParam, CommonFormExpose, CommonTableExpose } from '../../index'
 import { useRequest } from 'vue-hooks-plus'
-import { ref, useSlots } from 'vue'
+import { ref, useSlots, type Slots } from 'vue'
 import { ElLoading } from 'element-plus'
 
 const vLoading = ElLoading.directive
@@ -26,7 +26,7 @@ const props = withDefaults(defineProps<CommonQueryTableProps>(), {
 })
 
 /** 获取当前组件的插槽 */
-const slots = useSlots()
+const slots: Slots = useSlots()
 
 /** CommonForm组件引用，用于获取表单数据 */
 const CommonFormRef = ref<CommonFormExpose>()
