@@ -2,6 +2,43 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.5.0](https://github.com/yetuzi-open/vue3-query-components/compare/v1.4.4...v1.5.0) (2026-01-26)
+
+
+### ✨ 新增
+
+* 添加自动发布脚本，支持自动创建 git tag ([f80ae0f](https://github.com/yetuzi-open/vue3-query-components/commit/f80ae0fc3a6b5390d3a9e0696f08d3a772351b66))
+* 新增 CommonQueryTable 功能测试页面 ([a76accc](https://github.com/yetuzi-open/vue3-query-components/commit/a76accc67826fce2ee5cd637aa17036746d3fe12))
+* CommonQueryTable 新增实例方法并移除 layouts prop ([a9d9242](https://github.com/yetuzi-open/vue3-query-components/commit/a9d9242c437888d6b7ab0b7e4bc695434ef1f256))
+
+
+### 📝 文档
+
+* 补充 CommonQueryTable 实例方法文档 ([0b643aa](https://github.com/yetuzi-open/vue3-query-components/commit/0b643aa93659598def8757142a70d5d6fca99301))
+* 更新 CommonQueryTable 文档 ([49adb9c](https://github.com/yetuzi-open/vue3-query-components/commit/49adb9ca74c33b4e923ebb61c84b91ace5028811))
+* 更新 CommonTable 文档，移除自定义列类型注册相关内容 ([2ef6793](https://github.com/yetuzi-open/vue3-query-components/commit/2ef679376016b4e949215894683d09ed4aa1dc21))
+* 清理 CommonTable 文档中未使用的 dictName 字段说明 ([7769074](https://github.com/yetuzi-open/vue3-query-components/commit/77690740d774a3b60380c0eee523a5efd38c1ff7))
+* 修复 CHANGELOG.md，移除重复的更新内容 ([846c887](https://github.com/yetuzi-open/vue3-query-components/commit/846c8870e17e9544c6b5f9a9e9c0da5faed4a189))
+* 增强 CommonQueryTable 文档，增加事件透传示例说明 ([edde7b2](https://github.com/yetuzi-open/vue3-query-components/commit/edde7b2d2876b34109e8652323b24380b5b4eb32))
+* CommonQueryTable 新增分页配置章节和示例 ([a5281e1](https://github.com/yetuzi-open/vue3-query-components/commit/a5281e1b0ccdb8953295b378b523d5b2eb7ccc26))
+
+
+### 🔧 修复
+
+* 补充实例方法示例文件的 ElButton 组件导入 ([cebc6c2](https://github.com/yetuzi-open/vue3-query-components/commit/cebc6c229f1f721ce9820b963c4c4dd98807a57e))
+* 修复 CommonForm 示例中 el-radio 的废弃 API 警告 ([17b4583](https://github.com/yetuzi-open/vue3-query-components/commit/17b4583bd7ef1886ca0a305f22ceabfa3701dbac))
+* 修复 CommonQueryTable TypeScript 类型警告 ([ad10832](https://github.com/yetuzi-open/vue3-query-components/commit/ad1083213886ba7ace10d86ce59d4cb5bfe2c360))
+* 修复 CommonTable 列类型处理的潜在运行时错误 ([cb9e34b](https://github.com/yetuzi-open/vue3-query-components/commit/cb9e34be0b6cefc2671b7217620304e47cdcde4f))
+* 修复构建后 dist/node_modules 导致 VitePress 加载失败的问题 ([c4accbc](https://github.com/yetuzi-open/vue3-query-components/commit/c4accbc632d71c878e8ea0a7527ddc44e06b1fde))
+* CommonTable 列配置 prop 属性改为可选 ([6bf9380](https://github.com/yetuzi-open/vue3-query-components/commit/6bf93808f543b920b311bcb9915d71aa25b9f2ef))
+
+
+### ♻️ 重构
+
+* 更新 CommonQueryTable 示例文件 ([2162e94](https://github.com/yetuzi-open/vue3-query-components/commit/2162e946206645aaa8d3f3210660dcb58289ecdd))
+* 简化 CommonQueryTable 的 reset 方法实现 ([e187f2d](https://github.com/yetuzi-open/vue3-query-components/commit/e187f2df35f5ea588ee4e6a6908444894ba2b4b7))
+* 重构 CommonTable 列类型配置处理方式 ([47a773c](https://github.com/yetuzi-open/vue3-query-components/commit/47a773c1b33c474915f0742ec3e3279faf8f75e9))
+
 ### [1.4.5](https://github.com/yetuzi-open/vue3-query-components/compare/v1.4.4...v1.4.5) (2026-01-26)
 
 
