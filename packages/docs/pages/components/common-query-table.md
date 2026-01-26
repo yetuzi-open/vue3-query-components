@@ -36,6 +36,36 @@ title: CommonQueryTable
 
 <demo vue="CommonQueryTable/layouts/footer.vue" ssg="true" />
 
+## 分页配置
+
+CommonQueryTable 内置了完整的分页功能，支持自定义分页参数和样式。
+
+::: tip 分页说明
+- 可通过 `CommonConfigProvider` 组件设置全局默认的页码和每页条数
+- 当接口返回的 `total` 大于每页显示条数时，将自动显示分页组件
+- 分页参数 `pageNo` 和 `pageSize` 会自动传递给 `fetch` 函数
+:::
+
+<demo vue="CommonQueryTable/pagination.vue" ssg="true" />
+
+### 分页属性
+
+通过 `pagination-*` 前缀的属性可以自定义分页组件的行为，比如：
+
+| 属性 | 说明 | 类型 | 默认值 |
+| --- | --- | --- | --- |
+| `pagination-page-size` | 每页显示条数选项数组 | `number[]` | `[10, 20, 50, 100]` |
+| `pagination-default-page-size` | 默认每页显示条数 | `number` | `10` |
+| `pagination-layout` | 分页组件布局 | `string` | `'total, sizes, prev, pager, next, jumper'` |
+| `pagination-background` | 是否显示背景色 | `boolean` | `true` |
+| `pagination-page-count` | 总页数（通常由 total 自动计算） | `number` | - |
+
+### 分页事件
+
+| 事件 | 说明 | 回调参数 |
+| --- | --- | --- |
+| `@pagination-change` | 分页变化时触发 | `{ pageNo: number, pageSize: number }` |
+
 ## 插槽透传
 
 在实际使用过程中，可能需要对 `CommonQueryTable` 下的 `form` 或 `table` 组件使用插槽功能。
@@ -75,6 +105,7 @@ title: CommonQueryTable
 | form | 表单配置数组，定义查询表单的字段和属性 | `CommonFormItemArray<T>` | `[]` |
 | columns | 表格列配置，定义表格的列结构和展示方式 | `CommonTableColumn<T>` | 必填 |
 | layouts | 页面布局配置，控制页面中各个组件的显示顺序 | `Array<'header' \| 'form' \| 'toolbar' \| 'table' \| 'pagination' \| 'footer'>` | `['form', 'table', 'pagination']` |
+| pagination-* | 分页组件属性透传，详见[分页配置](#分页配置)章节 | - | - |
 
 ### Slots
 
