@@ -156,6 +156,19 @@ CommonQueryTable 内置了完整的分页功能，支持自定义分页参数和
 | @form-reset | 表单重置时触发 | - |
 | @pagination-change | 分页变化时触发 | `{ pageNo, pageSize }` |
 
+## 实例方法
+
+组件暴露了以下方法，可以通过 ref 调用：
+
+| 方法名 | 说明 | 参数 | 返回值 |
+| --- | --- | --- | --- |
+| refresh | 刷新列表数据 | - | `void` |
+| reset | 重置查询条件和分页 | - | `void` |
+| getFormData | 获取当前表单数据 | - | `Partial<T>` |
+| getSelectionRows | 获取表格选中的行数据 | - | `T[]` |
+
+<demo vue="CommonQueryTable/instance-methods.vue" ssg="true"/>
+
 ## TypeScript 类型
 
 组件导出了以下 TypeScript 类型定义，可在你的项目中直接使用：
@@ -172,6 +185,26 @@ interface CommonQueryTableProps<T extends AnyObject = AnyObject> {
 
   /** 表格列配置 */
   columns: CommonTableColumn<T>
+}
+```
+
+### CommonQueryTableExpose
+
+组件实例的类型定义，用于 ref 的类型标注：
+
+```typescript
+interface CommonQueryTableExpose<T = AnyObject> {
+  /** 刷新列表数据 */
+  refresh: () => void
+
+  /** 重置查询条件和分页 */
+  reset: () => void
+
+  /** 获取表单数据 */
+  getFormData: () => Partial<T>
+
+  /** 获取表格选中的行数据 */
+  getSelectionRows: () => T[]
 }
 ```
 
