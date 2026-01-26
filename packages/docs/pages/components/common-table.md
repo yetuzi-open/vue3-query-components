@@ -233,7 +233,7 @@ interface CommonTableInstance {
 import type {
   CommonTableProps,
   CommonTableArrayColumns,
-  TableColumnType,
+  CommonTableColumnType,
 } from '@yetuzi/vue3-query-components'
 
 // 定义数据行类型
@@ -265,27 +265,4 @@ const tableProps: CommonTableProps<UserData> = {
   columns,
   data: []
 }
-```
-
-### 注册自定义列类型
-
-如果你需要自定义列类型，可以使用 `registerColumnTypeConfig` 函数：
-
-```typescript
-import { registerColumnTypeConfig } from '@yetuzi/vue3-query-components'
-
-// 注册自定义货币列类型
-registerColumnTypeConfig('currency', (originalColumn) => ({
-  width: '120px',
-  formatter: (row, column, cellValue) => `¥${cellValue.toFixed(2)}`
-}))
-
-// 使用自定义列类型
-const columns = [
-  {
-    prop: 'price',
-    label: '价格',
-    type: 'currency'  // 使用自定义类型
-  }
-]
 ```
