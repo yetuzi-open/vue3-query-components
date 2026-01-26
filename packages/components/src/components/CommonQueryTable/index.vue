@@ -145,12 +145,7 @@ function refresh() {
  * 重置表单字段到初始值，重置分页到第一页，并重新请求数据
  */
 function reset() {
-  // 重置表单
-  CommonFormRef.value?.resetFields()
-  // 重置分页
-  resetPage()
-  // 重新请求数据（会在分页重置的 watch 中触发，或者直接调用）
-  fetchListData()
+  handleFormReset()
 }
 
 /**
