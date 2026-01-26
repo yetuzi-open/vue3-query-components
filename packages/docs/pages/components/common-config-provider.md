@@ -5,9 +5,13 @@ title: CommonConfigProvider
 
 # CommonConfigProvider 全局配置
 
-<!-- <demo vue="Test/test.vue" ssg="true"/> -->
-
 提供全局配置功能，包括分页默认值、表单文本、表格样式等。
+
+<!-- ::: tip 测试页面
+以下是一个完整的 CommonQueryTable 功能测试页面，展示了所有新功能：
+:::
+
+<demo vue="Test/test.vue" ssg="true"/> -->
 
 ## 基础用法
 
