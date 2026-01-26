@@ -109,14 +109,8 @@ function handlePaginationChange(params: { pageNo: number; pageSize: number }) {
     :columns="columns"
     :pagination-page-size="[10, 20, 50, 100]"
     :pagination-default-page-size="20"
-    pagination-layout="total, sizes, prev, pager, next, jumper"
+    pagination-layout="slot, ->, total, sizes, prev, pager, next, jumper"
     @pagination-change="handlePaginationChange"
   >
-    <!-- 自定义分页插槽 -->
-    <template #pagination-prefix>
-      <span style="color: var(--el-text-color-secondary); margin-right: 12px;">
-        当前第 {{ currentPagination.pageNo }} 页，每页 {{ currentPagination.pageSize }} 条
-      </span>
-    </template>
   </CommonQueryTable>
 </template>
