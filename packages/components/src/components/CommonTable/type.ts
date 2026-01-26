@@ -98,7 +98,7 @@ interface TableColumnBase<T extends AnyObject>
   /** 列字段名，支持数据类型的 key 或任意字符串 */
   prop: keyof T | (string & {})
   /** 列类型 */
-  type?: CommonTableColumnType
+  type?: CommonTableColumnType | (string & {})
 }
 
 interface TableColumnTypeDefault<T extends AnyObject> extends OptionalFields<TableColumnBase<T>, 'prop'> {
