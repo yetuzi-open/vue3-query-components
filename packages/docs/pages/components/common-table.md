@@ -83,7 +83,6 @@ interface CommonTableColumn {
 
   // dict 类型专属
   options?: Array<{ label: string; value: any }>  // 字典选项
-  dictName?: string  // 字典名称（用于从全局字典服务获取）
 }
 ```
 
