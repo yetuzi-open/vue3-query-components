@@ -96,7 +96,7 @@ export type CommonTableArrayColumns<T extends AnyObject> = Array<CommonTableColu
 interface TableColumnBase<T extends AnyObject>
   extends Partial<Omit<TableColumnCtx<T>, 'prop' | 'type'>> {
   /** 列字段名，支持数据类型的 key 或任意字符串 */
-  prop: keyof T | (string & {})
+  prop?: keyof T | (string & {})
   /** 列类型 */
   type?: CommonTableColumnType | (string & {})
 }
