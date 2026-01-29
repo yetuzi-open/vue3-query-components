@@ -7,7 +7,7 @@
 专为 Vue3 设计的高效查询组件，提升开发效率
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](../../LICENSE)
-[![Vue](https://img.shields.io/badge/Vue-3.4+-brightgreen)](https://vuejs.org/)
+[![Vue](https://img.shields.io/badge/Vue-3.5+-brightgreen)](https://vuejs.org/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.9+-blue)](https://www.typescriptlang.org/)
 [![Element Plus](https://img.shields.io/badge/Element%20Plus-2.11+-blueviolet)](https://element-plus.org/)
 [![npm version](https://img.shields.io/npm/v/@yetuzi/vue3-query-components)](https://www.npmjs.com/package/@yetuzi/vue3-query-components)
@@ -16,12 +16,11 @@
 
 ## ✨ 特性
 
-- 🚀 **一体化查询** - CommonQueryTable 集成表单、表格、分页，一个组件即可构建完整的查询页面，支持灵活的布局配置
-- 📋 **类型安全** - 完整的 TypeScript 泛型支持，列类型、表单项类型自动推导，提供精准的类型提示和校验
-- 🎨 **高度可定制** - 响应式全局配置系统，支持自定义组件、插槽和样式扩展，满足各种业务场景需求
-- 🧩 **丰富组件** - 提供 CommonTable（多种列类型）、CommonForm（7种表单项）及完整的基础组件体系
-- ⚡️ **开箱即用** - 基于 Element Plus 封装，API 设计一致，学习成本低，大幅提升开发效率
-- 🛠️ **实用工具** - 内置 useResettable 等实用 hooks，提供可重置的响应式数据管理能力
+- 🚀 **开箱即用** - 高度封装的查询表格组件，一个组件即可构建完整的查询页面
+- ⚡️ **高效开发** - 减少重复代码，专注于业务逻辑，提升开发效率
+- 🎨 **高度定制** - 灵活的配置系统，支持自定义插槽和样式
+- 🔧 **类型安全** - 完整的 TypeScript 支持，类型安全
+- 🛡️ **API 一致** - 基于 Element Plus 封装，API 设计一致，学习成本低
 
 ## 📚 文档
 
@@ -29,31 +28,34 @@
 
 ## 📦 安装
 
-```bash
+::: code-group
+
+```bash [npm]
 npm install @yetuzi/vue3-query-components
-# 或
+```
+
+```bash [yarn]
 yarn add @yetuzi/vue3-query-components
-# 或
+```
+
+```bash [pnpm]
 pnpm add @yetuzi/vue3-query-components
 ```
 
-## 🚀 快速开始
-
-### 安装依赖
-
-```bash
-npm install @yetuzi/vue3-query-components
-```
+:::
 
 ::: tip 注意
-本组件库依赖 Element Plus，但**不需要手动安装** Element Plus，它作为 peer dependency 会在你的项目中自动解析。
+本组件库依赖 Element Plus，需要确保项目中已安装 Element Plus。
 :::
+
+## 🚀 快速开始
 
 ### 导入样式
 
+`main.ts` 中导入样式，包含使用到的element plus 和 组件库所需的样式
+
 ```typescript
-// 导入组件库样式（已包含所需的 Element Plus 样式）
-import '@yetuzi/vue3-query-components/dist/index.css'
+import '@yetuzi/vue3-query-components/dist/style.css'
 ```
 
 ### 按需引入组件
@@ -67,7 +69,7 @@ import {
 } from '@yetuzi/vue3-query-components'
 ```
 
-### 4. 基础使用
+### 基础使用
 
 #### 完整查询表格组件（推荐）
 
@@ -228,7 +230,6 @@ const queryTableConfig = {
 | `CommonRadio` | 单选框组件 |
 | `CommonCheckbox` | 复选框组件 |
 | `CommonSwitch` | 开关组件 |
-| `CommonButton` | 按钮组件 |
 | `CommonPagination` | 分页组件 |
 
 ### Hooks
@@ -350,10 +351,15 @@ interface TableColumn {
 
 ### 环境要求
 
-- Node.js >= 16.0.0
-- Vue 3.4+
+- Node.js ^20.19.0 || >=22.12.0
+- Vue 3.5+
 - Element Plus 2.11+
-- TypeScript 5.9+
+- TypeScript 5.9+ (推荐)
+
+### 浏览器兼容性
+
+- 现代浏览器，支持 ES2018+ 和 ES Modules
+- 不支持 IE 浏览器
 
 ### 依赖说明
 
@@ -367,10 +373,6 @@ interface TableColumn {
   }
 }
 ```
-
-::: tip 关于 Element Plus
-组件库的 CSS 文件已包含所需的 Element Plus 组件样式，你只需要确保项目中安装了 Element Plus 即可，不需要单独导入 Element Plus 的样式。
-:::
 
 #### Dependencies（随组件库一起安装）
 
