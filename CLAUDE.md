@@ -13,7 +13,8 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - **UI 基础库**: Element Plus 2.11.5+
 - **语言**: TypeScript 5.9+
 - **包管理**: npm workspaces（**注意：不是 pnpm**）
-- **Node 版本**: 22.16.0（通过 Volta 管理）
+- **Node 版本**: 20.19.0（通过 Volta 管理，项目支持 ^20.19.0 || >=22.12.0）
+- **依赖管理**: vue-hooks-plus（useReactive）、lodash-es、dayjs
 
 ## 项目结构
 
@@ -74,6 +75,23 @@ npm run clean
 - **全局配置**: 通过 `CommonConfigProvider` 的 Provide/Inject 模式传递配置
 - **类型定义**: 集中在 `src/types/index.ts`，使用泛型支持扩展
 
+#### 组件列表
+
+**核心组件**：
+- `CommonQueryTable` - 一体化查询表格
+- `CommonForm` - 动态表单组件
+- `CommonTable` - 增强型表格组件
+- `CommonConfigProvider` - 全局配置组件
+
+**表单组件**：
+- `CommonInput` / `CommonInputNumber` - 输入框
+- `CommonSelect` - 下拉选择
+- `CommonDatePicker` / `CommonTimePicker` - 日期/时间选择器
+- `CommonCascader` - 级联选择器
+- `CommonRadio` / `CommonCheckbox` / `CommonSwitch` - 单选/复选/开关
+- `CommonButton` - 按钮
+- `CommonPagination` - 分页
+
 ### 构建系统
 
 - **Vite 构建**: 使用 Library Mode 构建 ES Module 格式
@@ -91,7 +109,8 @@ npm run clean
 
 在 `packages/docs/.vitepress/config.ts` 中配置：
 ```typescript
-'@yetuzi/vue3-query-components-dev': resolve(__dirname, '../../components/src')
+'@components-src': resolve(__dirname, '../../components/src')  // 组件库源码别名
+'@components-root': resolve(__dirname, '../../components')     // 组件库根目录
 ```
 
 用于在示例中直接导入组件库源码，实现开发时热更新。
@@ -127,21 +146,50 @@ npm run clean
 
 ### Element Plus CSS 导入
 
-使用组件库时，需要**手动导入** Element Plus 组件的 CSS：
+使用组件库时，只需导入组件库样式文件即可（已包含所需 Element Plus 样式）：
 ```typescript
-import 'element-plus/es/components/table/style/css'
-import 'element-plus/es/components/form/style/css'
-// ... 其他需要的组件样式
+import '@yetuzi/vue3-query-components/dist/style.css'
 ```
 
 ## 版本管理
 
-组件库版本号位于 `packages/components/package.json`，当前版本：`1.1.38`
+组件库版本号位于 `packages/components/package.json`，当前版本：`1.5.0`
 
-构建脚本 `scripts/build.js` 支持自动升级版本：
-- `npm run build:patch` - 升级补丁版本（1.1.38 → 1.1.39）
-- `npm run build:minor` - 升级小版本（1.1.38 → 1.2.0）
-- `npm run build:major` - 升级大版本（1.1.38 → 2.0.0）
+**组件库内构建命令**（在 `packages/components/` 目录下）：
+- `npm run build` - 使用 `build-optimized.js` 优化构建
+- `npm run build:legacy` - 使用 `build.js` 传统构建
+- `npm run build:patch` - 升级补丁版本并构建（1.5.0 → 1.5.1）
+- `npm run build:minor` - 升级小版本并构建（1.5.0 → 1.6.0）
+- `npm run build:major` - 升级大版本并构建（1.5.0 → 2.0.0）
+- `npm run dev` - 启动监听构建（使用 `dev-watch.js`）
+
+## 发布到 npm 工作流程
+
+**重要**: 每次发布到 npm 时，必须按以下步骤执行：
+
+1. **提交代码** - 确保所有修改已提交到 git
+   ```bash
+   git add .
+   git commit -m "描述本次修改内容"
+   ```
+
+2. **创建 tag** - 为发布版本打上 git tag
+   ```bash
+   git tag v<版本号>
+   # 例如：git tag v1.5.0
+   ```
+
+3. **推送代码和 tag** - 推送到远程仓库
+   ```bash
+   git push
+   git push --tags
+   ```
+
+4. **发布到 npm** - 在组件库目录下发布
+   ```bash
+   cd packages/components
+   npm publish
+   ```
 
 ## 开发注意事项
 
@@ -149,3 +197,35 @@ import 'element-plus/es/components/form/style/css'
 2. **VitePress 内置 Vue 支持**: 不需要在文档站点安装或配置 `@vitejs/plugin-vue`
 3. **组件库修改后需要重新构建**: 运行 `npm run dev:components` 进行监听构建
 4. **文档版本号导入**: 从 `@yetuzi/vue3-query-components` 导入版本号，与用户使用一致
+
+## 组件开发模式
+
+### 添加新组件
+
+1. 在 `packages/components/src/components/` 创建组件目录
+2. 创建三个文件：
+   - `index.vue` - 组件实现
+   - `index.ts` - 导出组件
+   - `type.ts` - 类型定义
+3. 在 `packages/components/src/components/index.ts` 中添加导出
+4. 在文档站点创建对应的文档和示例
+
+### 配置注入系统
+
+组件通过 `provide/inject` 获取全局配置：
+```typescript
+import { getCommonProviderConfig } from '@yetuzi/vue3-query-components'
+
+const config = getCommonProviderConfig()
+// config.component.placeholder
+// config.component.pagination.defaultPageSize
+// etc.
+```
+
+### 可用 Hooks
+
+| Hook 名 | 说明 |
+|---------|------|
+| `useResettableRef` | 创建可重置的 ref |
+| `useResettableReactive` | 创建可重置的 reactive |
+| `useGetComponentsChildrenSlots` | 获取组件子插槽 |
