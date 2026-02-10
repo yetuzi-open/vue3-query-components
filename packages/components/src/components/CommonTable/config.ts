@@ -65,18 +65,18 @@ export const builtinColumnTypeFactories: BuiltinColumnTypeFactoriesType = {
     width: "120px",
     formatter(row, column, cellValue){
       // 如果有 options，从 options 中查找对应的 label
-      if (originalColumn?.options && Array.isArray(originalColumn.options)) {
+      if (Array.isArray(originalColumn.options)) {
         const option = originalColumn.options.find(
           (opt) => opt.value === cellValue,
         );
-        return option?.label ?? String(cellValue ?? "");
+        return option?.label || String(cellValue);
       }
       // 如果有 dictName，可以从全局字典服务获取
       // TODO: 可以在这里集成全局字典服务
       // if (originalColumn?.dictName) {
       //   return getDictLabel(originalColumn.dictName, cellValue)
       // }
-        return String(cellValue ?? "");
+      return String(cellValue);
     },
   }),
 };
