@@ -15,6 +15,7 @@
       "@examples": ["./examples"],
       "@pages": ["./pages"],
       "@public": ["./public"],
+      "@yetuzi/vue3-query-components": ["../components/src/index.ts"],
       "@components-src": ["../components/src"]
     }
   },

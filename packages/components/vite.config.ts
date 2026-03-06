@@ -10,6 +10,7 @@ const packageJson = JSON.parse(
   readFileSync(resolve(__dirname, "package.json"), "utf8"),
 );
 const currentVersion = packageJson.version;
+const isWatch = process.argv.includes("--watch");
 
 export default defineConfig({
   plugins: [
@@ -101,7 +102,7 @@ export default defineConfig({
     sourcemap: false,
 
     // 清空输出目录
-    emptyOutDir: true,
+    emptyOutDir: !isWatch,
 
     // 构建报告
     reportCompressedSize: true,
