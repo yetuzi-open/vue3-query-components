@@ -1,34 +1,33 @@
 <script setup lang="ts" generic="T extends AnyObject">
-import { ElTable, ElEmpty, ElTableColumn } from 'element-plus'
-import type { CommonTableProps, CommonTableExpose, CommonTableColumnType } from './type'
-import { computed, ref, watch, useAttrs, getCurrentInstance } from 'vue'
+import { ElEmpty, ElTable, ElTableColumn } from 'element-plus'
+import type { TableInstance } from 'element-plus'
+import { computed, ref, useAttrs, watch } from 'vue'
+import type { VNodeRef } from 'vue'
 import { getCommonProviderConfig, getFirstValidValue } from '../../index'
 import type { AnyObject } from '../../index'
-import type { TableInstance } from 'element-plus'
-import { builtinColumnTypeFactories } from './config'
+import { normalizeCommonTableColumns } from './config'
+import type { CommonTableColumnRoot, CommonTableExpose, CommonTableProps } from './type'
 
-/** 全局配置对象 */
+const NON_CUSTOM_RENDER_COLUMN_TYPES = new Set(['index', 'selection'])
+
 const config = getCommonProviderConfig()
 
-/** 组件Props定义，提供默认值 */
 const props = withDefaults(defineProps<CommonTableProps<T>>(), {
-  /** 默认空数据数组 */
   data() {
     return []
   },
 })
 
-const vm = getCurrentInstance()
-
 const attrs = useAttrs()
-
-/** ElTable组件引用，用于调用表格方法 */
 const elTableRef = ref<TableInstance>()
 
-/**
- * 数据变化监听
- * 当表格数据更新时，自动滚动到表格顶部，提升用户体验
- */
+const tableBindings = computed(() => ({
+  ...props,
+  ...attrs,
+}))
+
+const normalizedColumns = computed(() => normalizeCommonTableColumns(props.columns))
+
 watch(
   () => props.data,
   () => {
@@ -40,81 +39,93 @@ watch(
   },
 )
 
-/**
- * 列配置计算属性
- *
- * 处理两种列配置格式：
- * 1. 数组格式：直接使用
- * 2. 对象格式：转换为数组格式
- *
- * 同时处理特殊列类型（如索引、选择框等）的默认配置合并
- *
- * @returns 标准化后的列配置数组
- */
-const arrayColumns = computed(() => {
-  let columns = props.columns
-
-  // 对象格式转数组格式
-  if (!Array.isArray(columns)) {
-    columns = Object.entries(columns).map(([key, value]) => ({
-      ...value,
-      prop: key,
-    }))
-  }
-
-  // 处理特殊列类型的默认配置
-  return columns.map((item) => {
-    if ( item.type && item.type in builtinColumnTypeFactories) {
-      const supplementConfig = builtinColumnTypeFactories[item.type as CommonTableColumnType](item as any)
-      if (supplementConfig) {
-        return Object.assign(supplementConfig, {
-          ...item,
-          prop: item.prop as string,
-        })
-      }
-    }
-    return {
-      ...item,
-      prop: item.prop as string,
-    }
-  })
-})
-
-
-function changeRef(el?: any) {
-  if(vm?.exposed && el){
-    vm.exposed = el
-  }
-  elTableRef.value = el
+const setTableRef: VNodeRef = (el) => {
+  elTableRef.value = (el ?? undefined) as TableInstance | undefined
 }
 
-/** 暴露 ElTable 方法，供父组件访问 */
-defineExpose<CommonTableExpose>()
+const shouldRenderCellSlot = (column: CommonTableColumnRoot<T>) => {
+  return !column.type || !NON_CUSTOM_RENDER_COLUMN_TYPES.has(column.type)
+}
+
+const getColumnSlotName = (column: CommonTableColumnRoot<T>) => {
+  return String(column.prop ?? column.type ?? '')
+}
+
+const getCellValue = (row: T, column: CommonTableColumnRoot<T>) => {
+  if (!column.prop) {
+    return undefined
+  }
+
+  return row[column.prop as keyof T]
+}
+
+const getCellDisplayValue = (
+  scoped: {
+    row: T
+    column: Parameters<NonNullable<CommonTableColumnRoot<T>['formatter']>>[1]
+    $index: number
+  },
+  column: CommonTableColumnRoot<T>,
+) => {
+  if (column.type === 'expand') {
+    return ''
+  }
+
+  const rawValue = getCellValue(scoped.row, column)
+  const value =
+    typeof column.formatter === 'function'
+      ? column.formatter(scoped.row, scoped.column, rawValue, scoped.$index)
+      : rawValue
+
+  return getFirstValidValue(value, config.component.placeholder)
+}
+
+const exposed = new Proxy({} as CommonTableExpose, {
+  get(_, key) {
+    const table = elTableRef.value as (Record<PropertyKey, unknown> & TableInstance) | undefined
+    const value = table?.[key]
+    return typeof value === 'function' ? value.bind(table) : value
+  },
+  has(_, key) {
+    return key in (elTableRef.value ?? {})
+  },
+  ownKeys() {
+    return Reflect.ownKeys(elTableRef.value ?? {})
+  },
+  getOwnPropertyDescriptor(_, key) {
+    return (
+      Object.getOwnPropertyDescriptor(elTableRef.value ?? {}, key) ?? {
+        configurable: true,
+        enumerable: true,
+      }
+    )
+  },
+})
+
+defineExpose<CommonTableExpose>(exposed)
 
 defineOptions({
   name: 'CommonTable',
 })
-
 </script>
 
 <template>
   <div class="common-table">
-    <el-table
-      :ref="changeRef"
-      v-bind="{ ...props, ...attrs }"
-      height="100%"
-    >
-      <el-table-column v-bind="column" v-for="column in arrayColumns" :key="column.prop">
-        <template v-if="!column.formatter" #default="scoped">
+    <el-table :ref="setTableRef" v-bind="tableBindings" height="100%">
+      <el-table-column
+        v-for="column in normalizedColumns"
+        :key="column.columnKey || column.prop || column.type"
+        v-bind="column"
+      >
+        <template v-if="shouldRenderCellSlot(column)" #default="scoped">
           <slot
-            :name="column.prop"
+            :name="getColumnSlotName(column)"
             :row="scoped.row"
             :column="scoped.column"
             :index="scoped.$index"
-            :value="scoped.row[column.prop]"
-            v-if="column.type ? !['index', 'selection', 'expand'].includes(column.type) : true"
+            :value="getCellValue(scoped.row, column)"
           >
-            {{ getFirstValidValue(scoped.row[column.prop], config.component.placeholder) }}
+            {{ getCellDisplayValue(scoped, column) }}
           </slot>
         </template>
       </el-table-column>
