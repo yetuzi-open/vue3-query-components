@@ -1,4 +1,4 @@
-<script setup lang="ts">
+﻿<script setup lang="ts">
 import { CommonPagination } from '@yetuzi/vue3-query-components'
 import { ref } from 'vue'
 
@@ -11,10 +11,10 @@ const fullPageSize = ref(20)
 
 <template>
   <div class="pagination-group">
-    <p class="demo-description">?? `layout` ?????????????????????</p>
+    <p class="demo-description">通过 `layout` 可以快速切换列表页与报表页常见的分页布局。</p>
 
     <div class="pagination-card">
-      <div class="pagination-title">????</div>
+      <div class="pagination-title">紧凑布局</div>
       <CommonPagination
         v-model:pageNo="compactPageNo"
         v-model:pageSize="compactPageSize"
@@ -24,7 +24,7 @@ const fullPageSize = ref(20)
     </div>
 
     <div class="pagination-card">
-      <div class="pagination-title">????</div>
+      <div class="pagination-title">默认布局</div>
       <CommonPagination v-model:pageNo="fullPageNo" v-model:pageSize="fullPageSize" :total="320" />
     </div>
   </div>

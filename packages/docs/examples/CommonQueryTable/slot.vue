@@ -1,13 +1,13 @@
-<script setup lang="ts">
+﻿<script setup lang="ts">
 import { ElTag } from 'element-plus'
 import { CommonQueryTable } from '@yetuzi/vue3-query-components'
 
 const fetch = async () => {
   return {
     list: [
-      { id: 1, name: '??????', status: 1, createTime: 1705278600000 },
-      { id: 2, name: '??????', status: 0, createTime: 1705377600000 },
-      { id: 3, name: '??????', status: 1, createTime: 1705454100000 },
+      { id: 1, name: '上海智选科技', status: 1, createTime: 1705278600000 },
+      { id: 2, name: '杭州云桥数据', status: 0, createTime: 1705377600000 },
+      { id: 3, name: '苏州星合信息', status: 1, createTime: 1705454100000 },
     ],
     total: 3,
   }
@@ -17,29 +17,29 @@ const form = [
   {
     is: 'input',
     prop: 'name',
-    label: '????',
+    label: '客户名称',
     props: {
-      placeholder: '???????',
+      placeholder: '请输入客户名称',
     },
   },
 ]
 
 const columns = [
   { label: 'ID', prop: 'id', width: 80 },
-  { label: '????', prop: 'name', minWidth: 180 },
-  { label: '????', prop: 'status', width: 120 },
-  { label: '????', prop: 'createTime', width: 180, type: 'dateTime' },
+  { label: '客户名称', prop: 'name', minWidth: 180 },
+  { label: '合作状态', prop: 'status', width: 120 },
+  { label: '创建时间', prop: 'createTime', width: 180, type: 'dateTime' },
 ]
 </script>
 
 <template>
   <div class="query-table-demo">
-    <p class="demo-description">??????????????????????????????????????</p>
+    <p class="demo-description">通过具名前缀插槽可以定制内部子组件的渲染，例如自定义表格列、空状态或工具栏。</p>
 
     <CommonQueryTable :fetch="fetch" :form="form" :columns="columns">
       <template #table-status="{ row }">
         <ElTag :type="row.status ? 'success' : 'info'">
-          {{ row.status ? '???' : '???' }}
+          {{ row.status ? '合作中' : '已暂停' }}
         </ElTag>
       </template>
     </CommonQueryTable>

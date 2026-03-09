@@ -1,4 +1,4 @@
-<script setup lang="ts">
+﻿<script setup lang="ts">
 import { ElMessage } from 'element-plus'
 import { CommonPagination } from '@yetuzi/vue3-query-components'
 import type { PaginationParam } from '@yetuzi/vue3-query-components'
@@ -9,13 +9,13 @@ const pageNo = ref(1)
 const pageSize = ref(10)
 
 const handleChange = ({ pageNo, pageSize }: PaginationParam) => {
-  ElMessage.success(`??????? ${pageNo} ???? ${pageSize} ?`)
+  ElMessage.success(`分页已更新：第 ${pageNo} 页，每页 ${pageSize} 条`)
 }
 </script>
 
 <template>
   <div class="events-demo">
-    <p class="demo-description">?? `change` ????????????????????????</p>
+    <p class="demo-description">监听 `change` 可直接拿到接口所需的分页参数，适合触发列表刷新。</p>
 
     <CommonPagination
       v-model:pageNo="pageNo"

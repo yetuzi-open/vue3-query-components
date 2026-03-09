@@ -1,4 +1,4 @@
-<script setup lang="ts">
+﻿<script setup lang="ts">
 import { ElTag } from 'element-plus'
 import { CommonTable, type CommonTableArrayColumns } from '@yetuzi/vue3-query-components'
 
@@ -9,26 +9,26 @@ interface TableRow {
 }
 
 const tableData: TableRow[] = [
-  { id: 1, name: '??', status: 1 },
-  { id: 2, name: '??', status: 0 },
-  { id: 3, name: '??', status: 1 },
+  { id: 1, name: '张敏', status: 1 },
+  { id: 2, name: '李婷', status: 0 },
+  { id: 3, name: '王凯', status: 1 },
 ]
 
 const columns: CommonTableArrayColumns<TableRow> = [
   { prop: 'id', label: 'ID', width: 80 },
-  { prop: 'name', label: '??' },
-  { prop: 'status', label: '??' },
+  { prop: 'name', label: '姓名' },
+  { prop: 'status', label: '状态' },
 ]
 </script>
 
 <template>
   <div class="table-demo">
-    <p class="demo-description">???????????????????????????????</p>
+    <p class="demo-description">列名插槽命名规则清晰，适合封装常见状态、标签、进度等展示逻辑。</p>
 
     <CommonTable :data="tableData" :columns="columns">
       <template #status="{ row }">
         <ElTag :type="row.status ? 'success' : 'danger'">
-          {{ row.status ? '??' : '??' }}
+          {{ row.status ? '启用' : '停用' }}
         </ElTag>
       </template>
     </CommonTable>

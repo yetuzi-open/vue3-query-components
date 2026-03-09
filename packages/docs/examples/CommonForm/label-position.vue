@@ -1,4 +1,4 @@
-<script setup lang="ts">
+﻿<script setup lang="ts">
 import { ref } from 'vue'
 import { ElRadioButton, ElRadioGroup } from 'element-plus'
 import { CommonForm } from '@yetuzi/vue3-query-components'
@@ -8,29 +8,29 @@ const labelPosition = ref<'left' | 'right' | 'top'>('right')
 const form = [
   {
     is: 'input',
-    label: '????',
+    label: '项目名称',
     prop: 'name',
     props: {
-      placeholder: '???????',
+      placeholder: '请输入项目名称',
     },
   },
   {
     is: 'input',
-    label: '?????',
+    label: '负责人邮箱',
     prop: 'email',
     props: {
-      placeholder: '????????',
+      placeholder: '请输入负责人邮箱',
     },
   },
   {
     is: 'select',
-    label: '????',
+    label: '项目状态',
     prop: 'status',
     props: {
-      placeholder: '???????',
+      placeholder: '请选择项目状态',
       options: [
-        { value: 1, label: '???' },
-        { value: 0, label: '???' },
+        { value: 1, label: '进行中' },
+        { value: 0, label: '已暂停' },
       ],
     },
   },
@@ -39,7 +39,7 @@ const form = [
 
 <template>
   <div class="label-demo">
-    <p class="demo-description">??????????????????????????????</p>
+    <p class="demo-description">标签位置会直接影响表单阅读节奏，详情页和录入页常见用法如下。</p>
 
     <ElRadioGroup v-model="labelPosition" style="margin-bottom: 16px">
       <ElRadioButton label="left">left</ElRadioButton>

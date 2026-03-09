@@ -1,19 +1,19 @@
-<script setup lang="ts">
+﻿<script setup lang="ts">
 import { ElColorPicker, ElInputNumber, ElRate } from 'element-plus'
 import { CommonForm } from '@yetuzi/vue3-query-components'
 
 const form = [
   {
     is: 'input',
-    label: '????',
+    label: '模板名称',
     prop: 'name',
     props: {
-      placeholder: '???????',
+      placeholder: '请输入模板名称',
     },
   },
   {
     is: ElInputNumber,
-    label: '?????',
+    label: '库存预警值',
     prop: 'threshold',
     initialValue: 10,
     props: {
@@ -23,7 +23,7 @@ const form = [
   },
   {
     is: ElRate,
-    label: '????',
+    label: '服务评分',
     prop: 'rating',
     initialValue: 4,
     props: {
@@ -32,7 +32,7 @@ const form = [
   },
   {
     is: ElColorPicker,
-    label: '???',
+    label: '主题色',
     prop: 'color',
     initialValue: '#409EFF',
   },
@@ -41,7 +41,7 @@ const form = [
 
 <template>
   <div class="form-demo">
-    <p class="demo-description">???????????????? Vue ?????????????</p>
+    <p class="demo-description">除了内置字段类型，你也可以把任意 Vue 组件直接作为表单控件接入。</p>
     <CommonForm :form="form" :inline="false" label-width="100px" />
   </div>
 </template>

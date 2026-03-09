@@ -1,14 +1,14 @@
-<script setup lang="ts">
+﻿<script setup lang="ts">
 import { CommonTable, type CommonTableArrayColumns } from '@yetuzi/vue3-query-components'
 
 const statusOptions = [
-  { label: '??', value: 1 },
-  { label: '??', value: 0 },
+  { label: '在职', value: 1 },
+  { label: '离职', value: 0 },
 ]
 
 const genderOptions = [
-  { label: '?', value: 'male' },
-  { label: '?', value: 'female' },
+  { label: '男', value: 'male' },
+  { label: '女', value: 'female' },
 ]
 
 interface TableRow {
@@ -29,9 +29,9 @@ interface TableRow {
 const tableData: TableRow[] = [
   {
     id: 1,
-    name: '??',
-    department: '???',
-    position: '?????',
+    name: '张敏',
+    department: '技术部',
+    position: '前端工程师',
     status: 1,
     gender: 'male',
     birthDate: '1990-05-15',
@@ -39,13 +39,13 @@ const tableData: TableRow[] = [
     createTime: 1705278600000,
     email: 'zhangmin@example.com',
     phone: '138-0000-0001',
-    address: '????????? A ?',
+    address: '北京市朝阳区科技园 A 座',
   },
   {
     id: 2,
-    name: '??',
-    department: '???',
-    position: '????',
+    name: '李婷',
+    department: '产品部',
+    position: '产品经理',
     status: 0,
     gender: 'female',
     birthDate: '1988-10-22',
@@ -53,13 +53,13 @@ const tableData: TableRow[] = [
     createTime: 1705377600000,
     email: 'liting@example.com',
     phone: '138-0000-0002',
-    address: '?????????? 2 ??',
+    address: '上海市浦东新区软件园 2 号楼',
   },
   {
     id: 3,
-    name: '??',
-    department: '???',
-    position: 'UI ???',
+    name: '王凯',
+    department: '设计部',
+    position: 'UI 设计师',
     status: 1,
     gender: 'male',
     birthDate: '1995-03-08',
@@ -67,34 +67,34 @@ const tableData: TableRow[] = [
     createTime: 1705454100000,
     email: 'wangkai@example.com',
     phone: '138-0000-0003',
-    address: '????????? C ?',
+    address: '深圳市南山区创意园 C 栋',
   },
 ]
 
 const columns: CommonTableArrayColumns<TableRow> = [
   { type: 'expand', width: 55 },
   { type: 'index', width: 55 },
-  { prop: 'name', label: '??' },
-  { prop: 'department', label: '??' },
-  { prop: 'position', label: '??' },
-  { prop: 'status', label: '????', type: 'dict', options: statusOptions, width: 110 },
-  { prop: 'gender', label: '??', type: 'dict', options: genderOptions, width: 90 },
-  { prop: 'birthDate', label: '????', type: 'date', width: 140 },
-  { prop: 'hireDate', label: '????', type: 'date', width: 140 },
-  { prop: 'createTime', label: '????', type: 'dateTime', width: 180 },
+  { prop: 'name', label: '姓名' },
+  { prop: 'department', label: '部门' },
+  { prop: 'position', label: '岗位' },
+  { prop: 'status', label: '在职状态', type: 'dict', options: statusOptions, width: 110 },
+  { prop: 'gender', label: '性别', type: 'dict', options: genderOptions, width: 90 },
+  { prop: 'birthDate', label: '出生日期', type: 'date', width: 140 },
+  { prop: 'hireDate', label: '入职日期', type: 'date', width: 140 },
+  { prop: 'createTime', label: '创建时间', type: 'dateTime', width: 180 },
 ]
 </script>
 
 <template>
   <div class="table-demo">
-    <p class="demo-description">????????????????????????????</p>
+    <p class="demo-description">内置列类型适合快速搭建通用后台表格，减少重复格式化逻辑。</p>
 
     <CommonTable :data="tableData" :columns="columns">
       <template #expand="{ row }">
         <div class="expand-content">
-          <p><strong>???</strong>{{ row.email }}</p>
-          <p><strong>???</strong>{{ row.phone }}</p>
-          <p><strong>???</strong>{{ row.address }}</p>
+          <p><strong>邮箱：</strong>{{ row.email }}</p>
+          <p><strong>电话：</strong>{{ row.phone }}</p>
+          <p><strong>地址：</strong>{{ row.address }}</p>
         </div>
       </template>
     </CommonTable>

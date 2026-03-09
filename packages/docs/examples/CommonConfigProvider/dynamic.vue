@@ -1,12 +1,12 @@
-<script setup lang="ts">
+﻿<script setup lang="ts">
 import { reactive } from 'vue'
 import { CommonConfigProvider, CommonForm, CommonTable } from '@yetuzi/vue3-query-components'
 
 const dynamicConfig = reactive({
   placeholder: '--',
   form: {
-    submitText: '????',
-    resetText: '????',
+    submitText: '保存配置',
+    resetText: '恢复默认',
     formItem: {
       components: {
         width: '240px',
@@ -18,41 +18,41 @@ const dynamicConfig = reactive({
 const configForm = [
   {
     is: 'input',
-    label: '?????',
+    label: '空值占位符',
     prop: 'placeholder',
     initialValue: dynamicConfig.placeholder,
   },
   {
     is: 'input',
-    label: '??????',
+    label: '提交按钮文案',
     prop: 'submitText',
     initialValue: dynamicConfig.form.submitText,
   },
   {
     is: 'input',
-    label: '??????',
+    label: '重置按钮文案',
     prop: 'resetText',
     initialValue: dynamicConfig.form.resetText,
   },
   {
     is: 'input',
-    label: '??????',
+    label: '控件默认宽度',
     prop: 'width',
     initialValue: dynamicConfig.form.formItem.components.width,
   },
 ]
 
 const tableData = [
-  { id: 1, name: '????', owner: '??', phone: '13800001234' },
+  { id: 1, name: '华北大区', owner: '张敏', phone: '13800001234' },
   { id: 2, name: '', owner: null, phone: '13800005678' },
-  { id: 3, name: '????', owner: '??', phone: '' },
+  { id: 3, name: '华东大区', owner: '李婷', phone: '' },
 ]
 
 const tableColumns = [
   { prop: 'id', label: 'ID', width: 80 },
-  { prop: 'name', label: '????', width: 160 },
-  { prop: 'owner', label: '???', width: 120 },
-  { prop: 'phone', label: '????' },
+  { prop: 'name', label: '区域名称', width: 160 },
+  { prop: 'owner', label: '负责人', width: 120 },
+  { prop: 'phone', label: '联系电话' },
 ]
 
 const syncConfig = (values: Record<string, string>) => {
@@ -65,18 +65,18 @@ const syncConfig = (values: Record<string, string>) => {
 
 <template>
   <div class="dynamic-config-demo">
-    <p class="demo-description">????????????????????????????????????????????</p>
+    <p class="demo-description">通过全局配置可以统一控制表单按钮文案、控件宽度和空值展示风格，修改后会立即影响内部组件。</p>
 
     <CommonConfigProvider :component="dynamicConfig">
       <CommonForm :form="configForm" :inline="true" @submit="syncConfig" @reset="syncConfig" />
 
       <div class="current-config">
-        <h4>????</h4>
+        <h4>当前配置</h4>
         <pre>{{ JSON.stringify(dynamicConfig, null, 2) }}</pre>
       </div>
 
       <div class="table-section">
-        <h4>????</h4>
+        <h4>联动预览</h4>
         <CommonTable :data="tableData" :columns="tableColumns" border />
       </div>
     </CommonConfigProvider>

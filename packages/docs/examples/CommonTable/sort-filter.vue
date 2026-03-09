@@ -1,4 +1,4 @@
-<script setup lang="ts">
+﻿<script setup lang="ts">
 import { CommonTable, type CommonTableArrayColumns } from '@yetuzi/vue3-query-components'
 
 interface TableRow {
@@ -10,29 +10,29 @@ interface TableRow {
 }
 
 const tableData: TableRow[] = [
-  { name: '??', age: 28, department: '???', salary: 15000, level: 'P7' },
-  { name: '??', age: 32, department: '???', salary: 18000, level: 'P8' },
-  { name: '??', age: 26, department: '???', salary: 12000, level: 'P6' },
-  { name: '??', age: 30, department: '???', salary: 20000, level: 'P8' },
+  { name: '张敏', age: 28, department: '技术部', salary: 15000, level: 'P7' },
+  { name: '李婷', age: 32, department: '产品部', salary: 18000, level: 'P8' },
+  { name: '王凯', age: 26, department: '设计部', salary: 12000, level: 'P6' },
+  { name: '赵磊', age: 30, department: '技术部', salary: 20000, level: 'P8' },
 ]
 
 const columns: CommonTableArrayColumns<TableRow> = [
-  { prop: 'name', label: '??', sortable: true },
-  { prop: 'age', label: '??', sortable: true },
+  { prop: 'name', label: '姓名', sortable: true },
+  { prop: 'age', label: '年龄', sortable: true },
   {
     prop: 'department',
-    label: '??',
+    label: '部门',
     filters: [
-      { text: '???', value: '???' },
-      { text: '???', value: '???' },
-      { text: '???', value: '???' },
+      { text: '技术部', value: '技术部' },
+      { text: '产品部', value: '产品部' },
+      { text: '设计部', value: '设计部' },
     ],
     filterMethod: (value, row) => row.department === value,
   },
-  { prop: 'salary', label: '??', sortable: true },
+  { prop: 'salary', label: '薪资', sortable: true },
   {
     prop: 'level',
-    label: '??',
+    label: '职级',
     filters: [
       { text: 'P6', value: 'P6' },
       { text: 'P7', value: 'P7' },
@@ -45,7 +45,7 @@ const columns: CommonTableArrayColumns<TableRow> = [
 
 <template>
   <div class="table-demo">
-    <p class="demo-description">??????????????????????????</p>
+    <p class="demo-description">原生排序和筛选能力会完整透传，适合中后台数据分析页。</p>
     <CommonTable :data="tableData" :columns="columns" />
   </div>
 </template>
