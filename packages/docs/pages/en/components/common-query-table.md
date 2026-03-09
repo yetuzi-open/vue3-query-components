@@ -2,274 +2,139 @@
 title: CommonQueryTable
 ---
 
-# CommonQueryTable Query Table
+# CommonQueryTable
 
-A highly integrated query page component that includes form queries, table display, and pagination.
+`CommonQueryTable` is a composed list component that combines a query form, data table, and pagination into one reusable unit.
+
+Key features:
+
+- Built-in query form, table, and pagination workflow
+- Unified list request management through `fetch`
+- Supports layout slots and child component slot forwarding
+- Supports prop and event forwarding through prefixes
+- Exposes common instance methods for page-level control
 
 ## Basic Usage
 
-<demo vue="CommonQueryTable/basic.vue" ssg="true"/>
+<demo vue="CommonQueryTable/basic.vue" ssg="true" />
 
-## Slot Layout
+## Layout Slots
 
-The component provides 6 layout slots, control the page layout through slot content:
+The component provides these layout slots:
 
-- `header` - Header area
-- `form` - Form query area
-- `toolbar` - Toolbar area
-- `table` - Table area (default display)
-- `pagination` - Pagination area
-- `footer` - Footer area
+- `header`
+- `form`
+- `toolbar`
+- `table`
+- `pagination`
+- `footer`
 
-::: tip Slot Display Rules
-- `header`, `toolbar`, `footer`: Displayed only when slot content is provided
-- `form`: Displayed when slot content is provided or form configuration exists
-- `table`: Always displayed by default
-- `pagination`: Displayed when slot content is provided or has data (total > 0)
-:::
+### Table + Pagination Only
 
-### Table with Pagination
+If `form` is not provided, only the table and pagination areas are rendered.
 
-Display only table and pagination without `form` prop.
-
-<demo vue="CommonQueryTable/layouts/table.vue" ssg="true"/>
+<demo vue="CommonQueryTable/layouts/table.vue" ssg="true" />
 
 ### Toolbar
 
-Add operation buttons via `toolbar` slot.
+Use the `toolbar` slot to add common action buttons.
 
-<demo vue="CommonQueryTable/layouts/toolbar.vue" ssg="true"/>
+<demo vue="CommonQueryTable/layouts/toolbar.vue" ssg="true" />
 
-### Footer Content
+### Footer
 
-Display additional information via `footer` slot.
+Use the `footer` slot to display additional notes.
 
-<demo vue="CommonQueryTable/layouts/footer.vue" ssg="true"/>
+<demo vue="CommonQueryTable/layouts/footer.vue" ssg="true" />
 
-## Pagination Configuration
+## Pagination
 
-CommonQueryTable has built-in complete pagination functionality, supporting custom pagination parameters and styles.
+Pagination is built in. Query params `pageNo` and `pageSize` are automatically passed to `fetch`.
 
-::: tip Pagination Notes
-- Global default page number and page size can be set via `CommonConfigProvider` component
-- Pagination component will automatically display when the returned `total` from the API is greater than the page size
-- Pagination parameters `pageNo` and `pageSize` are automatically passed to the `fetch` function
-:::
+<demo vue="CommonQueryTable/pagination.vue" ssg="true" />
 
-<demo vue="CommonQueryTable/pagination.vue" ssg="true"/>
+You can also forward pagination props with the `pagination-*` prefix, such as:
 
-### Pagination Props
+- `pagination-page-size`
+- `pagination-layout`
+- `pagination-background`
 
-Customize pagination component behavior via `pagination-*` prefixed attributes:
+## Slot Forwarding
 
-| Attribute | Description | Type | Default |
-| --- | --- | --- | --- |
-| `pagination-page-size` | Array of page size options | `number[]` | `[10, 20, 50, 100]` |
-| `pagination-default-page-size` | Default page size | `number` | `10` |
-| `pagination-layout` | Pagination component layout | `string` | `'total, sizes, prev, pager, next, jumper'` |
-| `pagination-background` | Whether to show background color | `boolean` | `true` |
-| `pagination-page-count` | Total page count (usually calculated from total) | `number` | - |
+You can pass slots to child components by prefix:
 
-### Pagination Events
+- `form-*` for `CommonForm`
+- `table-*` for `CommonTable`
+- `pagination-*` for `CommonPagination`
 
-| Event | Description | Callback Parameters |
-| --- | --- | --- |
-| `@pagination-change` | Triggered when pagination changes | `{ pageNo: number, pageSize: number }` |
+Examples:
 
-## Slot Pass-through
+- `form-name`
+- `table-status`
+- `table-empty`
 
-In actual use, you may need to use slot functionality on the `form` or `table` components under `CommonQueryTable`.
+<demo vue="CommonQueryTable/slot.vue" ssg="true" />
 
-::: tip Slot Naming Rule
-Pass slots to internal components via `componentName-slotName`:
+## Prop and Event Forwarding
 
-- `form-name` - Pass name slot to form component
-- `table-status` - Pass status slot to table component
-- `table-empty` - Pass empty state slot to table component (corresponds to Element Plus el-table's #empty)
+Extra props and events can be forwarded to internal components using prefixes:
 
-:::
+- Prop forwarding: `:form-inline="false"`
+- Event forwarding: `@table-selection-change="handleSelectionChange"`
 
-<demo vue="CommonQueryTable/slot.vue" ssg="true"/>
-
-## Attribute Pass-through
-
-Although the component provides some default attributes, it cannot meet all requirements. Supports passing additional attributes and events to internal components via attribute pass-through.
-
-::: tip Pass-through Rule
-- **Attribute Pass-through**: Pass attributes to internal components via `componentName-attributeName`
-- **Event Pass-through**: Listen to internal component events via `@componentName-eventName`
-
-:::
-
-### Attribute Pass-through Example
-
-Pass additional attributes to internal components, for example, setting form to non-inline mode:
-
-```vue
-<CommonQueryTable
-  :form-inline="false"
-  ...
-/>
-```
-
-### Event Pass-through Example
-
-Listen to internal component events, for example, listening to table selection changes:
-
-```vue
-<script setup>
-function handleSelectionChange(selection) {
-  console.log('Selected items:', selection)
-}
-</script>
-
-<template>
-  <CommonQueryTable
-    @table-selection-change="handleSelectionChange"
-    ...
-  />
-</template>
-```
-
-The following complete example shows the actual usage of attribute pass-through and event pass-through:
-
-<demo vue="CommonQueryTable/attrs.vue" ssg="true"/>
+<demo vue="CommonQueryTable/attrs.vue" ssg="true" />
 
 ## API
 
 ### Props
 
-| Parameter | Description | Type | Default |
+| Prop | Description | Type | Default |
 | --- | --- | --- | --- |
-| fetch | Data fetch function, receives query parameters and returns a Promise containing list and total | `(params?: ListParam) => Promise<{ list: T[]; total: string \| number }>` | Required |
-| form | Form configuration array, defines fields and properties of query form | `CommonFormItemArray<T>` | `[]` |
-| columns | Table column configuration, defines table column structure and display | `CommonTableColumn<T>` | Required |
-| pagination-* | Pagination component attribute pass-through, see [Pagination Configuration](#pagination-configuration) section | - | - |
+| `fetch` | Data fetch function | `(params?: ListParam) => Promise<{ list: T[]; total: string \| number }>` | - |
+| `form` | Query form configuration array | `CommonFormItemArray<T>` | `[]` |
+| `columns` | Table column configuration | `CommonTableColumn<T>` | - |
 
 ### Slots
 
 #### Layout Slots
 
-CommonQueryTable supports passing content to internal components via layout slots:
+| Name | Description |
+| --- | --- |
+| `header` | Header area |
+| `form` | Query form area |
+| `toolbar` | Toolbar area |
+| `table` | Table area |
+| `pagination` | Pagination area |
+| `footer` | Footer area |
 
-| Name | Description | Target |
-| --- | --- | --- |
-| header | Header area slot | Page header |
-| form | Form area slot | Query form component |
-| toolbar | Toolbar slot | Table toolbar |
-| table | Table area slot | Data table component |
-| pagination | Pagination area slot | Pagination component |
-| footer | Footer area slot | Page footer |
+#### Child Slot Forwarding
 
-#### Sub-component Slot Passing
-
-Pass slots to internal components via prefix:
-
-- **`form-*`** - Pass slots to internal CommonForm component
-- **`table-*`** - Pass slots to internal CommonTable component
-- **`pagination-*`** - Pass slots to internal CommonPagination component
-
-**Usage Example:**
-
-- `form-name` - Pass name slot to form component
-- `table-status` - Pass status slot to table component
-- `pagination-sizes` - Pass sizes slot to pagination component
+- `form-*` forwards to internal `CommonForm`
+- `table-*` forwards to internal `CommonTable`
+- `pagination-*` forwards to internal `CommonPagination`
 
 ### Exposes
 
-The component exposes the following methods that can be called via ref:
-
-| Method | Description | Parameters | Return Value |
-| --- | --- | --- | --- |
-| refresh | Refresh list data | - | `void` |
-| reset | Reset query conditions and pagination | - | `void` |
-| getFormData | Get current form data | - | `Partial<T>` |
-| getSelectionRows | Get selected row data from table | - | `T[]` |
+| Method | Description |
+| --- | --- |
+| `refresh` | Refresh the list with current conditions |
+| `reset` | Reset query conditions and pagination |
+| `getFormData` | Get current form data |
+| `getSelectionRows` | Get selected table rows |
 
 ## TypeScript Types
 
-The component exports the following TypeScript type definitions for direct use in your project:
-
-### CommonQueryTableProps
-
-```typescript
-interface CommonQueryTableProps<T extends AnyObject = AnyObject> {
-  /** Data fetch function */
+```ts
+interface CommonQueryTableProps<T = AnyObject> {
   fetch: (params?: ListParam) => Promise<{ list: T[]; total: string | number }>
-
-  /** Form configuration array */
   form?: CommonFormItemArray<T>
-
-  /** Table column configuration */
   columns: CommonTableColumn<T>
 }
-```
 
-### CommonQueryTableExpose
-
-Type definition for component instance, used for ref type annotation:
-
-```typescript
 interface CommonQueryTableExpose<T = AnyObject> {
-  /** Refresh list data */
   refresh: () => void
-
-  /** Reset query conditions and pagination */
   reset: () => void
-
-  /** Get form data */
   getFormData: () => Partial<T>
-
-  /** Get selected row data from table */
   getSelectionRows: () => T[]
-}
-```
-
-### ListParam
-
-```typescript
-/**
- * List request parameter type
- * @typeParam T - Additional query parameter type
- */
-type ListParam<T extends AnyObject = AnyObject> = PaginationParam & T
-
-/**
- * Pagination request parameters
- */
-type PaginationParam = {
-  pageNo: number
-  pageSize: number
-}
-```
-
-**Usage Example:**
-
-```typescript
-import type {
-  CommonQueryTableProps,
-  ListParam,
-} from '@yetuzi/vue3-query-components'
-
-// Define query parameter type
-interface MyQueryParams {
-  name: string
-  status: number
-}
-
-// Define data row type
-interface UserData {
-  id: number
-  name: string
-  email: string
-}
-
-// Use types
-const fetch = (params: ListParam<MyQueryParams>) => {
-  // params includes: pageNo, pageSize, name, status
-  return Promise.resolve({
-    list: [] as UserData[],
-    total: 0
-  })
 }
 ```

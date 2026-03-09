@@ -1,51 +1,47 @@
-import type { AnyObject, ListParam, CommonTableColumn, CommonFormItemArray } from '../../index'
+import type { AnyObject, CommonFormItemArray, CommonTableColumn, ListParam } from '../../index'
 
+/**
+ * CommonQueryTable 组件 Props
+ * 将查询表单、数据表格和分页能力组合到一个组件中
+ *
+ * @typeParam T - 表格行数据类型
+ */
 export interface CommonQueryTableProps<T extends AnyObject = AnyObject> {
   /**
    * 数据获取函数
-   * @param params - 查询参数，包含分页和表单查询条件
-   * @returns Promise 包含数据列表和总数的对象
+   * 接收查询参数并返回包含列表和总数的 Promise
    */
   fetch: (params?: ListParam) => Promise<{ list: T[]; total: string | number }>
 
   /**
    * 表单配置数组
-   * 定义查询表单的字段和属性
+   * 用于定义查询表单的字段结构和属性
    */
   form?: CommonFormItemArray<T>
 
   /**
    * 表格列配置
-   * 定义表格的列结构和展示方式
+   * 定义列表表格的列结构与展示方式
    */
   columns: CommonTableColumn<T>
 }
 
 /**
- * CommonQueryTable 组件实例方法
+ * CommonQueryTable 组件暴露方法
+ * 可通过 `ref` 直接调用
+ *
+ * @typeParam T - 表格行数据类型
  */
 export interface CommonQueryTableExpose<T = AnyObject> {
-  /**
-   * 刷新列表数据
-   * 使用当前查询条件和分页参数重新请求数据
-   */
+  /** 使用当前条件刷新列表数据 */
   refresh: () => void
 
-  /**
-   * 重置查询条件和分页
-   * 重置表单字段到初始值，重置分页到第一页，并重新请求数据
-   */
+  /** 重置查询条件和分页，并重新获取列表数据 */
   reset: () => void
 
-  /**
-   * 获取表单数据
-   * @returns 当前表单的值对象
-   */
+  /** 获取当前表单数据 */
   getFormData: () => Partial<T>
 
-  /**
-   * 获取表格选中的行数据
-   * @returns 选中的行数据数组
-   */
+  /** 获取当前表格选中行数据 */
   getSelectionRows: () => T[]
 }
