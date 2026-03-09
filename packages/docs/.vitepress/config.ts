@@ -73,7 +73,8 @@ export default defineConfig({
                   items: [
                     { text: 'CommonQueryTable 查询表格', link: '/components/common-query-table' },
                     { text: 'CommonForm 表单', link: '/components/common-form' },
-                    { text: 'CommonTable 表格', link: '/components/common-table' }
+                    { text: 'CommonTable 表格', link: '/components/common-table' },
+                    { text: 'CommonPagination 分页', link: '/components/common-pagination' }
                   ]
                 },
               ]
@@ -192,7 +193,8 @@ export default defineConfig({
                   items: [
                     { text: 'CommonQueryTable Query Table', link: '/en/components/common-query-table' },
                     { text: 'CommonForm Form', link: '/en/components/common-form' },
-                    { text: 'CommonTable Table', link: '/en/components/common-table' }
+                    { text: 'CommonTable Table', link: '/en/components/common-table' },
+                    { text: 'CommonPagination Pagination', link: '/en/components/common-pagination' }
                   ]
                 },
               ]
