@@ -1,35 +1,30 @@
 <script setup lang="ts">
-import { ref } from "vue";
-import { CommonTable } from "@yetuzi/vue3-query-components";
-import type { CommonTableArrayColumns } from "@yetuzi/vue3-query-components";
-import { ElButton } from "element-plus";
+import { ref } from 'vue'
+import { CommonTable, type CommonTableArrayColumns } from '@yetuzi/vue3-query-components'
 
-const multipleSelection = ref([]);
+interface TableRow {
+  id: number
+  name: string
+  department: string
+}
 
-const handleSelectionChange = (selection: any[]) => {
-  multipleSelection.value = selection;
-};
+const multipleSelection = ref<TableRow[]>([])
 
-const tableData = [
-  { id: 1, name: "Zhang San", department: "技术部" },
-  { id: 2, name: "Li Si", department: "产品部" },
-  { id: 3, name: "Wang Wu", department: "设计部" },
-];
+const handleSelectionChange = (selection: TableRow[]) => {
+  multipleSelection.value = selection
+}
 
-const columns: CommonTableArrayColumns<any> = [
-  {
-    type: "selection",
-    width: 55,
-  },
-  {
-    prop: "name",
-    label: "Name",
-  },
-  {
-    prop: "department",
-    label: "部门",
-  },
-];
+const tableData: TableRow[] = [
+  { id: 1, name: '张三', department: '技术部' },
+  { id: 2, name: '李四', department: '产品部' },
+  { id: 3, name: '王五', department: '设计部' },
+]
+
+const columns: CommonTableArrayColumns<TableRow> = [
+  { type: 'selection', width: 55 },
+  { prop: 'name', label: '姓名' },
+  { prop: 'department', label: '部门' },
+]
 </script>
 
 <template>
