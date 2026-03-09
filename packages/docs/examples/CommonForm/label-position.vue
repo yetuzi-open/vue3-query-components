@@ -1,69 +1,39 @@
 <script setup lang="ts">
-import { CommonForm } from "@yetuzi/vue3-query-components";
-import { ref } from "vue";
-import { ElRadioGroup, ElRadio } from 'element-plus';
+import { ref } from 'vue'
+import { ElRadioGroup, ElRadioButton } from 'element-plus'
+import { CommonForm } from '@yetuzi/vue3-query-components'
 
-const currentPosition = ref<"left" | "right" | "top">("right");
+const labelPosition = ref<'left' | 'right' | 'top'>('right')
 
 const form = [
+  { is: 'input', label: '姓名', prop: 'name' },
   {
-    is: "input",
-    label: "Username",
-    prop: "username",
-    props: {
-      placeholder: "Please enterUsername",
-    },
+    is: 'input',
+    label: '邮箱',
+    prop: 'email',
   },
   {
-    is: "select",
-    label: "城市",
-    prop: "city",
+    is: 'select',
+    label: '状态',
+    prop: 'status',
     props: {
-      placeholder: "Please select城市",
       options: [
-        { value: "beijing", label: "北京" },
-        { value: "shanghai", label: "上海" },
-        { value: "guangzhou", label: "广州" },
+        { value: 1, label: '启用' },
+        { value: 0, label: '禁用' },
       ],
     },
   },
-  {
-    is: "date-picker",
-    label: "生日",
-    prop: "birthday",
-    props: {
-      type: "date",
-      placeholder: "Please select生日",
-    },
-  },
-];
+]
 </script>
 
 <template>
-  <div class="label-position-demo">
-    <div class="control-panel">
-      <span>标签位置：</span>
-      <el-radio-group v-model="currentPosition">
-        <el-radio value="left">左对齐</el-radio>
-        <el-radio value="right">右对齐</el-radio>
-        <el-radio value="top">顶部对齐</el-radio>
-      </el-radio-group>
-    </div>
+  <div>
+    <el-radio-group v-model="labelPosition" style="margin-bottom: 16px">
+      <el-radio-button label="left">left</el-radio-button>
+      <el-radio-button label="right">right</el-radio-button>
+      <el-radio-button label="top">top</el-radio-button>
+    </el-radio-group>
 
-    <CommonForm
-      :form="form"
-      :label-position="currentPosition"
-      :inline="false"
-      label-width="100px"
-    />
+    <CommonForm :form="form" :inline="false" :label-position="labelPosition" label-width="100px" />
   </div>
 </template>
-
-<style scoped>
-.control-panel {
-  margin-bottom: 20px;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-</style>

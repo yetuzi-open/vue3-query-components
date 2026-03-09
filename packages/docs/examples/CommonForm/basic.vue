@@ -1,91 +1,93 @@
 <script setup lang="ts">
-import { CommonForm } from "@yetuzi/vue3-query-components";
+import { ElMessage } from 'element-plus'
+import { CommonForm } from '@yetuzi/vue3-query-components'
 
 const form = [
   {
-    is: "input",
-    label: "Name",
-    prop: "name",
+    is: 'input',
+    label: '姓名',
+    prop: 'name',
     formItem: {
       rules: [
-        { required: true, message: "Please enterName", trigger: "blur" },
-        { min: 2, max: 10, message: "长度在 2 到 10 个字符", trigger: "blur" },
+        { required: true, message: '请输入姓名', trigger: 'blur' },
+        { min: 2, max: 10, message: '长度应为 2 到 10 个字符', trigger: 'blur' },
       ],
     },
   },
   {
-    is: "select",
-    label: "性别",
-    prop: "gender",
-    initialValue: "",
+    is: 'select',
+    label: '性别',
+    prop: 'gender',
+    initialValue: '',
     props: {
-      placeholder: "Please select性别",
+      placeholder: '请选择性别',
       options: [
-        { value: "male", label: "男" },
-        { value: "female", label: "女" },
+        { value: 'male', label: '男' },
+        { value: 'female', label: '女' },
       ],
       clearable: true,
     },
   },
   {
-    is: "date-picker",
-    label: "生日",
-    prop: "birthday",
+    is: 'date-picker',
+    label: '生日',
+    prop: 'birthday',
     props: {
-      type: "date",
-      placeholder: "Please select生日",
+      type: 'date',
+      placeholder: '请选择生日',
       clearable: true,
-      format: "YYYY-MM-DD",
-      valueFormat: "YYYY-MM-DD",
+      format: 'YYYY-MM-DD',
+      valueFormat: 'YYYY-MM-DD',
     },
   },
   {
-    is: "radio",
-    label: "Status",
-    prop: "status",
+    is: 'radio',
+    label: '状态',
+    prop: 'status',
     initialValue: 1,
     props: {
       options: [
-        { value: 1, label: "Enabled" },
-        { value: 0, label: "Disabled" },
+        { value: 1, label: '启用' },
+        { value: 0, label: '禁用' },
       ],
     },
   },
   {
-    is: "check-box",
-    label: "爱好",
-    prop: "hobbies",
+    is: 'check-box',
+    label: '爱好',
+    prop: 'hobbies',
     initialValue: [],
     props: {
       options: [
-        { value: "reading", label: "阅读" },
-        { value: "music", label: "音乐" },
-        { value: "sports", label: "运动" },
-        { value: "travel", label: "旅行" },
+        { value: 'reading', label: '阅读' },
+        { value: 'music', label: '音乐' },
+        { value: 'sports', label: '运动' },
+        { value: 'travel', label: '旅行' },
       ],
     },
   },
   {
-    is: "switch",
-    label: "是否订阅",
-    prop: "subscribe",
+    is: 'switch',
+    label: '是否订阅',
+    prop: 'subscribe',
     initialValue: true,
     props: {
-      activeText: "是",
-      inactiveText: "否",
+      activeText: '是',
+      inactiveText: '否',
       activeValue: true,
       inactiveValue: false,
     },
   },
-];
+]
 
 function handleSubmit(formData: any) {
-  console.log("表单提交数据:", formData);
-  alert("表单提交成功！请查看控制台输出。");
+  console.log('表单提交数据：', formData)
+  ElMessage.success('提交成功，请查看控制台输出')
 }
 
 function handleReset(formData: any) {
-  console.log("表单Reset后数据:", formData);
+  console.log('表单重置后数据：', formData)
+  ElMessage.info('表单已重置')
 }
 </script>
 
