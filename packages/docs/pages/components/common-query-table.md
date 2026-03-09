@@ -1,18 +1,18 @@
----
+﻿---
 title: CommonQueryTable
 ---
 
 # CommonQueryTable 查询表格
 
-`CommonQueryTable` 是一个组合型列表组件，将查询表单、表格展示和分页能力整合在一起，适合快速搭建后台列表页面。
+`CommonQueryTable` 是一个组合型列表组件，把查询表单、数据表格和分页统一收敛到一个组件里，适合中后台列表页快速落地。
 
 主要特性：
 
-- 内置查询表单、表格和分页联动能力
+- 内置查询表单、表格和分页联动逻辑
 - 通过 `fetch` 统一管理列表请求
 - 支持布局插槽和子组件插槽透传
-- 支持前缀属性和事件透传到内部组件
-- 暴露常用实例方法，便于页面联动控制
+- 支持前缀属性 / 事件透传给内部组件
+- 通过 `ref` 暴露常用列表操作方法
 
 ## 基础用法
 
@@ -20,7 +20,7 @@ title: CommonQueryTable
 
 ## 布局插槽
 
-组件提供以下布局插槽：
+组件提供以下布局区域：
 
 - `header`：头部区域
 - `form`：查询表单区域
@@ -29,57 +29,51 @@ title: CommonQueryTable
 - `pagination`：分页区域
 - `footer`：底部区域
 
-### 仅表格 + 分页
-
-不传 `form` 时，只展示表格和分页。
+### 仅保留表格 + 分页
 
 <demo vue="CommonQueryTable/layouts/table.vue" ssg="true" />
 
 ### 工具栏
 
-通过 `toolbar` 插槽添加常用操作按钮。
-
 <demo vue="CommonQueryTable/layouts/toolbar.vue" ssg="true" />
 
-### 底部内容
-
-通过 `footer` 插槽展示额外说明信息。
+### 页脚补充信息
 
 <demo vue="CommonQueryTable/layouts/footer.vue" ssg="true" />
 
 ## 分页配置
 
-组件内置分页功能，查询参数中的 `pageNo` 和 `pageSize` 会自动传给 `fetch`。
+组件内部会自动把 `pageNo` 和 `pageSize` 传入 `fetch`。
 
 <demo vue="CommonQueryTable/pagination.vue" ssg="true" />
 
 ### 分页透传属性
 
-可以通过 `pagination-*` 前缀向内部分页组件传递属性，例如：
+可以通过 `pagination-*` 前缀把属性传给内部 `CommonPagination`，例如：
 
-- `pagination-page-size`
+- `pagination-page-sizes`
 - `pagination-layout`
 - `pagination-background`
 
 ## 插槽透传
 
-可以通过前缀插槽的方式把内容传给内部组件：
+可以通过带前缀的插槽把内容传给内部子组件：
 
-- `form-*`：传给 `CommonForm`
-- `table-*`：传给 `CommonTable`
-- `pagination-*`：传给 `CommonPagination`
+- `form-*`：透传给 `CommonForm`
+- `table-*`：透传给 `CommonTable`
+- `pagination-*`：透传给 `CommonPagination`
 
 例如：
 
-- `form-name`
 - `table-status`
 - `table-empty`
+- `pagination-default`
 
 <demo vue="CommonQueryTable/slot.vue" ssg="true" />
 
 ## 属性与事件透传
 
-通过带前缀的属性和事件，可以向内部组件透传额外配置：
+通过带前缀的属性和事件，可以精细控制内部组件行为：
 
 - 属性透传：`:form-inline="false"`
 - 事件透传：`@table-selection-change="handleSelectionChange"`
@@ -90,11 +84,11 @@ title: CommonQueryTable
 
 ### Props
 
-| 参数 | 说明 | 类型 | 默认值 |
-| --- | --- | --- | --- |
-| `fetch` | 数据获取函数 | `(params?: ListParam) => Promise<{ list: T[]; total: string \| number }>` | - |
-| `form` | 查询表单配置数组 | `CommonFormItemArray<T>` | `[]` |
-| `columns` | 表格列配置 | `CommonTableColumn<T>` | - |
+| 参数 | 说明 | 类型 |
+| --- | --- | --- |
+| `fetch` | 列表请求函数 | `(params?: ListParam) => Promise<{ list: T[]; total: string \| number }>` |
+| `form` | 查询表单配置数组 | `CommonFormItemArray<T>` |
+| `columns` | 表格列配置 | `CommonTableColumn<T>` |
 
 ### Slots
 
@@ -107,9 +101,9 @@ title: CommonQueryTable
 | `toolbar` | 工具栏区域 |
 | `table` | 表格区域 |
 | `pagination` | 分页区域 |
-| `footer` | 底部区域 |
+| `footer` | 页面底部区域 |
 
-#### 子组件插槽透传
+#### 子组件透传插槽
 
 - `form-*`：透传给内部 `CommonForm`
 - `table-*`：透传给内部 `CommonTable`
@@ -119,12 +113,19 @@ title: CommonQueryTable
 
 | 方法 | 说明 |
 | --- | --- |
-| `refresh` | 使用当前查询条件刷新列表 |
-| `reset` | 重置查询条件和分页 |
+| `refresh` | 使用当前条件刷新列表 |
+| `reset` | 重置查询条件和分页并重新获取列表 |
 | `getFormData` | 获取当前表单数据 |
-| `getSelectionRows` | 获取当前表格选中行 |
+| `getSelectionRows` | 获取当前选中行 |
 
 ## TypeScript 类型
+
+```ts
+import type {
+  CommonQueryTableProps,
+  CommonQueryTableExpose,
+} from '@yetuzi/vue3-query-components'
+```
 
 ```ts
 interface CommonQueryTableProps<T = AnyObject> {

@@ -1,62 +1,53 @@
----
+﻿---
 title: CommonTable
 ---
 
 # CommonTable
 
-`CommonTable` is a wrapper around Element Plus `ElTable`. It provides a more consistent column configuration API while keeping most native table capabilities.
+`CommonTable` is a lightweight wrapper around Element Plus `ElTable`. It standardizes column configuration while keeping most native table capabilities.
 
 Key features:
 
-- Supports both array and object column configurations
+- Supports both array-style and object-style column config
 - Built-in column types: `selection`, `index`, `expand`, `date`, `dateTime`, `dict`
-- Supports quick named slots based on column names
-- Automatically scrolls to the top when table data changes
-- Exposes `ElTable` instance methods through `ref`
-- Forwards most native `ElTable` props, events, and column options
+- Supports fast named slots based on column names
+- Automatically scrolls to the top when data changes
+- Exposes internal `ElTable` instance methods through `ref`
 
 ## Basic Usage
-
-Basic table usage with selection, index, date-time, and operation columns.
 
 <demo vue="CommonTable/basic.vue" ssg="true"/>
 
 ## Selection Table
 
-Use the `selection` column type to quickly enable row selection and listen to `selection-change` for selected rows.
-
 <demo vue="CommonTable/selection.vue" ssg="true"/>
 
 ## Fixed Columns
-
-When there are many columns, use `fixed` to pin important columns to the left or right side.
 
 <demo vue="CommonTable/fixed.vue" ssg="true"/>
 
 ## Custom Slots
 
-`CommonTable` supports named slots based on columns:
+Typical custom rendering can be defined with column-based slot names:
 
 - Regular columns use `prop` as the slot name
-- Expand columns can use `expand` as the slot name directly
+- Expand columns use `expand` as the slot name
 
 <demo vue="CommonTable/slot.vue" ssg="true"/>
 
 ## Sorting and Filtering
 
-The component forwards Element Plus sorting and filtering behavior, so you can use `sortable`, `filters`, and `filter-method` directly.
+The component forwards native sorting and filtering capabilities from `ElTable`.
 
 <demo vue="CommonTable/sort-filter.vue" ssg="true"/>
 
 ## Built-in Column Types
 
-`CommonTable` includes several built-in column types to reduce repetitive configuration.
-
 | Type | Description | Example |
 | --- | --- | --- |
-| `selection` | Selection column with checkbox | `{ type: 'selection' }` |
-| `index` | Index column with row numbers | `{ type: 'index' }` |
-| `expand` | Expand column for extra row content | `{ type: 'expand' }` |
+| `selection` | Selection column | `{ type: 'selection' }` |
+| `index` | Index column | `{ type: 'index' }` |
+| `expand` | Expand column | `{ type: 'expand' }` |
 | `date` | Date column formatted as `YYYY-MM-DD` | `{ prop: 'createDate', type: 'date' }` |
 | `dateTime` | Date-time column formatted as `YYYY-MM-DD HH:mm:ss` | `{ prop: 'createTime', type: 'dateTime' }` |
 | `dict` | Dictionary column mapped by `options` | `{ prop: 'status', type: 'dict', options: [...] }` |
@@ -65,7 +56,7 @@ The component forwards Element Plus sorting and filtering behavior, so you can u
 
 ## Exposed Methods
 
-You can access common `ElTable` instance methods via `ref`, such as clearing selection, sorting, and scrolling.
+Use `ref` to access internal table instance methods.
 
 <demo vue="CommonTable/expose.vue" ssg="true"/>
 
@@ -73,58 +64,47 @@ You can access common `ElTable` instance methods via `ref`, such as clearing sel
 
 ### Props
 
-Besides the custom props below, `CommonTable` also supports most native Element Plus `ElTable` props.
-
 | Prop | Description | Type | Default |
 | --- | --- | --- | --- |
 | `data` | Table data | `T[]` | `[]` |
-| `columns` | Column configuration in array or object form | `CommonTableColumn<T>` | - |
+| `columns` | Column config in array or object form | `CommonTableColumn<T>` | - |
 
-> Note: Common forwarded props include `height`, `max-height`, `border`, `stripe`, `row-key`, and `default-sort`.
+> The component also supports most native Element Plus `ElTable` props such as `height`, `max-height`, `border`, `stripe`, `row-key`, and `default-sort`.
 
-### Column Configuration
-
-Column definitions extend Element Plus `TableColumnCtx` and add support for built-in column types.
+### Column Config
 
 ```ts
-interface CommonTableColumn<T> extends Partial<TableColumnCtx<T>> {
-  prop?: keyof T | string
-  type?: 'default' | 'selection' | 'index' | 'expand' | 'date' | 'dateTime' | 'dict'
-  options?: Array<{ label: string; value: any }>
-  dictName?: string
-}
+type CommonTableColumn<T> =
+  | CommonTableArrayColumns<T>
+  | Record<string, CommonTableColumnRoot<T>>
 ```
 
-### Exposes
+### Slots
 
-`CommonTable` exposes `ElTable` instance methods through `ref`. Common methods include:
+| Slot | Description | Params |
+| --- | --- | --- |
+| Column slot | Uses the column `prop` as the slot name, such as `#name` or `#status` | `{ row, column, index, value }` |
+| `expand` | Expand row slot | `{ row, column, index, value }` |
+| `empty` | Custom empty state | - |
+
+### Exposes
 
 | Method | Description |
 | --- | --- |
 | `clearSelection` | Clear selected rows |
-| `toggleRowSelection` | Toggle selection for one row |
+| `toggleRowSelection` | Toggle a row selection state |
 | `toggleAllSelection` | Toggle select all |
 | `toggleRowExpansion` | Toggle row expansion |
-| `setCurrentRow` | Set current row |
+| `setCurrentRow` | Set the current row |
 | `clearSort` | Clear sorting |
-| `clearFilter` | Clear filters |
+| `clearFilter` | Clear filtering |
 | `doLayout` | Recalculate layout |
 | `sort` | Sort manually |
-| `scrollTo` | Scroll to a given position |
+| `scrollTo` | Scroll to a target position |
 | `setScrollTop` | Set vertical scroll position |
 | `setScrollLeft` | Set horizontal scroll position |
 
-### Slots
-
-| Slot | Description | Parameters |
-| --- | --- | --- |
-| Column slot | Uses the column `prop` as the slot name, such as `#name` or `#status` | `{ row, column, index, value }` |
-| `expand` | Expand column slot | `{ row, column, index, value }` |
-| `empty` | Custom empty state content | - |
-
 ## TypeScript Types
-
-The component exports these commonly used types:
 
 ```ts
 import type {
@@ -136,32 +116,12 @@ import type {
 } from '@yetuzi/vue3-query-components'
 ```
 
-### `CommonTableProps`
-
 ```ts
 interface CommonTableProps<T = AnyObject> {
   columns: CommonTableColumn<T>
   data: T[]
 }
-```
 
-### `CommonTableColumn`
-
-```ts
-type CommonTableColumn<T> =
-  | CommonTableArrayColumns<T>
-  | Record<string, CommonTableColumnRoot<T>>
-```
-
-### `CommonTableArrayColumns`
-
-```ts
-type CommonTableArrayColumns<T> = Array<CommonTableColumnRoot<T>>
-```
-
-### `CommonTableExpose`
-
-```ts
 interface CommonTableExpose extends TableInstance {}
 ```
 

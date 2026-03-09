@@ -1,18 +1,18 @@
----
+﻿---
 title: CommonQueryTable
 ---
 
 # CommonQueryTable
 
-`CommonQueryTable` is a composed list component that combines a query form, data table, and pagination into one reusable unit.
+`CommonQueryTable` is a composed list component that combines a search form, data table, and pagination into one unified solution for admin list pages.
 
 Key features:
 
-- Built-in query form, table, and pagination workflow
-- Unified list request management through `fetch`
-- Supports layout slots and child component slot forwarding
-- Supports prop and event forwarding through prefixes
-- Exposes common instance methods for page-level control
+- Built-in linkage between form, table, and pagination
+- Uses `fetch` as the single list request entry
+- Supports layout slots and child-component slot forwarding
+- Supports prefixed prop / event forwarding to internal components
+- Exposes common list actions through `ref`
 
 ## Basic Usage
 
@@ -20,7 +20,7 @@ Key features:
 
 ## Layout Slots
 
-The component provides these layout slots:
+Available layout areas:
 
 - `header`
 - `form`
@@ -31,56 +31,52 @@ The component provides these layout slots:
 
 ### Table + Pagination Only
 
-If `form` is not provided, only the table and pagination areas are rendered.
-
 <demo vue="CommonQueryTable/layouts/table.vue" ssg="true" />
 
 ### Toolbar
 
-Use the `toolbar` slot to add common action buttons.
-
 <demo vue="CommonQueryTable/layouts/toolbar.vue" ssg="true" />
 
-### Footer
-
-Use the `footer` slot to display additional notes.
+### Footer Summary
 
 <demo vue="CommonQueryTable/layouts/footer.vue" ssg="true" />
 
 ## Pagination
 
-Pagination is built in. Query params `pageNo` and `pageSize` are automatically passed to `fetch`.
+The component automatically passes `pageNo` and `pageSize` into `fetch`.
 
 <demo vue="CommonQueryTable/pagination.vue" ssg="true" />
 
-You can also forward pagination props with the `pagination-*` prefix, such as:
+### Pagination Forwarding
 
-- `pagination-page-size`
+Use the `pagination-*` prefix to pass props to internal `CommonPagination`, for example:
+
+- `pagination-page-sizes`
 - `pagination-layout`
 - `pagination-background`
 
 ## Slot Forwarding
 
-You can pass slots to child components by prefix:
+Use prefixed slots to customize internal child components:
 
-- `form-*` for `CommonForm`
-- `table-*` for `CommonTable`
-- `pagination-*` for `CommonPagination`
+- `form-*` → internal `CommonForm`
+- `table-*` → internal `CommonTable`
+- `pagination-*` → internal `CommonPagination`
 
 Examples:
 
-- `form-name`
 - `table-status`
 - `table-empty`
+- `pagination-default`
 
 <demo vue="CommonQueryTable/slot.vue" ssg="true" />
 
 ## Prop and Event Forwarding
 
-Extra props and events can be forwarded to internal components using prefixes:
+Prefixed props and events let you fine-tune internal components:
 
-- Prop forwarding: `:form-inline="false"`
-- Event forwarding: `@table-selection-change="handleSelectionChange"`
+- prop forwarding: `:form-inline="false"`
+- event forwarding: `@table-selection-change="handleSelectionChange"`
 
 <demo vue="CommonQueryTable/attrs.vue" ssg="true" />
 
@@ -88,11 +84,11 @@ Extra props and events can be forwarded to internal components using prefixes:
 
 ### Props
 
-| Prop | Description | Type | Default |
-| --- | --- | --- | --- |
-| `fetch` | Data fetch function | `(params?: ListParam) => Promise<{ list: T[]; total: string \| number }>` | - |
-| `form` | Query form configuration array | `CommonFormItemArray<T>` | `[]` |
-| `columns` | Table column configuration | `CommonTableColumn<T>` | - |
+| Prop | Description | Type |
+| --- | --- | --- |
+| `fetch` | List request function | `(params?: ListParam) => Promise<{ list: T[]; total: string \| number }>` |
+| `form` | Search form config array | `CommonFormItemArray<T>` |
+| `columns` | Table column config | `CommonTableColumn<T>` |
 
 ### Slots
 
@@ -101,7 +97,7 @@ Extra props and events can be forwarded to internal components using prefixes:
 | Name | Description |
 | --- | --- |
 | `header` | Header area |
-| `form` | Query form area |
+| `form` | Search form area |
 | `toolbar` | Toolbar area |
 | `table` | Table area |
 | `pagination` | Pagination area |
@@ -118,11 +114,18 @@ Extra props and events can be forwarded to internal components using prefixes:
 | Method | Description |
 | --- | --- |
 | `refresh` | Refresh the list with current conditions |
-| `reset` | Reset query conditions and pagination |
+| `reset` | Reset filters and pagination, then reload the list |
 | `getFormData` | Get current form data |
-| `getSelectionRows` | Get selected table rows |
+| `getSelectionRows` | Get currently selected rows |
 
 ## TypeScript Types
+
+```ts
+import type {
+  CommonQueryTableProps,
+  CommonQueryTableExpose,
+} from '@yetuzi/vue3-query-components'
+```
 
 ```ts
 interface CommonQueryTableProps<T = AnyObject> {

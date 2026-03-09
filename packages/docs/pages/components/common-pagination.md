@@ -1,10 +1,10 @@
----
+﻿---
 title: CommonPagination
 ---
 
 # CommonPagination 分页组件
 
-`CommonPagination` 是基于 Element Plus `ElPagination` 的轻量封装，统一了常用分页默认值，并使用 `v-model:pageNo`、`v-model:pageSize` 对接列表查询参数。
+`CommonPagination` 是基于 Element Plus `ElPagination` 的轻量封装，提供了后台列表常见的默认分页布局，并通过 `v-model:pageNo`、`v-model:pageSize` 对接列表查询参数。
 
 主要特性：
 
@@ -20,27 +20,25 @@ title: CommonPagination
 
 ## 布局配置
 
-通过 `layout` 可以控制分页器显示顺序与显示内容，适配不同页面布局。
+通过 `layout` 可以调整分页器显示顺序与显示内容。
 
 <demo vue="CommonPagination/layout.vue" ssg="true"/>
 
 ## 插槽内容
 
-默认布局包含 `slot` 区域，可以在分页左侧补充统计信息或提示文案。
+默认布局包含 `slot` 区域，适合补充当前显示范围或说明信息。
 
 <demo vue="CommonPagination/slot.vue" ssg="true"/>
 
 ## 事件回调
 
-组件通过 `change` 统一抛出当前分页参数。
+通过 `change` 可以直接拿到当前分页参数。
 
 <demo vue="CommonPagination/events.vue" ssg="true"/>
 
 ## API
 
 ### Props
-
-除以下自定义约定外，`CommonPagination` 还支持大部分 Element Plus `ElPagination` 原生属性，例如 `pager-count`、`hide-on-single-page`、`small`、`disabled` 等。
 
 | 参数 | 说明 | 类型 | 默认值 |
 | --- | --- | --- | --- |
@@ -52,6 +50,8 @@ title: CommonPagination
 | `background` | 是否显示带背景色的分页按钮 | `boolean` | `true` |
 | `teleported` | 下拉面板是否挂载到 `body` | `boolean` | `true` |
 
+> 组件还支持大部分 Element Plus `ElPagination` 原生属性，例如 `pager-count`、`hide-on-single-page`、`small`、`disabled` 等。
+
 ### Events
 
 | 事件名 | 说明 | 回调参数 |
@@ -62,7 +62,7 @@ title: CommonPagination
 
 | 插槽名 | 说明 |
 | --- | --- |
-| `default` | 自定义分页左侧插槽内容，需要 `layout` 中包含 `slot` |
+| `default` | 自定义分页左侧插槽内容，要求 `layout` 中包含 `slot` |
 
 ## TypeScript 类型
 

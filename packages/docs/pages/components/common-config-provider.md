@@ -1,23 +1,23 @@
----
+﻿---
 title: CommonConfigProvider
 ---
 
 # CommonConfigProvider 全局配置
 
-`CommonConfigProvider` 用于统一配置组件库的默认行为，例如空值占位符、分页参数、表单按钮文字和表单控件宽度等。
+`CommonConfigProvider` 用于统一管理组件库的默认行为，例如空值占位符、分页默认值、表单按钮文案和控件宽度等。它适合放在应用根部，也可以按页面局部覆盖。
 
 主要特性：
 
-- 支持应用级、页面级和局部配置
-- 支持响应式配置更新
-- 支持嵌套配置合并
-- 影响所有读取全局配置的组件
+- 支持应用级、页面级和局部作用域配置
+- 支持嵌套使用，子级会在父级配置基础上继续合并
+- 支持响应式配置，修改后会立即影响内部组件
+- 适合统一中后台页面的交互细节与展示风格
 
 ## 基础用法
 
 ### 应用级配置
 
-在应用入口统一配置，作用于整个应用。
+适合在项目入口统一设置默认风格。
 
 ```vue
 <template>
@@ -29,7 +29,7 @@ title: CommonConfigProvider
 
 ### 页面级配置
 
-在页面内部包裹使用，可覆盖当前页面及子组件配置。
+适合只覆盖某个页面或某一块业务区域的默认行为。
 
 ```vue
 <template>
@@ -39,18 +39,18 @@ title: CommonConfigProvider
 </template>
 ```
 
-### 动态配置
+## 动态配置
 
-使用响应式对象时，修改配置后会实时生效。
+当配置对象本身是响应式数据时，内部组件会自动同步最新配置。
 
 <demo vue="CommonConfigProvider/dynamic.vue" ssg="true"/>
 
 ## 最佳实践
 
-- 在应用根组件统一配置默认风格
-- 页面级仅覆盖需要定制的配置项
-- 使用 `reactive` 管理可变配置对象
-- 尽量按需覆盖，不重复声明完整配置
+- 在应用根组件统一设置品牌化默认配置
+- 在页面级只覆盖当前场景真正需要调整的字段
+- 使用 `reactive` 或 `computed` 管理动态配置
+- 优先做增量覆盖，避免重复声明完整配置对象
 
 ## API
 
@@ -58,9 +58,9 @@ title: CommonConfigProvider
 
 | 参数 | 说明 | 类型 |
 | --- | --- | --- |
-| `component` | 组件库全局配置对象 | `DeepPartial<Config['component']>` |
+| `component` | 组件库配置对象，通常用于覆盖 `config.component` | `DeepPartial<Config['component']>` |
 
-## 常见配置项
+### 常用配置项
 
 | 配置项 | 说明 | 默认值 |
 | --- | --- | --- |
@@ -74,12 +74,17 @@ title: CommonConfigProvider
 ## TypeScript 类型
 
 ```ts
+import type {
+  CommonConfigProviderProps,
+  Config,
+} from '@yetuzi/vue3-query-components'
+```
+
+```ts
 interface CommonConfigProviderProps extends DeepPartial<Config> {}
 ```
 
-### `Config`
+## 参考
 
-默认配置和完整类型定义可参考：
-
-- `packages/components/src/index.ts:15`
-- `packages/components/src/types/index.ts:7`
+- `packages/components/src/index.ts:9`
+- `packages/components/src/types/index.ts:5`
