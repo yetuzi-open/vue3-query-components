@@ -1,31 +1,39 @@
 <script setup lang="ts">
-import { provide, reactive, useAttrs, watchEffect } from 'vue'
+import { cloneDeep, merge } from 'lodash-es'
+import { reactive, provide, useAttrs, watchEffect } from 'vue'
 import { configInjectKey, getCommonProviderConfig } from '../../index'
-import { merge, cloneDeep } from 'lodash-es'
 import type { Config } from '../../index'
 import type { CommonConfigProviderProps } from './type'
 
-/** 定义组件Props */
+/**
+ * 组件 Props 定义
+ * 这里通过 attrs 接收运行时传入的配置对象，并与上层配置合并
+ */
 defineProps<CommonConfigProviderProps>()
 
-/** 获取全局默认配置 */
+/** 获取上层配置或全局默认配置 */
 const config = getCommonProviderConfig()
 
-/** vue sfc 报错，传递给props的值只能在attrs里取 */
+/**
+ * 在 Vue SFC 中，透传给 Provider 的深层对象更适合通过 attrs 读取
+ * 这样可以避免模板展开时的类型与响应式限制问题
+ */
 const attrs = useAttrs()
 
-/** 当前配置对象，合并默认配置和传入的attrs */
+/**
+ * 当前作用域的配置对象
+ * 以“上层配置 + 当前传入配置”的方式生成，并保持响应式更新
+ */
 const currentConfig = reactive<Config>(merge(cloneDeep(config), attrs))
 
-/** 向子组件提供配置对象 */
+/** 向子组件提供合并后的配置对象 */
 provide(configInjectKey, currentConfig)
 
 /**
- * 使用 watchEffect 自动追踪依赖
- * 当attrs变化时，自动更新currentConfig配置
+ * 自动跟踪 attrs 变化
+ * 当外部配置发生变化时，实时同步到当前作用域配置
  */
 watchEffect(() => {
-  /** 这里会自动追踪 attrs 和 props 的使用 */
   Object.assign(currentConfig, merge(cloneDeep(config), attrs))
 })
 
