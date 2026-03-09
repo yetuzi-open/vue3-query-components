@@ -14,11 +14,11 @@ const fetch = async (params?: { pageNo?: number; pageSize?: number }) => {
 
   return {
     list: [
-      { id: 1, name: '张三', status: 1, createTime: 1705278600000 },
-      { id: 2, name: '李四', status: 0, createTime: 1705377600000 },
-      { id: 3, name: '王五', status: 1, createTime: 1705454100000 },
-      { id: 4, name: '赵六', status: 0, createTime: 1705540500000 },
-      { id: 5, name: '孙七', status: 1, createTime: 1705626900000 },
+      { id: 1, name: '??????', status: 1, createTime: 1705278600000 },
+      { id: 2, name: '??????', status: 0, createTime: 1705377600000 },
+      { id: 3, name: '??????', status: 1, createTime: 1705454100000 },
+      { id: 4, name: '??????', status: 0, createTime: 1705540500000 },
+      { id: 5, name: '??????', status: 1, createTime: 1705626900000 },
     ],
     total: 50,
   }
@@ -28,35 +28,36 @@ const form = [
   {
     is: 'input',
     prop: 'name',
-    label: '用户名',
+    label: '????',
     props: {
-      placeholder: '请输入用户名',
+      placeholder: '???????',
     },
   },
   {
     is: 'select',
     prop: 'status',
-    label: '状态',
+    label: '????',
     props: {
-      placeholder: '请选择状态',
+      placeholder: '???????',
       options: [
-        { value: 1, label: '启用' },
-        { value: 0, label: '禁用' },
+        { value: 1, label: '???' },
+        { value: 0, label: '???' },
       ],
     },
   },
 ]
 
 const columns = [
-  { type: 'selection' },
-  { label: 'ID', prop: 'id' },
-  { label: '用户名', prop: 'name' },
+  { type: 'selection', width: 55 },
+  { label: 'ID', prop: 'id', width: 80 },
+  { label: '????', prop: 'name', minWidth: 180 },
   {
-    label: '状态',
+    label: '????',
     prop: 'status',
-    formatter: (row: { status: number }) => (row.status === 1 ? '启用' : '禁用'),
+    width: 120,
+    formatter: (row: { status: number }) => (row.status === 1 ? '???' : '???'),
   },
-  { label: '创建时间', prop: 'createTime', width: 180, type: 'dateTime' },
+  { label: '????', prop: 'createTime', width: 180, type: 'dateTime' },
 ]
 
 function handlePaginationChange(params: { pageNo: number; pageSize: number }) {
@@ -66,12 +67,14 @@ function handlePaginationChange(params: { pageNo: number; pageSize: number }) {
 
 <template>
   <div class="pagination-example">
-    <p>当前分页：第 {{ currentPagination.pageNo }} 页 / 每页 {{ currentPagination.pageSize }} 条</p>
+    <p class="demo-description">?????????????????????????????????</p>
+    <p class="pagination-status">?????? {{ currentPagination.pageNo }} ? / ?? {{ currentPagination.pageSize }} ?</p>
+
     <CommonQueryTable
       :fetch="fetch"
       :form="form"
       :columns="columns"
-      :pagination-page-size="[10, 20, 50]"
+      :pagination-page-sizes="[10, 20, 50]"
       pagination-layout="total, sizes, prev, pager, next, jumper"
       @pagination-change="handlePaginationChange"
     />
@@ -79,8 +82,16 @@ function handlePaginationChange(params: { pageNo: number; pageSize: number }) {
 </template>
 
 <style scoped>
-.pagination-example p {
-  margin-bottom: 16px;
-  color: #606266;
+.pagination-example {
+  display: grid;
+  gap: 12px;
+}
+
+.demo-description,
+.pagination-status {
+  margin: 0;
+  color: var(--vp-c-text-2);
+  font-size: 14px;
+  line-height: 1.6;
 }
 </style>

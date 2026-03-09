@@ -1,7 +1,11 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { ElButton, ElMessage } from 'element-plus'
-import { CommonTable, type CommonTableArrayColumns, type CommonTableExpose } from '@yetuzi/vue3-query-components'
+import {
+  CommonTable,
+  type CommonTableArrayColumns,
+  type CommonTableExpose,
+} from '@yetuzi/vue3-query-components'
 
 interface TableRow {
   id: number
@@ -13,85 +17,94 @@ interface TableRow {
 const tableRef = ref<CommonTableExpose>()
 
 const tableData: TableRow[] = [
-  { id: 1, name: '张三', status: 1, createTime: 1705278600000 },
-  { id: 2, name: '李四', status: 0, createTime: 1705377600000 },
-  { id: 3, name: '王五', status: 1, createTime: 1705454100000 },
-  { id: 4, name: '赵六', status: 0, createTime: 1705540500000 },
-  { id: 5, name: '孙七', status: 1, createTime: 1705626900000 },
+  { id: 1, name: '??', status: 1, createTime: 1705278600000 },
+  { id: 2, name: '??', status: 0, createTime: 1705377600000 },
+  { id: 3, name: '??', status: 1, createTime: 1705454100000 },
+  { id: 4, name: '??', status: 0, createTime: 1705540500000 },
+  { id: 5, name: '??', status: 1, createTime: 1705626900000 },
 ]
 
 const columns: CommonTableArrayColumns<TableRow> = [
   { type: 'selection', width: 55 },
   { type: 'index', width: 55 },
-  { prop: 'name', label: '姓名', sortable: true },
+  { prop: 'name', label: '??', sortable: true },
   {
     prop: 'status',
-    label: '状态',
+    label: '??',
     width: 100,
-    formatter: (row) => (row.status === 1 ? '启用' : '禁用'),
+    formatter: (row) => (row.status === 1 ? '??' : '??'),
   },
-  { prop: 'createTime', label: '创建时间', width: 180, type: 'dateTime' },
+  { prop: 'createTime', label: '????', width: 180, type: 'dateTime' },
 ]
 
 function handleClearSelection() {
   tableRef.value?.clearSelection()
-  ElMessage.info('已清空所有选择')
+  ElMessage.info('????????')
 }
 
 function handleToggleRow() {
   tableRef.value?.toggleRowSelection(tableData[0])
-  ElMessage.success('已切换第一行选中状态')
+  ElMessage.success('???????????')
 }
 
 function handleToggleAll() {
   tableRef.value?.toggleAllSelection()
-  ElMessage.info('已切换全选状态')
+  ElMessage.info('???????')
 }
 
 function handleSetCurrentRow() {
   tableRef.value?.setCurrentRow(tableData[1])
-  ElMessage.success('已将第二行设为当前行')
+  ElMessage.success('???????????')
 }
 
 function handleClearSort() {
   tableRef.value?.clearSort()
-  ElMessage.info('已清空排序')
+  ElMessage.info('?????')
 }
 
 function handleSort() {
   tableRef.value?.sort('createTime', 'descending')
-  ElMessage.success('已按创建时间降序排序')
+  ElMessage.success('??????????')
 }
 
 function handleScrollToTop() {
   tableRef.value?.scrollTo({ top: 0, behavior: 'smooth' })
-  ElMessage.info('已滚动到顶部')
+  ElMessage.info('??????')
 }
 </script>
 
 <template>
   <div class="expose-demo">
+    <p class="demo-description">`CommonTable` ?? `ref` ????????????????????</p>
+
     <CommonTable ref="tableRef" :data="tableData" :columns="columns" height="300px" />
 
     <div class="demo-actions">
-      <ElButton @click="handleClearSelection">清空选择</ElButton>
-      <ElButton @click="handleToggleRow">切换第一行选中</ElButton>
-      <ElButton @click="handleToggleAll">全选 / 取消全选</ElButton>
-      <ElButton @click="handleSetCurrentRow">设置当前行</ElButton>
-      <ElButton @click="handleClearSort">清空排序</ElButton>
-      <ElButton @click="handleSort">按时间降序</ElButton>
-      <ElButton @click="handleScrollToTop">滚动到顶部</ElButton>
+      <ElButton @click="handleClearSelection">????</ElButton>
+      <ElButton @click="handleToggleRow">???????</ElButton>
+      <ElButton @click="handleToggleAll">?? / ????</ElButton>
+      <ElButton @click="handleSetCurrentRow">?????</ElButton>
+      <ElButton @click="handleClearSort">????</ElButton>
+      <ElButton @click="handleSort">?????</ElButton>
+      <ElButton @click="handleScrollToTop">?????</ElButton>
     </div>
   </div>
 </template>
 
 <style scoped>
 .expose-demo {
-  padding: 20px;
+  display: grid;
+  gap: 16px;
+}
+
+.demo-description {
+  margin: 0;
+  color: var(--vp-c-text-2);
+  font-size: 14px;
+  line-height: 1.6;
 }
 
 .demo-actions {
-  margin-top: 20px;
   display: flex;
   gap: 10px;
   flex-wrap: wrap;

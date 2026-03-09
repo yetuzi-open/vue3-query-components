@@ -7,22 +7,25 @@ const formRef = ref<CommonFormExpose>()
 const baseForm = [
   {
     is: 'select',
-    label: '主体类型',
+    label: '????',
     prop: 'type',
     initialValue: 'person',
     props: {
       options: [
-        { value: 'person', label: '个人' },
-        { value: 'company', label: '企业' },
+        { value: 'person', label: '????' },
+        { value: 'company', label: '????' },
       ],
     },
   },
   {
     is: 'input',
-    label: '名称',
+    label: '???',
     prop: 'name',
+    props: {
+      placeholder: '????????',
+    },
     formItem: {
-      rules: [{ required: true, message: '请输入名称' }],
+      rules: [{ required: true, message: '????????', trigger: 'blur' }],
     },
   },
 ]
@@ -32,10 +35,21 @@ const companyFields = computed(() => {
     return [
       {
         is: 'input',
-        label: '公司名称',
+        label: '????',
         prop: 'companyName',
+        props: {
+          placeholder: '???????',
+        },
         formItem: {
-          rules: [{ required: true, message: '请输入公司名称' }],
+          rules: [{ required: true, message: '???????', trigger: 'blur' }],
+        },
+      },
+      {
+        is: 'input',
+        label: '????????',
+        prop: 'creditCode',
+        props: {
+          placeholder: '???????????',
         },
       },
     ]
@@ -47,10 +61,22 @@ const dynamicForm = computed(() => [...baseForm, ...companyFields.value])
 </script>
 
 <template>
-  <CommonForm
-    ref="formRef"
-    :form="dynamicForm"
-    :inline="false"
-    label-width="120px"
-  />
+  <div class="form-demo">
+    <p class="demo-description">????????????????????/??????????????</p>
+    <CommonForm ref="formRef" :form="dynamicForm" :inline="false" label-width="120px" />
+  </div>
 </template>
+
+<style scoped>
+.form-demo {
+  display: grid;
+  gap: 12px;
+}
+
+.demo-description {
+  margin: 0;
+  color: var(--vp-c-text-2);
+  font-size: 14px;
+  line-height: 1.6;
+}
+</style>

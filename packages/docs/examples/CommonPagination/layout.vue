@@ -11,8 +11,10 @@ const fullPageSize = ref(20)
 
 <template>
   <div class="pagination-group">
-    <div>
-      <div class="pagination-title">紧凑布局</div>
+    <p class="demo-description">?? `layout` ?????????????????????</p>
+
+    <div class="pagination-card">
+      <div class="pagination-title">????</div>
       <CommonPagination
         v-model:pageNo="compactPageNo"
         v-model:pageSize="compactPageSize"
@@ -21,8 +23,8 @@ const fullPageSize = ref(20)
       />
     </div>
 
-    <div>
-      <div class="pagination-title">默认布局</div>
+    <div class="pagination-card">
+      <div class="pagination-title">????</div>
       <CommonPagination v-model:pageNo="fullPageNo" v-model:pageSize="fullPageSize" :total="320" />
     </div>
   </div>
@@ -31,7 +33,20 @@ const fullPageSize = ref(20)
 <style scoped>
 .pagination-group {
   display: grid;
-  gap: 20px;
+  gap: 16px;
+}
+
+.demo-description {
+  margin: 0;
+  color: var(--vp-c-text-2);
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.pagination-card {
+  padding: 16px;
+  border: 1px solid var(--vp-c-divider);
+  border-radius: 12px;
 }
 
 .pagination-title {

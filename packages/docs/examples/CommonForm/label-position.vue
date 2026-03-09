@@ -1,25 +1,36 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { ElRadioGroup, ElRadioButton } from 'element-plus'
+import { ElRadioButton, ElRadioGroup } from 'element-plus'
 import { CommonForm } from '@yetuzi/vue3-query-components'
 
 const labelPosition = ref<'left' | 'right' | 'top'>('right')
 
 const form = [
-  { is: 'input', label: '姓名', prop: 'name' },
   {
     is: 'input',
-    label: '邮箱',
+    label: '????',
+    prop: 'name',
+    props: {
+      placeholder: '???????',
+    },
+  },
+  {
+    is: 'input',
+    label: '?????',
     prop: 'email',
+    props: {
+      placeholder: '????????',
+    },
   },
   {
     is: 'select',
-    label: '状态',
+    label: '????',
     prop: 'status',
     props: {
+      placeholder: '???????',
       options: [
-        { value: 1, label: '启用' },
-        { value: 0, label: '禁用' },
+        { value: 1, label: '???' },
+        { value: 0, label: '???' },
       ],
     },
   },
@@ -27,13 +38,29 @@ const form = [
 </script>
 
 <template>
-  <div>
-    <el-radio-group v-model="labelPosition" style="margin-bottom: 16px">
-      <el-radio-button label="left">left</el-radio-button>
-      <el-radio-button label="right">right</el-radio-button>
-      <el-radio-button label="top">top</el-radio-button>
-    </el-radio-group>
+  <div class="label-demo">
+    <p class="demo-description">??????????????????????????????</p>
+
+    <ElRadioGroup v-model="labelPosition" style="margin-bottom: 16px">
+      <ElRadioButton label="left">left</ElRadioButton>
+      <ElRadioButton label="right">right</ElRadioButton>
+      <ElRadioButton label="top">top</ElRadioButton>
+    </ElRadioGroup>
 
     <CommonForm :form="form" :inline="false" :label-position="labelPosition" label-width="100px" />
   </div>
 </template>
+
+<style scoped>
+.label-demo {
+  display: grid;
+  gap: 12px;
+}
+
+.demo-description {
+  margin: 0;
+  color: var(--vp-c-text-2);
+  font-size: 14px;
+  line-height: 1.6;
+}
+</style>

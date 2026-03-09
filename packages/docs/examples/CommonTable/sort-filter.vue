@@ -10,29 +10,29 @@ interface TableRow {
 }
 
 const tableData: TableRow[] = [
-  { name: '张三', age: 28, department: '技术部', salary: 15000, level: 'P7' },
-  { name: '李四', age: 32, department: '产品部', salary: 18000, level: 'P8' },
-  { name: '王五', age: 26, department: '设计部', salary: 12000, level: 'P6' },
-  { name: '赵六', age: 30, department: '技术部', salary: 20000, level: 'P8' },
+  { name: '??', age: 28, department: '???', salary: 15000, level: 'P7' },
+  { name: '??', age: 32, department: '???', salary: 18000, level: 'P8' },
+  { name: '??', age: 26, department: '???', salary: 12000, level: 'P6' },
+  { name: '??', age: 30, department: '???', salary: 20000, level: 'P8' },
 ]
 
 const columns: CommonTableArrayColumns<TableRow> = [
-  { prop: 'name', label: '姓名', sortable: true },
-  { prop: 'age', label: '年龄', sortable: true },
+  { prop: 'name', label: '??', sortable: true },
+  { prop: 'age', label: '??', sortable: true },
   {
     prop: 'department',
-    label: '部门',
+    label: '??',
     filters: [
-      { text: '技术部', value: '技术部' },
-      { text: '产品部', value: '产品部' },
-      { text: '设计部', value: '设计部' },
+      { text: '???', value: '???' },
+      { text: '???', value: '???' },
+      { text: '???', value: '???' },
     ],
     filterMethod: (value, row) => row.department === value,
   },
-  { prop: 'salary', label: '薪资', sortable: true },
+  { prop: 'salary', label: '??', sortable: true },
   {
     prop: 'level',
-    label: '级别',
+    label: '??',
     filters: [
       { text: 'P6', value: 'P6' },
       { text: 'P7', value: 'P7' },
@@ -44,5 +44,22 @@ const columns: CommonTableArrayColumns<TableRow> = [
 </script>
 
 <template>
-  <CommonTable :data="tableData" :columns="columns" />
+  <div class="table-demo">
+    <p class="demo-description">??????????????????????????</p>
+    <CommonTable :data="tableData" :columns="columns" />
+  </div>
 </template>
+
+<style scoped>
+.table-demo {
+  display: grid;
+  gap: 12px;
+}
+
+.demo-description {
+  margin: 0;
+  color: var(--vp-c-text-2);
+  font-size: 14px;
+  line-height: 1.6;
+}
+</style>

@@ -5,36 +5,40 @@ import { CommonForm } from '@yetuzi/vue3-query-components'
 const form = [
   {
     is: 'input',
-    label: '姓名',
+    label: '???',
     prop: 'name',
     formItem: {
       rules: [
-        { required: true, message: '请输入姓名', trigger: 'blur' },
-        { min: 2, max: 10, message: '长度应为 2 到 10 个字符', trigger: 'blur' },
+        { required: true, message: '????????', trigger: 'blur' },
+        { min: 2, max: 10, message: '?????? 2 - 10 ???', trigger: 'blur' },
       ],
+    },
+    props: {
+      placeholder: '????????',
     },
   },
   {
     is: 'select',
-    label: '性别',
-    prop: 'gender',
-    initialValue: '',
+    label: '????',
+    prop: 'level',
+    initialValue: 'a',
     props: {
-      placeholder: '请选择性别',
+      placeholder: '???????',
       options: [
-        { value: 'male', label: '男' },
-        { value: 'female', label: '女' },
+        { value: 'a', label: 'A?' },
+        { value: 'b', label: 'B?' },
+        { value: 'c', label: 'C?' },
       ],
       clearable: true,
     },
   },
   {
     is: 'date-picker',
-    label: '生日',
-    prop: 'birthday',
+    label: '????',
+    prop: 'followDate',
     props: {
       type: 'date',
-      placeholder: '请选择生日',
+      placeholder: '???????',
       clearable: true,
       format: 'YYYY-MM-DD',
       valueFormat: 'YYYY-MM-DD',
@@ -42,38 +46,39 @@ const form = [
   },
   {
     is: 'radio',
-    label: '状态',
+    label: '????',
     prop: 'status',
-    initialValue: 1,
+    initialValue: 'pending',
     props: {
       options: [
-        { value: 1, label: '启用' },
-        { value: 0, label: '禁用' },
+        { value: 'pending', label: '???' },
+        { value: 'tracking', label: '???' },
+        { value: 'done', label: '???' },
       ],
     },
   },
   {
     is: 'check-box',
-    label: '爱好',
-    prop: 'hobbies',
-    initialValue: [],
+    label: '????',
+    prop: 'channels',
+    initialValue: ['wechat'],
     props: {
       options: [
-        { value: 'reading', label: '阅读' },
-        { value: 'music', label: '音乐' },
-        { value: 'sports', label: '运动' },
-        { value: 'travel', label: '旅行' },
+        { value: 'wechat', label: '??' },
+        { value: 'phone', label: '??' },
+        { value: 'email', label: '??' },
+        { value: 'visit', label: '??' },
       ],
     },
   },
   {
     is: 'switch',
-    label: '是否订阅',
+    label: '????',
     prop: 'subscribe',
     initialValue: true,
     props: {
-      activeText: '是',
-      inactiveText: '否',
+      activeText: '??',
+      inactiveText: '??',
       activeValue: true,
       inactiveValue: false,
     },
@@ -81,16 +86,33 @@ const form = [
 ]
 
 function handleSubmit(formData: any) {
-  console.log('表单提交数据：', formData)
-  ElMessage.success('提交成功，请查看控制台输出')
+  console.log('????????', formData)
+  ElMessage.success('?????????????')
 }
 
 function handleReset(formData: any) {
-  console.log('表单重置后数据：', formData)
-  ElMessage.info('表单已重置')
+  console.log('?????????', formData)
+  ElMessage.info('?????')
 }
 </script>
 
 <template>
-  <CommonForm :form="form" @submit="handleSubmit" @reset="handleReset" />
+  <div class="form-demo">
+    <p class="demo-description">?????????/?????????????????????????</p>
+    <CommonForm :form="form" @submit="handleSubmit" @reset="handleReset" />
+  </div>
 </template>
+
+<style scoped>
+.form-demo {
+  display: grid;
+  gap: 12px;
+}
+
+.demo-description {
+  margin: 0;
+  color: var(--vp-c-text-2);
+  font-size: 14px;
+  line-height: 1.6;
+}
+</style>

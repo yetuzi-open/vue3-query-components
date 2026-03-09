@@ -5,127 +5,116 @@ import { CommonConfigProvider, CommonForm, CommonTable } from '@yetuzi/vue3-quer
 const dynamicConfig = reactive({
   placeholder: '--',
   form: {
-    submitText: '保存',
-    resetText: '重置',
+    submitText: '????',
+    resetText: '????',
     formItem: {
       components: {
-        width: '260px',
+        width: '240px',
       },
     },
   },
 })
 
-const formConfig = [
+const configForm = [
   {
     is: 'input',
-    label: '占位符',
+    label: '?????',
     prop: 'placeholder',
     initialValue: dynamicConfig.placeholder,
   },
   {
     is: 'input',
-    label: '提交按钮文案',
+    label: '??????',
     prop: 'submitText',
     initialValue: dynamicConfig.form.submitText,
   },
   {
     is: 'input',
-    label: '重置按钮文案',
+    label: '??????',
     prop: 'resetText',
     initialValue: dynamicConfig.form.resetText,
   },
   {
     is: 'input',
-    label: '控件宽度',
+    label: '??????',
     prop: 'width',
     initialValue: dynamicConfig.form.formItem.components.width,
   },
 ]
 
 const tableData = [
-  { id: 1, name: '张三', age: 25, email: 'zhangsan@example.com' },
-  { id: 2, name: '', age: null, email: 'lisi@example.com' },
-  { id: 3, name: '王五', age: 30, email: '' },
-  { id: 4, name: null, age: null, email: null },
+  { id: 1, name: '????', owner: '??', phone: '13800001234' },
+  { id: 2, name: '', owner: null, phone: '13800005678' },
+  { id: 3, name: '????', owner: '??', phone: '' },
 ]
 
 const tableColumns = [
   { prop: 'id', label: 'ID', width: 80 },
-  { prop: 'name', label: '姓名', width: 120 },
-  { prop: 'age', label: '年龄', width: 80 },
-  { prop: 'email', label: '邮箱' },
+  { prop: 'name', label: '????', width: 160 },
+  { prop: 'owner', label: '???', width: 120 },
+  { prop: 'phone', label: '????' },
 ]
 
-const handleSubmit = (data: any) => {
-  if (data.placeholder) {
-    dynamicConfig.placeholder = data.placeholder
-  }
-  if (data.submitText) {
-    dynamicConfig.form.submitText = data.submitText
-  }
-  if (data.resetText) {
-    dynamicConfig.form.resetText = data.resetText
-  }
-  if (data.width) {
-    dynamicConfig.form.formItem.components.width = data.width
-  }
+const syncConfig = (values: Record<string, string>) => {
+  dynamicConfig.placeholder = values.placeholder || dynamicConfig.placeholder
+  dynamicConfig.form.submitText = values.submitText || dynamicConfig.form.submitText
+  dynamicConfig.form.resetText = values.resetText || dynamicConfig.form.resetText
+  dynamicConfig.form.formItem.components.width = values.width || dynamicConfig.form.formItem.components.width
 }
 </script>
 
 <template>
   <div class="dynamic-config-demo">
-    <div class="current-config">
-      <h4>当前配置：</h4>
-      <pre>{{ JSON.stringify(dynamicConfig, null, 2) }}</pre>
-    </div>
+    <p class="demo-description">????????????????????????????????????????????</p>
 
     <CommonConfigProvider :component="dynamicConfig">
-      <CommonForm
-        :form="formConfig"
-        :inline="true"
-        @submit="handleSubmit"
-        @reset="handleSubmit"
-      />
+      <CommonForm :form="configForm" :inline="true" @submit="syncConfig" @reset="syncConfig" />
+
+      <div class="current-config">
+        <h4>????</h4>
+        <pre>{{ JSON.stringify(dynamicConfig, null, 2) }}</pre>
+      </div>
 
       <div class="table-section">
-        <h4>表格展示：空值占位符效果</h4>
-        <CommonTable :data="tableData" :columns="tableColumns" />
+        <h4>????</h4>
+        <CommonTable :data="tableData" :columns="tableColumns" border />
       </div>
     </CommonConfigProvider>
   </div>
 </template>
 
 <style scoped>
-.current-config {
-  margin-top: 16px;
-  padding: 12px;
-  background-color: #fff;
-  border-radius: 4px;
+.dynamic-config-demo {
+  display: grid;
+  gap: 16px;
 }
 
-.current-config h4 {
-  margin: 0 0 8px 0;
+.demo-description {
+  margin: 0;
+  color: var(--vp-c-text-2);
   font-size: 14px;
-  color: #303133;
+  line-height: 1.6;
+}
+
+.current-config,
+.table-section {
+  padding: 16px;
+  border: 1px solid var(--vp-c-divider);
+  border-radius: 12px;
+}
+
+.current-config h4,
+.table-section h4 {
+  margin: 0 0 12px;
+  font-size: 14px;
 }
 
 .current-config pre {
   margin: 0;
-  padding: 8px;
-  background-color: #f5f7fa;
-  border-radius: 4px;
+  padding: 12px;
+  background-color: var(--vp-c-bg-soft);
+  border-radius: 8px;
   font-size: 12px;
-  color: #606266;
   overflow-x: auto;
-}
-
-.table-section {
-  margin-top: 20px;
-}
-
-.table-section h4 {
-  margin: 0 0 12px 0;
-  font-size: 14px;
-  color: #303133;
 }
 </style>

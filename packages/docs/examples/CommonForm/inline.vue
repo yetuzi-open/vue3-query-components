@@ -2,37 +2,46 @@
 import { CommonForm } from '@yetuzi/vue3-query-components'
 
 const form = [
-  { is: 'input', label: '姓名', prop: 'name' },
+  {
+    is: 'input',
+    label: '???',
+    prop: 'keyword',
+    props: {
+      placeholder: '??????? / ???',
+    },
+  },
   {
     is: 'select',
-    label: '性别',
-    prop: 'gender',
+    label: '????',
+    prop: 'source',
     props: {
-      placeholder: '请选择性别',
+      placeholder: '???????',
       options: [
-        { value: 'male', label: '男' },
-        { value: 'female', label: '女' },
+        { value: 'douyin', label: '??' },
+        { value: 'wechat', label: '??' },
+        { value: 'offline', label: '????' },
       ],
     },
   },
   {
     is: 'date-picker',
-    label: '生日',
-    prop: 'birthday',
+    label: '????',
+    prop: 'createdAt',
     props: {
       type: 'date',
-      placeholder: '请选择生日',
+      placeholder: '???????',
     },
   },
   {
     is: 'radio',
-    label: '状态',
+    label: '????',
     prop: 'status',
-    initialValue: 1,
+    initialValue: 'all',
     props: {
       options: [
-        { value: 1, label: '启用' },
-        { value: 0, label: '禁用' },
+        { value: 'all', label: '??' },
+        { value: 'pending', label: '???' },
+        { value: 'done', label: '???' },
       ],
     },
   },
@@ -40,5 +49,22 @@ const form = [
 </script>
 
 <template>
-  <CommonForm :form="form" inline />
+  <div class="form-demo">
+    <p class="demo-description">????????????????????????????</p>
+    <CommonForm :form="form" inline />
+  </div>
 </template>
+
+<style scoped>
+.form-demo {
+  display: grid;
+  gap: 12px;
+}
+
+.demo-description {
+  margin: 0;
+  color: var(--vp-c-text-2);
+  font-size: 14px;
+  line-height: 1.6;
+}
+</style>

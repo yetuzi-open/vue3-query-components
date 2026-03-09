@@ -11,12 +11,28 @@ const end = computed(() => Math.min(pageNo.value * pageSize.value, total.value))
 </script>
 
 <template>
-  <CommonPagination v-model:pageNo="pageNo" v-model:pageSize="pageSize" :total="total">
-    <span class="slot-text">显示第 {{ start }} - {{ end }} 条</span>
-  </CommonPagination>
+  <div class="slot-demo">
+    <p class="demo-description">?????? `slot` ?????????????????????????????</p>
+
+    <CommonPagination v-model:pageNo="pageNo" v-model:pageSize="pageSize" :total="total">
+      <span class="slot-text">????? {{ start }} - {{ end }} ???</span>
+    </CommonPagination>
+  </div>
 </template>
 
 <style scoped>
+.slot-demo {
+  display: grid;
+  gap: 12px;
+}
+
+.demo-description {
+  margin: 0;
+  color: var(--vp-c-text-2);
+  font-size: 14px;
+  line-height: 1.6;
+}
+
 .slot-text {
   color: var(--vp-c-text-2);
   font-size: 14px;

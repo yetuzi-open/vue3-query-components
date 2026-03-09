@@ -13,47 +13,65 @@ interface TableRow {
 
 const tableData: TableRow[] = [
   {
-    name: '张三',
-    email: 'zhangsan@example.com',
+    name: '??',
+    email: 'zhangmin@example.com',
     phone: '13800138001',
-    address: '北京市朝阳区建国路 88 号',
-    department: '技术部',
+    address: '????????? 88 ?',
+    department: '???',
     salary: '15000',
   },
   {
-    name: '李四',
-    email: 'lisi@example.com',
+    name: '??',
+    email: 'liting@example.com',
     phone: '13800138002',
-    address: '上海市浦东新区陆家嘴金融中心',
-    department: '产品部',
+    address: '?????????? 88 ?',
+    department: '???',
     salary: '18000',
   },
   {
-    name: '王五',
-    email: 'wangwu@example.com',
+    name: '??',
+    email: 'wangkai@example.com',
     phone: '13800138003',
-    address: '广州市天河区珠江新城',
-    department: '设计部',
+    address: '??????????',
+    department: '???',
     salary: '12000',
   },
 ]
 
 const columns: CommonTableArrayColumns<TableRow> = [
-  { prop: 'name', label: '姓名', width: 100, fixed: 'left' },
-  { prop: 'email', label: '邮箱', width: 220 },
-  { prop: 'phone', label: '电话', width: 140 },
-  { prop: 'address', label: '地址', width: 260, showOverflowTooltip: true },
-  { prop: 'department', label: '部门', width: 100 },
-  { prop: 'salary', label: '薪资', width: 100 },
-  { prop: 'operation', label: '操作', width: 160, fixed: 'right' },
+  { prop: 'name', label: '??', width: 100, fixed: 'left' },
+  { prop: 'email', label: '??', width: 220 },
+  { prop: 'phone', label: '??', width: 140 },
+  { prop: 'address', label: '??', width: 260, showOverflowTooltip: true },
+  { prop: 'department', label: '??', width: 100 },
+  { prop: 'salary', label: '??', width: 100 },
+  { prop: 'operation', label: '??', width: 160, fixed: 'right' },
 ]
 </script>
 
 <template>
-  <CommonTable :data="tableData" :columns="columns" border>
-    <template #operation>
-      <ElButton size="small" type="primary">编辑</ElButton>
-      <ElButton size="small" type="danger">删除</ElButton>
-    </template>
-  </CommonTable>
+  <div class="table-demo">
+    <p class="demo-description">??????????????????????????????</p>
+
+    <CommonTable :data="tableData" :columns="columns" border>
+      <template #operation>
+        <ElButton size="small" type="primary">??</ElButton>
+        <ElButton size="small" type="danger">??</ElButton>
+      </template>
+    </CommonTable>
+  </div>
 </template>
+
+<style scoped>
+.table-demo {
+  display: grid;
+  gap: 12px;
+}
+
+.demo-description {
+  margin: 0;
+  color: var(--vp-c-text-2);
+  font-size: 14px;
+  line-height: 1.6;
+}
+</style>

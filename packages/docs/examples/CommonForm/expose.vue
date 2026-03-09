@@ -8,22 +8,28 @@ const formRef = ref<CommonFormExpose>()
 const form = [
   {
     is: 'input' as const,
-    label: '姓名',
+    label: '???',
     prop: 'name',
     initialValue: '',
+    props: {
+      placeholder: '????????',
+    },
     formItem: {
-      rules: [{ required: true, message: '请输入姓名', trigger: 'blur' }],
+      rules: [{ required: true, message: '????????', trigger: 'blur' }],
     },
   },
   {
     is: 'input' as const,
-    label: '邮箱',
+    label: '????',
     prop: 'email',
     initialValue: '',
+    props: {
+      placeholder: '???????',
+    },
     formItem: {
       rules: [
-        { required: true, message: '请输入邮箱', trigger: 'blur' },
-        { type: 'email', message: '请输入正确的邮箱地址', trigger: 'blur' },
+        { required: true, message: '???????', trigger: 'blur' },
+        { type: 'email', message: '??????????', trigger: 'blur' },
       ],
     },
   },
@@ -32,64 +38,74 @@ const form = [
 async function handleValidate() {
   const valid = await formRef.value?.validate()
   if (valid) {
-    ElMessage.success('校验通过')
+    ElMessage.success('??????')
   } else {
-    ElMessage.error('校验失败')
+    ElMessage.error('???????')
   }
 }
 
 function handleValidateField() {
   formRef.value?.validateField('name', (errorMessage) => {
     if (errorMessage) {
-      ElMessage.error(`姓名字段校验失败：${errorMessage}`)
-    } else {
-      ElMessage.success('姓名字段校验通过')
+      ElMessage.error('??????????' + errorMessage)
+      return
     }
+    ElMessage.success('?????????')
   })
 }
 
 function handleReset() {
   formRef.value?.resetFields()
-  ElMessage.info('表单已重置')
+  ElMessage.info('?????')
 }
 
 function handleClearValidate() {
   formRef.value?.clearValidate()
-  ElMessage.info('校验信息已清除')
+  ElMessage.info('???????')
 }
 
 function handleScrollToField() {
   formRef.value?.scrollToField('email')
+  ElMessage.info('????????')
 }
 
 function handleGetFormData() {
-  console.log('表单数据：', formRef.value?.formData)
-  ElMessage.success('请查看控制台输出的表单数据')
+  console.log('???????', formRef.value?.formData)
+  ElMessage.success('????????????????')
 }
 </script>
 
 <template>
   <div class="expose-demo">
+    <p class="demo-description">?? `ref` ????????????????????????????</p>
+
     <CommonForm ref="formRef" :form="form" />
 
     <div class="demo-actions">
-      <ElButton @click="handleValidate">校验表单</ElButton>
-      <ElButton @click="handleValidateField">校验姓名字段</ElButton>
-      <ElButton @click="handleReset">重置表单</ElButton>
-      <ElButton @click="handleClearValidate">清除校验</ElButton>
-      <ElButton @click="handleScrollToField">滚动到邮箱</ElButton>
-      <ElButton @click="handleGetFormData">获取表单数据</ElButton>
+      <ElButton @click="handleValidate">????</ElButton>
+      <ElButton @click="handleValidateField">?????</ElButton>
+      <ElButton @click="handleReset">????</ElButton>
+      <ElButton @click="handleClearValidate">????</ElButton>
+      <ElButton @click="handleScrollToField">?????</ElButton>
+      <ElButton @click="handleGetFormData">??????</ElButton>
     </div>
   </div>
 </template>
 
 <style scoped>
 .expose-demo {
-  padding: 20px;
+  display: grid;
+  gap: 16px;
+}
+
+.demo-description {
+  margin: 0;
+  color: var(--vp-c-text-2);
+  font-size: 14px;
+  line-height: 1.6;
 }
 
 .demo-actions {
-  margin-top: 20px;
   display: flex;
   gap: 10px;
   flex-wrap: wrap;

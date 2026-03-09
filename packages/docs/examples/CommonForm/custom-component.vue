@@ -5,24 +5,34 @@ import { CommonForm } from '@yetuzi/vue3-query-components'
 const form = [
   {
     is: 'input',
-    label: '名称',
+    label: '????',
     prop: 'name',
+    props: {
+      placeholder: '???????',
+    },
   },
   {
     is: ElInputNumber,
-    label: '数量',
-    prop: 'quantity',
-    initialValue: 1,
+    label: '?????',
+    prop: 'threshold',
+    initialValue: 10,
+    props: {
+      min: 1,
+      max: 999,
+    },
   },
   {
-    is: 'rate',
-    label: '评分',
+    is: ElRate,
+    label: '????',
     prop: 'rating',
-    initialValue: 3,
+    initialValue: 4,
+    props: {
+      showScore: true,
+    },
   },
   {
-    is: 'color-picker',
-    label: '颜色',
+    is: ElColorPicker,
+    label: '???',
     prop: 'color',
     initialValue: '#409EFF',
   },
@@ -30,13 +40,22 @@ const form = [
 </script>
 
 <template>
-  <CommonForm :form="form" :inline="false" label-width="100px">
-    <template #rating="{ value, updateValue }">
-      <ElRate :model-value="value" @update:modelValue="updateValue" show-score />
-    </template>
-
-    <template #color="{ value, updateValue }">
-      <ElColorPicker :model-value="value" @update:modelValue="updateValue" />
-    </template>
-  </CommonForm>
+  <div class="form-demo">
+    <p class="demo-description">???????????????? Vue ?????????????</p>
+    <CommonForm :form="form" :inline="false" label-width="100px" />
+  </div>
 </template>
+
+<style scoped>
+.form-demo {
+  display: grid;
+  gap: 12px;
+}
+
+.demo-description {
+  margin: 0;
+  color: var(--vp-c-text-2);
+  font-size: 14px;
+  line-height: 1.6;
+}
+</style>
