@@ -42,9 +42,9 @@ const form = [
     <p class="demo-description">标签位置会直接影响表单阅读节奏，详情页和录入页常见用法如下。</p>
 
     <ElRadioGroup v-model="labelPosition" style="margin-bottom: 16px">
-      <ElRadioButton label="left">left</ElRadioButton>
-      <ElRadioButton label="right">right</ElRadioButton>
-      <ElRadioButton label="top">top</ElRadioButton>
+      <ElRadioButton value="left">left</ElRadioButton>
+      <ElRadioButton value="right">right</ElRadioButton>
+      <ElRadioButton value="top">top</ElRadioButton>
     </ElRadioGroup>
 
     <CommonForm :form="form" :inline="false" :label-position="labelPosition" label-width="100px" />
@@ -64,3 +64,4 @@ const form = [
   line-height: 1.6;
 }
 </style>
+
