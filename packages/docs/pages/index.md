@@ -18,6 +18,9 @@ hero:
     - theme: alt
       text: Gitee
       link: https://gitee.com/yetuzi-open/vue3-query-components
+    - theme: alt
+      text: GitCode
+      link: https://gitcode.com/yetuzi/vue3-query-components
 
 features:
   - icon: 🚀

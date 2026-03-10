@@ -44,6 +44,10 @@ export default defineConfig({
         link: 'https://gitee.com/yetuzi-open/vue3-query-components',
       },
       {
+        text: 'GitCode',
+        link: 'https://gitcode.com/yetuzi/vue3-query-components',
+      },
+      {
         text: `v${version}`,
         items: [
           {
