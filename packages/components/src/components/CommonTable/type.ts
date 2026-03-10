@@ -86,6 +86,15 @@ export type CommonTableColumn<T extends AnyObject> =
  */
 export type CommonTableArrayColumns<T extends AnyObject> = Array<CommonTableColumnRoot<T>>
 
+type CommonTableBuiltInColumnType =
+  | 'default'
+  | 'index'
+  | 'selection'
+  | 'expand'
+  | 'date'
+  | 'dateTime'
+  | 'dict'
+
 /**
  * 表格列基础接口
  * 定义所有列类型共享的公共属性
@@ -97,7 +106,7 @@ interface TableColumnBase<T extends AnyObject>
   /** 列字段名，支持数据类型的 key 或任意字符串 */
   prop?: keyof T | (string & {})
   /** 列类型 */
-  type?: CommonTableColumnType | (string & {})
+  type?: CommonTableBuiltInColumnType | (string & {})
 }
 
 /**
@@ -278,7 +287,7 @@ export type CommonTableColumnRoot<T extends AnyObject> =
  * columnType = 'dict'
  * ```
  */
-export type CommonTableColumnType = Extract<CommonTableColumnRoot<AnyObject>, { type: any }>['type']
+export type CommonTableColumnType = CommonTableBuiltInColumnType
 
 /**
  * 表格列对象形式类型

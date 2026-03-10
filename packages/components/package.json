@@ -23,10 +23,9 @@
   "scripts": {
     "dev": "node scripts/dev-watch.js",
     "build": "node scripts/build-optimized.js",
-    "build:legacy": "node scripts/build.js",
-    "build:patch": "node scripts/build.js patch",
-    "build:minor": "node scripts/build.js minor",
-    "build:major": "node scripts/build.js major",
+    "build:patch": "node scripts/build-optimized.js patch",
+    "build:minor": "node scripts/build-optimized.js minor",
+    "build:major": "node scripts/build-optimized.js major",
     "publish:patch": "node scripts/publish.js patch",
     "publish:minor": "node scripts/publish.js minor",
     "publish:major": "node scripts/publish.js major",
@@ -36,8 +35,7 @@
     "release:patch": "standard-version --release-as patch",
     "release:minor": "standard-version --release-as minor",
     "release:major": "standard-version --release-as major",
-    "release:dry": "standard-version --dry-run",
-    "version": "node scripts/generate-version-info.js"
+    "release:dry": "standard-version --dry-run"
   },
   "keywords": [
     "vue3",
@@ -73,12 +71,13 @@
     "vue-hooks-plus": "^2.4.1"
   },
   "devDependencies": {
+    "@microsoft/api-extractor": "^7.57.7",
     "@types/node": "^22.0.0",
     "@vitejs/plugin-vue": "^6.0.3",
     "@vue/tsconfig": "^0.8.0",
     "sass": "^1.97.0",
     "standard-version": "^9.5.0",
-    "typescript": "~5.9.0",
+    "typescript": "~5.8.2",
     "unplugin-element-plus": "^0.11.2",
     "vite": "^6.4.1",
     "vite-plugin-dts": "^4.5.4",

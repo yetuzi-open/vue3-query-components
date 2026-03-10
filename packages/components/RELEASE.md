@@ -32,7 +32,6 @@ npm run publish:major
 
 - 仅构建当前版本
 - 输出 `dist/` 产物
-- 生成 `dist/version-info.json`
 
 ### `build:patch|minor|major`
 

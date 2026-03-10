@@ -146,7 +146,6 @@ try {
   console.log(`- dist/index.js      (${jsSize} KB) - ES Module`);
   console.log(`- dist/index.d.ts    (${dtsSize} KB) - TypeScript 声明文件`);
   console.log(`- dist/index.css     (${cssSize} KB) - 样式文件`);
-  console.log(`- dist/version-info.json - 版本信息`);
 
   // 清理 dist/node_modules 目录（vite-plugin-dts 可能会创建）
   const distNodeModulesPath = path.resolve(process.cwd(), "dist/node_modules");
@@ -155,22 +154,6 @@ try {
     console.log("🧹 清理 dist/node_modules 目录...");
     rmSync(distNodeModulesPath, { recursive: true, force: true });
     console.log("   ✅ 已删除 dist/node_modules");
-  }
-
-  // 生成版本信息（供 docs 使用）
-  try {
-    console.log("");
-    console.log("📝 生成版本信息...");
-    const versionInfoStartTime = performance.now();
-
-    run("node scripts/generate-version-info.js");
-
-    const versionInfoEndTime = performance.now();
-    console.log(
-      `⏱️ 版本信息生成耗时: ${(versionInfoEndTime - versionInfoStartTime).toFixed(2)}ms`,
-    );
-  } catch (error) {
-    console.warn("⚠️  版本信息生成失败，但不影响构建");
   }
 
   // 总体性能统计
