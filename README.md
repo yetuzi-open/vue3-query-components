@@ -6,7 +6,7 @@
 
 专为 Vue3 设计的高效查询组件，提升开发效率
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](../../LICENSE)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](./LICENSE)
 [![Vue](https://img.shields.io/badge/Vue-3.5+-brightgreen)](https://vuejs.org/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.9+-blue)](https://www.typescriptlang.org/)
 [![Element Plus](https://img.shields.io/badge/Element%20Plus-2.11+-blueviolet)](https://element-plus.org/)
@@ -28,34 +28,25 @@
 
 ## 📦 安装
 
-::: code-group
-
-```bash [npm]
-npm install @yetuzi/vue3-query-components
+```bash
+npm install @yetuzi/vue3-query-components element-plus
+# 或
+yarn add @yetuzi/vue3-query-components element-plus
+# 或
+pnpm add @yetuzi/vue3-query-components element-plus
 ```
 
-```bash [yarn]
-yarn add @yetuzi/vue3-query-components
-```
-
-```bash [pnpm]
-pnpm add @yetuzi/vue3-query-components
-```
-
-:::
-
-::: tip 注意
-本组件库依赖 Element Plus，需要确保项目中已安装 Element Plus。
-:::
+> 注意
+> `element-plus` 和 `vue` 是 peer dependencies，需要由宿主项目自行安装。
 
 ## 🚀 快速开始
 
 ### 导入样式
 
-`main.ts` 中导入样式，包含使用到的element plus 和 组件库所需的样式
+`main.ts` 中导入组件库样式，已包含组件运行所需样式。
 
 ```typescript
-import '@yetuzi/vue3-query-components/dist/style.css'
+import '@yetuzi/vue3-query-components/dist/index.css'
 ```
 
 ### 按需引入组件
@@ -175,10 +166,7 @@ const tableColumns = [
       },
     }"
   >
-    <CommonQueryTable
-      v-bind="queryTableConfig"
-      :layouts="['form', 'toolbar', 'table', 'pagination']"
-    >
+    <CommonQueryTable v-bind="queryTableConfig">
       <!-- 自定义工具栏 -->
       <template #toolbar>
         <el-button type="primary" @click="handleAdd">新增</el-button>
@@ -244,12 +232,11 @@ const queryTableConfig = {
 
 ### CommonQueryTable Props
 
-| 参数    | 说明         | 类型                                                                     | 默认值                            |
-| ------- | ------------ | ------------------------------------------------------------------------ | --------------------------------- |
-| fetch   | 数据请求函数 | `(params: ListParam) => Promise<{ list: T[], total: string \| number }>` | -                                 |
-| form    | 表单配置数组 | `CommonFormPropForm[]`                                                   | []                                |
-| columns | 表格列配置   | `CommonTableColumn[]`                                                    | -                                 |
-| layouts | 布局顺序     | `Array<'header'\|'form'\|'toolbar'\|'table'\|'pagination'\|'footer'>`    | `['form', 'table', 'pagination']` |
+| 参数 | 说明 | 类型 | 默认值 |
+| --- | --- | --- | --- |
+| fetch | 数据请求函数 | `(params: ListParam) => Promise<{ list: T[]; total: string \| number }>` | - |
+| form | 表单配置数组 | `CommonFormItemArray<T>` | `[]` |
+| columns | 表格列配置 | `CommonTableColumn<T>` | - |
 
 ### 表单组件类型支持
 

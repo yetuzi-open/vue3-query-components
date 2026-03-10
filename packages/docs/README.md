@@ -1,66 +1,38 @@
-# Vue3 Query Components 文档
+# 文档站点
 
-这是 [vue3-query-components](https://github.com/yetuzi-open/vue3-query-components) 组件库的官方文档站点。
+这是 `@yetuzi/vue3-query-components` 的 VitePress 文档站点。
 
-**仓库地址**：
-- [GitHub](https://github.com/yetuzi-open/vue3-query-components)
-- [Gitee](https://gitee.com/yetuzi-open/vue3-query-components)
+## 开发命令
 
-## 快速开始
-
-### 安装依赖
+在仓库根目录执行：
 
 ```bash
-pnpm install
+npm install
+npm run dev:docs
 ```
 
-### 启动开发服务器
+如需联动组件源码，另开一个终端执行：
 
 ```bash
-pnpm dev
+npm run dev:components
 ```
 
-### 构建文档
+仅构建文档站点：
 
 ```bash
-pnpm build
+npm run build:docs
 ```
 
-### 预览构建结果
+## 目录说明
 
-```bash
-pnpm preview
-```
+- `pages/`：文档页面
+- `examples/`：示例文件
+- `.vitepress/`：站点配置与主题
+- `update-latest.js`：把文档站点依赖的组件包版本同步到 npm 最新版
 
-## 文档结构
+## 协作约定
 
-```
-docs/
-├── .vitepress/          # VitePress 配置
-│   ├── config.ts        # 站点配置
-│   └── theme/           # 主题定制
-├── guide/               # 使用指南
-├── components/          # 组件文档
-├── advanced/            # 进阶主题
-├── changelog/           # 更新日志
-├── faq/                 # 常见问题
-└── index.md             # 首页
-```
-
-## 贡献指南
-
-1. Fork 项目
-2. 创建特性分支
-3. 提交更改
-4. 创建 Pull Request
-
-## 技术栈
-
-- [VitePress](https://vitepress.dev/) - 文档生成工具
-- [Vue 3](https://vuejs.org/) - 框架
-- [TypeScript](https://www.typescriptlang.org/) - 类型支持
-- [Element Plus](https://element-plus.org/) - UI 组件库
-
-## License
-
-MIT
+- 文档和组件源码跟随 `main` 主干一起演进
+- 不再维护长期 `docs` 分支
+- 组件 API 变更时，需要同步更新对应页面和示例
+- 文档部署由 GitHub Actions 在 `main` 分支相关文件变更后自动触发

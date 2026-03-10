@@ -148,47 +148,65 @@ npm run clean
 
 使用组件库时，只需导入组件库样式文件即可（已包含所需 Element Plus 样式）：
 ```typescript
-import '@yetuzi/vue3-query-components/dist/style.css'
+import '@yetuzi/vue3-query-components/dist/index.css'
 ```
 
 ## 版本管理
 
-组件库版本号位于 `packages/components/package.json`，当前版本：`1.5.0`
+组件库版本号位于 `packages/components/package.json`
 
 **组件库内构建命令**（在 `packages/components/` 目录下）：
 - `npm run build` - 使用 `build-optimized.js` 优化构建
 - `npm run build:legacy` - 使用 `build.js` 传统构建
-- `npm run build:patch` - 升级补丁版本并构建（1.5.0 → 1.5.1）
-- `npm run build:minor` - 升级小版本并构建（1.5.0 → 1.6.0）
-- `npm run build:major` - 升级大版本并构建（1.5.0 → 2.0.0）
+- `npm run build:patch` - 升级补丁版本并构建
+- `npm run build:minor` - 升级小版本并构建
+- `npm run build:major` - 升级大版本并构建
 - `npm run dev` - 启动监听构建（使用 `dev-watch.js`）
+- `npm run publish:patch` - 按补丁版本执行完整发布流程
+- `npm run publish:minor` - 按小版本执行完整发布流程
+- `npm run publish:major` - 按大版本执行完整发布流程
 
 ## 发布到 npm 工作流程
 
-**重要**: 每次发布到 npm 时，必须按以下步骤执行：
+**重要**: 正式版本只从 `main` 发布，推荐在 `packages/components` 目录下使用发布脚本：
 
-1. **提交代码** - 确保所有修改已提交到 git
+```bash
+npm run publish:patch
+```
+
+发布脚本会自动执行以下步骤：
+
+1. **更新版本号和 CHANGELOG**
+2. **执行类型检查和构建**
+3. **创建 release commit 和 git tag**
+4. **发布到 npm**
+5. **推送 `main` 和 tag**
+
+如果需要手动发布，至少应遵循以下顺序：
+
+1. **提交代码** - 确保所有功能修改已提交到 git
    ```bash
    git add .
    git commit -m "描述本次修改内容"
    ```
 
-2. **创建 tag** - 为发布版本打上 git tag
-   ```bash
-   git tag v<版本号>
-   # 例如：git tag v1.5.0
-   ```
-
-3. **推送代码和 tag** - 推送到远程仓库
-   ```bash
-   git push
-   git push --tags
-   ```
-
-4. **发布到 npm** - 在组件库目录下发布
+2. **在组件包目录执行校验和构建**
    ```bash
    cd packages/components
-   npm publish
+   npm run type-check
+   npm run build
+   ```
+
+3. **创建 tag** - 为发布版本打上 git tag
+   ```bash
+   git tag v<版本号>
+   ```
+
+4. **发布并推送**
+   ```bash
+   npm publish --access public
+   git push origin main
+   git push origin v<版本号>
    ```
 
 ## 开发注意事项

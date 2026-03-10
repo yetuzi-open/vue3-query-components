@@ -22,7 +22,7 @@
     "build:docs": "cd packages/docs && npm run build",
     "type-check": "cd packages/components && npm run type-check",
     "format": "prettier --write \"**/*.{ts,js,vue,json,md}\"",
-    "clean": "rm -rf packages/components/dist packages/docs/.vitepress/dist"
+    "clean": "node --input-type=module -e \"import { rmSync } from 'node:fs'; rmSync('packages/components/dist', { recursive: true, force: true }); rmSync('packages/docs/.vitepress/dist', { recursive: true, force: true });\""
   },
   "devDependencies": {
     "@tsconfig/node22": "^22.0.2",

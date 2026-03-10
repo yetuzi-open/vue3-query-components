@@ -6,7 +6,7 @@
 
 专为 Vue3 设计的高效查询组件，提升开发效率
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](../../LICENSE)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](./LICENSE)
 [![Vue](https://img.shields.io/badge/Vue-3.5+-brightgreen)](https://vuejs.org/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.9+-blue)](https://www.typescriptlang.org/)
 [![Element Plus](https://img.shields.io/badge/Element%20Plus-2.11+-blueviolet)](https://element-plus.org/)
@@ -41,9 +41,8 @@ pnpm add @yetuzi/vue3-query-components
 npm install @yetuzi/vue3-query-components
 ```
 
-::: tip 注意
-本组件库依赖 Element Plus，但**不需要手动安装** Element Plus，它作为 peer dependency 会在你的项目中自动解析。
-:::
+> 注意
+> `vue` 和 `element-plus` 是 peer dependencies，需要由宿主项目自行安装。
 
 ### 导入样式
 
@@ -169,10 +168,7 @@ const tableColumns = [
       },
     }"
   >
-    <CommonQueryTable
-      v-bind="queryTableConfig"
-      :layouts="['form', 'toolbar', 'table', 'pagination']"
-    >
+    <CommonQueryTable v-bind="queryTableConfig">
       <!-- 自定义工具栏 -->
       <template #toolbar>
         <el-button type="primary" @click="handleAdd">新增</el-button>
@@ -239,12 +235,11 @@ const queryTableConfig = {
 
 ### CommonQueryTable Props
 
-| 参数    | 说明         | 类型                                                                     | 默认值                            |
-| ------- | ------------ | ------------------------------------------------------------------------ | --------------------------------- |
-| fetch   | 数据请求函数 | `(params: ListParam) => Promise<{ list: T[], total: string \| number }>` | -                                 |
-| form    | 表单配置数组 | `CommonFormPropForm[]`                                                   | []                                |
-| columns | 表格列配置   | `CommonTableColumn[]`                                                    | -                                 |
-| layouts | 布局顺序     | `Array<'header'\|'form'\|'toolbar'\|'table'\|'pagination'\|'footer'>`    | `['form', 'table', 'pagination']` |
+| 参数 | 说明 | 类型 | 默认值 |
+| --- | --- | --- | --- |
+| fetch | 数据请求函数 | `(params: ListParam) => Promise<{ list: T[]; total: string \| number }>` | - |
+| form | 表单配置数组 | `CommonFormItemArray<T>` | `[]` |
+| columns | 表格列配置 | `CommonTableColumn<T>` | - |
 
 ### 表单组件类型支持
 
@@ -346,7 +341,7 @@ interface TableColumn {
 
 ### 环境要求
 
-- Node.js >= 16.0.0
+- Node.js ^20.19.0 || >=22.12.0
 - Vue 3.5+
 - Element Plus 2.11+
 - TypeScript 5.9+
@@ -358,15 +353,14 @@ interface TableColumn {
 ```json
 {
   "peerDependencies": {
-    "vue": "^3.5.0",
+    "vue": "^3.4.0",
     "element-plus": "^2.11.5"
   }
 }
 ```
 
-::: tip 关于 Element Plus
-组件库的 CSS 文件已包含所需的 Element Plus 组件样式，你只需要确保项目中安装了 Element Plus 即可，不需要单独导入 Element Plus 的样式。
-:::
+> 关于 Element Plus
+> 组件库样式文件已包含运行所需样式，但宿主项目仍需安装 `element-plus` 依赖。
 
 #### Dependencies（随组件库一起安装）
 
