@@ -349,6 +349,8 @@ interface TableColumn {
 
 ## 🛠️ 开发
 
+协作流程和分支规范见：[CONTRIBUTING.md](./CONTRIBUTING.md)
+
 ### 环境要求
 
 - Node.js ^20.19.0 || >=22.12.0

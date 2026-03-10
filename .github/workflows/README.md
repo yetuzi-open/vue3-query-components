@@ -4,7 +4,7 @@
 
 ## 🚀 工作流程
 
-当 `docs` 分支的代码有变化时，会自动触发以下流程：
+当 `main` 分支中与组件库、文档站点或部署配置相关的代码发生变化时，会自动触发以下流程：
 
 1. **构建组件库** - 构建组件库到 `packages/components/dist`
 2. **构建文档站点** - 使用 VitePress 构建文档
@@ -12,25 +12,27 @@
 
 ## 📝 使用方法
 
-### 方法一：推荐 - 使用专用分支
+### 方法一：推荐 - 直接走主干工作流
 
-1. **创建并切换到 `docs` 分支**：
+1. **从 `main` 拉出短期开发分支**：
    ```bash
-   git checkout -b docs
+   git checkout main
+   git pull origin main
+   git checkout -b docs/your-change
    ```
 
-2. **修改文档内容**：
-   - 在 `packages/docs/` 目录下修改文档
-   - 可以修改示例、页面内容等
+2. **修改代码或文档内容**：
+   - 组件源码位于 `packages/components/`
+   - 文档与示例位于 `packages/docs/`
 
-3. **提交并推送到 `docs` 分支**：
+3. **提交并合并到 `main`**：
    ```bash
-   git add packages/docs/
-   git commit -m "docs: 更新文档内容"
-   git push origin docs
+   git add .
+   git commit -m "docs: 更新组件文档"
+   git push origin docs/your-change
    ```
 
-4. **等待 GitHub Actions 自动构建部署**
+4. **等待合并到 `main` 后自动构建部署**
    - 访问 https://github.com/yetuzi-open/vue3-query-components/actions 查看构建状态
    - 构建成功后，文档会自动发布到 GitHub Pages
 
@@ -47,14 +49,18 @@
 
 工作流在以下情况触发：
 
-- 推送代码到 `docs` 分支
+- 推送代码到 `main` 分支
 - 且修改了以下路径的文件：
   - `packages/docs/**`
+  - `packages/components/**`
+  - `package.json`
+  - `package-lock.json`
   - `.github/workflows/deploy-docs.yml`
+  - `.github/workflows/README.md`
 
 ### 构建环境
 
-- **Node.js**: v22
+- **Node.js**: 20.19.0
 - **包管理器**: npm
 - **构建命令**:
   - `npm run build:components` - 构建组件库
@@ -70,12 +76,12 @@
 
 ### 组件库版本
 
-在 CI/CD 环境中，文档使用的是**构建后的组件库**（`packages/components/dist`），而不是源码。
+在 CI/CD 环境中，文档会先构建组件库，再构建文档站点。
 
 如果需要使用最新的组件库功能，请确保：
 
 1. 组件库已构建（`npm run build:components`）
-2. 构建产物已提交到 `docs` 分支
+2. 组件源码和文档示例已经合并到 `main`
 
 ### 本地预览
 
@@ -111,29 +117,27 @@ npm run dev
 推荐的开发工作流程：
 
 ```bash
-# 1. 在 main 分支开发组件库功能
+# 1. 从 main 拉取最新代码
 git checkout main
-# ... 修改组件库代码 ...
+git pull origin main
 
-# 2. 提交组件库修改
-git add packages/components/
+# 2. 创建短期分支
+git checkout -b feat/your-change
+
+# 3. 开发组件或文档
+# ... 修改 packages/components/ 或 packages/docs/ ...
+
+# 4. 本地验证
+npm run type-check
+npm run build
+
+# 5. 提交并推送分支
+git add .
 git commit -m "feat: 添加新功能"
-git push
+git push origin feat/your-change
 
-# 3. 切换到 docs 分支更新文档
-git checkout docs
-git merge main
-
-# 4. 更新文档
-# ... 修改文档内容 ...
-
-# 5. 提交文档修改
-git add packages/docs/
-git commit -m "docs: 更新组件文档"
-git push origin docs
-
-# 6. GitHub Actions 自动构建部署
-# 等待构建完成...
+# 6. 发起 PR 合并到 main
+# 7. 合并后 GitHub Actions 自动构建部署文档
 ```
 
 ## 🛠️ 故障排除

@@ -30,3 +30,22 @@ title: 更新日志
 | `perf` | 性能优化 | ⚡ |
 | `test` | 测试相关 | ✅ |
 | `build` | 构建系统 | 📦 |
+
+## 协作与发布规范
+
+本仓库采用轻量化的主干开发模式：
+
+- `main` 是唯一正式主干分支，组件发布和文档部署都以 `main` 为准
+- `next` 仅用于大版本或 breaking change 的预发布验证
+- 日常开发使用短期分支，例如 `feat/*`、`fix/*`、`docs/*`、`refactor/*`、`chore/*`、`hotfix/*`
+
+正式发布遵循以下约束：
+
+- npm 正式版本只从 `main` 发布
+- 每一个已发布 npm 版本都必须有对应的 git tag，例如 `v1.5.1`
+- `packages/components/package.json`、`CHANGELOG.md`、git tag 和 npm registry 中的版本号必须保持一致
+
+文档站点部署遵循以下约束：
+
+- GitHub Pages 在 `main` 分支相关文件变更后自动构建和部署
+- 文档示例与组件源码保持同仓库、同主干演进，不再维护长期 `docs` 分支
