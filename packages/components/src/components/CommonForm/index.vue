@@ -1,27 +1,25 @@
 <script setup lang="ts" generic="T extends AnyObject">
-import { ElForm, ElFormItem, ElButton } from 'element-plus'
+import { ElForm, ElFormItem } from 'element-plus'
 import type { FormInstance } from 'element-plus'
-
-import type { CommonFormProps, CommonFormData, CommonFormExpose, CommonFormItemArray } from './type'
-
+import type { Component, VNodeRef } from 'vue'
+import { getCurrentInstance, reactive, ref, useAttrs } from 'vue'
 import {
-  CommonSelect,
+  CommonButton,
+  CommonCascader,
+  CommonCheckbox,
+  CommonDatePicker,
   CommonInput,
   CommonInputNumber,
-  CommonDatePicker,
-  CommonTimePicker,
-  CommonCascader,
   CommonRadio,
-  getCommonProviderConfig,
-  CommonCheckbox,
+  CommonSelect,
   CommonSwitch,
-  CommonButton,
+  CommonTimePicker,
+  getCommonProviderConfig,
 } from '../../index'
 import type { AnyObject } from '../../index'
-import type { Component } from 'vue'
-import { reactive, ref, useAttrs, getCurrentInstance } from 'vue'
+import type { CommonFormData, CommonFormExpose, CommonFormItemArray, CommonFormProps } from './type'
 
-/** 组件Props定义，提供默认值 */
+/** 缁勪欢 Props 瀹氫箟锛屾彁渚涢粯璁ゆ爣绛惧搴︺€佸竷灞€鍜岀┖琛ㄥ崟閰嶇疆 */
 const props = withDefaults(defineProps<CommonFormProps<T>>(), {
   labelWidth: 'auto',
   inline: true,
@@ -31,9 +29,7 @@ const props = withDefaults(defineProps<CommonFormProps<T>>(), {
 })
 
 /**
- * 内置组件映射
- * 使用 Map 存储组件类型映射
- */
+ * 鍐呯疆缁勪欢鏄犲皠琛? * 鏍规嵁 `is` 鐨勫瓧绗︿覆鏍囪瘑锛屾槧灏勫埌瀵瑰簲鐨勭粍浠跺疄鐜? */
 const componentMap = new Map<string, Component>([
   ['select', CommonSelect],
   ['input', CommonInput],
@@ -47,8 +43,8 @@ const componentMap = new Map<string, Component>([
 ])
 
 /**
- * 获取对应的组件
- * 如果是内置组件类型，返回对应组件；否则返回 undefined
+ * 鑾峰彇琛ㄥ崟椤瑰搴旂殑缁勪欢
+ * 濡傛灉鏄唴缃粍浠跺瓧绗︿覆锛屽垯浠庢槧灏勮〃涓煡鎵撅紱鑷畾涔夌粍浠剁敱妯℃澘鐩存帴娓叉煋
  */
 function getComponent(item: CommonFormItemArray<T>[number]): Component | undefined {
   if (typeof item.is === 'string') {
@@ -59,40 +55,37 @@ function getComponent(item: CommonFormItemArray<T>[number]): Component | undefin
 
 const vm = getCurrentInstance()
 
+/** 閫忎紶缁?ElForm 鐨勫睘鎬т笌浜嬩欢 */
 const attrs = useAttrs()
 
-/** 定义组件事件 */
+/** 缁勪欢浜嬩欢瀹氫箟 */
 const emit = defineEmits<{
-  /** 表单提交事件，返回表单数据 */
+  /** 琛ㄥ崟鎻愪氦浜嬩欢锛岃繑鍥炲綋鍓嶈〃鍗曟暟鎹?*/
   submit: [formData: AnyObject]
-  /** 表单重置事件，返回重置后的表单数据 */
+  /** 琛ㄥ崟閲嶇疆浜嬩欢锛岃繑鍥為噸缃悗鐨勮〃鍗曟暟鎹?*/
   reset: [formData: AnyObject]
 }>()
 
-/** ElForm组件引用，用于调用表单方法 */
+/** ElForm 瀹炰緥寮曠敤锛岀敤浜庤皟鐢ㄦ牎楠屽拰閲嶇疆绛夋柟娉?*/
 const elFormRef = ref<FormInstance>()
+
 /**
- * 表单数据响应式对象
- * 根据form配置动态生成，使用initialValue作为默认值
- */
+ * 琛ㄥ崟鏁版嵁鍝嶅簲寮忓璞? * 鏍规嵁 `form` 閰嶇疆涓殑 `initialValue` 鍔ㄦ€佺敓鎴愰粯璁ゅ€? */
 const formData = reactive<CommonFormData<T>>(
   Object.fromEntries(props.form.map((item) => [item.prop, item.initialValue])) as CommonFormData<T>,
 )
 
-/** 获取全局配置 */
+/** 鑾峰彇鍏ㄥ眬閰嶇疆 */
 const config = getCommonProviderConfig()
 
-/** 加载状态，支持v-model双向绑定 */
+/** 鎻愪氦鎸夐挳 loading 鐘舵€侊紝鏀寔 `v-model:loading` 鍙屽悜缁戝畾 */
 const loading = defineModel('loading', {
   default: false,
 })
 
 /**
- * 表单提交处理函数
- *
- * 1. 触发表单验证
- * 2. 验证通过后触发表单提交事件
- * 3. 返回当前表单数据
+ * 琛ㄥ崟鎻愪氦澶勭悊
+ * 鍏堣繘琛岃〃鍗曟牎楠岋紝鏍￠獙閫氳繃鍚庡啀瑙﹀彂 submit 浜嬩欢
  */
 async function handleSubmit() {
   await elFormRef.value?.validate()
@@ -100,54 +93,44 @@ async function handleSubmit() {
 }
 
 /**
- * 表单重置处理函数
- *
- * 1. 调用 ElForm 的 resetFields 方法重置表单字段
- * 2. 触发表单重置事件
- * 3. 返回重置后的表单数据
+ * 琛ㄥ崟閲嶇疆澶勭悊
+ * 璋冪敤 ElForm 鐨?`resetFields`锛屽苟瑙﹀彂 reset 浜嬩欢
  */
 function handleReset() {
   elFormRef.value?.resetFields()
   emit('reset', formData)
 }
 
-
-function changeRef(el?: any) {
-  if(vm?.exposed){
+/**
+ * 鍚屾 ElForm 瀹炰緥寮曠敤
+ * 鍏煎缁勪欢瀵瑰鏆撮湶 FormInstance 鏂规硶鍜?formData
+ */
+const changeRef: VNodeRef = (el) => {
+  if (vm?.exposed) {
     Object.assign(vm.exposed, {
       ...el,
       formData,
     })
   }
-  elFormRef.value = el
+  elFormRef.value = (el ?? undefined) as FormInstance | undefined
 }
 
-/** 暴露表单数据对象和 ElForm 方法，供父组件访问 */
+/** 鏆撮湶琛ㄥ崟鏁版嵁瀵硅薄鍜?ElForm 鏂规硶锛屼緵鐖剁粍浠惰闂?*/
 defineExpose<CommonFormExpose>()
 
-/** 组件选项配置 */
 defineOptions({
   name: 'CommonForm',
 })
 </script>
 
 <template>
-  <!-- 表单容器，绑定表单数据和验证规则 -->
   <el-form :ref="changeRef" v-bind="{ ...props, ...attrs }" :model="formData" @submit.prevent>
-    <!--
-      动态表单项渲染
-      根据form配置数组动态生成表单项，每个表单项包含：
-      - formItem: ElFormItem的配置
-      - prop: 表单字段名
-      - is: 组件类型（字符串或自定义组件）
-      - props: 传递给组件的props
-    -->
     <el-form-item
+      v-for="item in form"
+      :key="item.prop"
       v-bind="item.formItem"
       :label="item.label"
       :prop="String(item.prop)"
-      v-for="item in form"
-      :key="item.prop"
     >
       <slot
         :name="item.prop"
@@ -155,7 +138,6 @@ defineOptions({
         :value="formData[item.prop]"
         :updateValue="(val: any) => (formData[item.prop] = val)"
       >
-        <!-- 使用 getComponent 函数获取内置组件 -->
         <component
           v-if="getComponent(item)"
           :is="getComponent(item)"
@@ -163,7 +145,6 @@ defineOptions({
           :modelValue="formData[item.prop]"
           @update:modelValue="(val: any) => (formData[item.prop] = val)"
         />
-        <!-- 自定义组件 -->
         <component
           v-else-if="typeof item.is !== 'string'"
           :is="item.is"
@@ -174,37 +155,29 @@ defineOptions({
       </slot>
     </el-form-item>
 
-    <!-- 操作按钮区域 -->
     <el-form-item label=" ">
-      <!-- 提交按钮，触发表单验证和提交 -->
       <CommonButton :loading @click="handleSubmit">
         {{ config.component.form.submitText }}
       </CommonButton>
-      <!-- 重置按钮，重置表单数据 -->
-      <CommonButton type="default" :loading @click="handleReset">{{
-        config.component.form.resetText
-      }}</CommonButton>
+      <CommonButton type="default" :loading @click="handleReset">
+        {{ config.component.form.resetText }}
+      </CommonButton>
     </el-form-item>
   </el-form>
 </template>
 
 <style scoped>
 /**
- * 表单样式调整
- *
- * 解决表单布局问题：
- * 1. 负边距处理：抵消 el-form-item 的默认下边距，保持表单间距一致
- * 2. 内容宽度：通过 CSS 变量绑定配置中的组件宽度
- */
+ * 琛ㄥ崟鏍峰紡璋冩暣
+ * 缁熶竴澶勭悊琛ㄥ崟椤归棿璺濆拰鎺т欢瀹藉害锛屼繚鎸佸悇绫荤粍浠剁殑甯冨眬涓€鑷? */
 .el-form {
-  /* 需要减去 el-form-item 的下边距高度，保持在使用时间距一致 */
   margin-bottom: -18px !important;
 }
+
 .el-form .el-form-item :deep(.el-form-item__content) {
-  /* 使用配置中的组件宽度，确保表单控件宽度一致 */
   width: v-bind('config.component.form.formItem.components.width');
 }
-/* 为所有表单控件添加统一宽度 */
+
 .el-form .el-form-item :deep(.el-select),
 .el-form .el-form-item :deep(.el-input),
 .el-form .el-form-item :deep(.el-date-editor) {

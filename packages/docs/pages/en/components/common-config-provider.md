@@ -1,196 +1,85 @@
----
+﻿---
 title: CommonConfigProvider
 ---
 
+# CommonConfigProvider
 
-# CommonConfigProvider Global Configuration
+`CommonConfigProvider` centralizes default behavior across the component library, such as placeholders, pagination defaults, form button labels, and input widths. It works well at the app root and can also be scoped to a single page.
 
-Provides global configuration functionality, including pagination defaults, form text, table styles, etc.
+Key features:
+
+- Supports app-level, page-level, and local configuration scopes
+- Supports nested providers with merged configuration
+- Supports reactive config updates
+- Helps keep admin pages visually and behaviorally consistent
 
 ## Basic Usage
 
-### 1. Application-level Configuration
+### App-Level Configuration
 
-Configure at the application entry point, effective globally:
+Use it at the application entry to define global defaults.
 
 ```vue
-<!-- App.vue -->
 <template>
-  <common-config-provider v-bind="appConfig">
+  <CommonConfigProvider :component="appConfig">
     <router-view />
-  </common-config-provider>
+  </CommonConfigProvider>
 </template>
-
-<script setup>
-import { reactive } from 'vue'
-
-const appConfig = reactive({
-  component: {
-    placeholder: '--',
-    form: {
-      submitText: 'Search',
-      resetText: 'Reset'
-    }
-  }
-})
-</script>
 ```
 
-### 2. Page-level Configuration
+### Page-Level Configuration
 
-Configure on a specific page, overriding the page and its child components:
+Use it inside a page when only that area needs custom defaults.
 
 ```vue
 <template>
-  <common-config-provider v-bind="pageConfig">
-    <common-query-table ... />
-  </common-config-provider>
+  <CommonConfigProvider :component="pageConfig">
+    <CommonQueryTable :fetch="fetch" :columns="columns" :form="form" />
+  </CommonConfigProvider>
 </template>
-
-<script setup>
-import { reactive } from 'vue'
-
-const pageConfig = reactive({
-  component: {
-    placeholder: '--',
-    form: {
-      submitText: 'Search',
-      resetText: 'Reset'
-    }
-  }
-})
-</script>
 ```
 
-### 3. Dynamic Configuration
+## Reactive Configuration
 
-Configuration supports reactive updates and can be dynamically adjusted based on user preferences or runtime conditions:
+When the config object is reactive, internal components update automatically.
 
 <demo vue="CommonConfigProvider/dynamic.vue" ssg="true"/>
 
-**Key Features:**
-- Configuration objects defined with `reactive` take effect immediately after modification
-- Configuration changes are reflected in real-time on wrapped components
-- Suitable for dynamic scenarios such as user preference settings and theme switching
-
 ## Best Practices
 
-1. **Unified Style**: Use CommonConfigProvider in the application root component to ensure consistent application-wide styling
-2. **Reasonable Override**: Page-level configuration can override application-level configuration for personalized customization
-3. **Reactive Updates**: Use `reactive` to define configuration, directly modify properties for real-time effectiveness
-4. **Configure as Needed**: Only configure properties that need to be overridden, other properties use default values
+- Define brand-level defaults at the app root
+- Override only the fields needed for a specific page
+- Use `reactive` or `computed` for dynamic config
+- Prefer incremental overrides instead of repeating the full config object
 
 ## API
 
 ### Props
 
-| Parameter | Description | Type | Default |
-| --- | --- | --- | --- |
-| config | Global configuration object | `Config` | See default configuration below |
+| Prop | Description | Type |
+| --- | --- | --- |
+| `component` | Component-level configuration, typically used to override `config.component` | `DeepPartial<Config['component']>` |
 
-### Config Configuration Description
+### Common Config Fields
 
-#### Default Configuration
-
-<<< ../../../../components/src/index.ts#config
-
-#### TypeScript Type Definition
-
-<<< ../../../../components/src/types/index.ts#config
-
-#### Configuration Items Description
-
-| Configuration Item | Description | Type | Default |
-| --- | --- | --- | --- |
-| placeholder | Empty value placeholder, used to display empty values in tables and forms | `string` | `'-'` |
-| pagination.defaultPageCount | Default starting page number | `number` | `1` |
-| pagination.defaultPageSize | Default number of items per page | `number` | `10` |
-| form.submitText | Form submit button text | `string` | `'Search'` |
-| form.resetText | Form reset button text | `string` | `'Reset'` |
-| form.formItem.components.width | Form item width | `string` | `'200px'` |
+| Field | Description | Default |
+| --- | --- | --- |
+| `component.placeholder` | Placeholder for empty values | `'-'` |
+| `component.pagination.defaultPageCount` | Default initial page number | `1` |
+| `component.pagination.defaultPageSize` | Default page size | `10` |
+| `component.form.submitText` | Form submit button text | `'搜索'` |
+| `component.form.resetText` | Form reset button text | `'重置'` |
+| `component.form.formItem.components.width` | Default form control width | `'200px'` |
 
 ## TypeScript Types
 
-The component exports the following TypeScript type definitions for direct use in your project:
-
-### Config
-
-```typescript
-/**
- * Global configuration type
- */
-interface Config {
-  component: {
-    /** Empty value placeholder */
-    placeholder: string
-
-    /** Pagination component default pagination data */
-    pagination: {
-      /** Default request starting page number */
-      defaultPageCount: number
-      /** Default number of items per page */
-      defaultPageSize: number
-    }
-
-    /** Table component */
-    table: {}
-
-    /** Form component */
-    form: {
-      /** Submit button text */
-      submitText: string
-      /** Reset button text */
-      resetText: string
-      /** Form item configuration */
-      formItem: {
-        components: {
-          width: string
-        }
-      }
-    }
-  }
-}
+```ts
+import type {
+  CommonConfigProviderProps,
+  Config,
+} from '@yetuzi/vue3-query-components'
 ```
 
-### CommonConfigProviderProps
-
-```typescript
-/**
- * CommonConfigProvider component Props
- */
-interface CommonConfigProviderProps extends Partial<Config> {}
-```
-
-**Usage Example:**
-
-```typescript
-import { reactive } from 'vue'
-import type { Config } from '@yetuzi/vue3-query-components'
-
-// Define global configuration
-const appConfig: Config = {
-  component: {
-    placeholder: 'No data',
-    pagination: {
-      defaultPageCount: 1,
-      defaultPageSize: 20,
-    },
-    table: {},
-    form: {
-      submitText: 'Search',
-      resetText: 'Reset',
-      formItem: {
-        components: {
-          width: '240px',
-        },
-      },
-    },
-  },
-}
-
-// Use reactive configuration
-const config = reactive(appConfig)
-
-// Dynamically update configuration
-config.component.pagination.defaultPageSize = 50
+```ts
+interface CommonConfigProviderProps extends DeepPartial<Config> {}
 ```

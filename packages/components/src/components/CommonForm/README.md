@@ -1,471 +1,148 @@
-# CommonForm 表单
+# CommonForm 表单组件
 
-常用的表单组件，基于 Element Plus Form 封装，支持动态渲染表单项和表单验证。
+`CommonForm` 是一个基于配置生成的动态表单组件，适合后台查询表单、编辑表单和快速录入场景。
+
+主要特性：
+
+- 基于配置生成表单结构
+- 内置 `input`、`input-number`、`select`、`date-picker`、`time-picker`、`cascader`、`radio`、`check-box`、`switch`
+- 支持 Element Plus 表单校验规则
+- 支持通过具名插槽自定义表单项内容
+- 支持暴露 `FormInstance` 方法和 `formData`
 
 ## 基础用法
 
 ```vue
 <template>
-  <CommonForm :form="formConfig" v-model="formData" @submit="handleSubmit" @reset="handleReset" />
+  <CommonForm :form="form" @submit="handleSubmit" />
 </template>
 
-<script setup>
-import { ref } from 'vue'
+<script setup lang="ts">
+import { CommonForm } from '@yetuzi/vue3-query-components'
 
-const formData = ref({})
-
-const formConfig = ref([
+const form = [
   {
-    type: 'input',
+    is: 'input',
+    label: '用户名',
     prop: 'name',
-    label: '姓名',
-    required: true,
+    formItem: {
+      rules: [{ required: true, message: '请输入用户名', trigger: 'blur' }],
+    },
   },
   {
-    type: 'select',
-    prop: 'city',
-    label: '城市',
-    options: [
-      { label: '北京', value: 'beijing' },
-      { label: '上海', value: 'shanghai' },
-    ],
-  },
-])
-
-const handleSubmit = (data) => {
-  console.log('提交数据:', data)
-}
-
-const handleReset = () => {
-  console.log('重置表单')
-}
-</script>
-```
-
-## 表单项类型
-
-支持多种表单项类型：输入框、选择器、日期选择器等。
-
-```vue
-<template>
-  <CommonForm :form="formConfig" v-model="formData" />
-</template>
-
-<script setup>
-const formData = ref({})
-
-const formConfig = ref([
-  {
-    type: 'input',
-    prop: 'name',
-    label: '姓名',
-    placeholder: '请输入姓名',
-  },
-  {
-    type: 'select',
-    prop: 'gender',
-    label: '性别',
-    options: [
-      { label: '男', value: 'male' },
-      { label: '女', value: 'female' },
-    ],
-  },
-  {
-    type: 'date',
-    prop: 'birthday',
-    label: '生日',
-  },
-  {
-    type: 'radio',
-    prop: 'status',
+    is: 'select',
     label: '状态',
-    options: [
-      { label: '启用', value: 'active' },
-      { label: '禁用', value: 'inactive' },
-    ],
-  },
-  {
-    type: 'switch',
-    prop: 'enabled',
-    label: '是否启用',
-  },
-])
-</script>
-```
-
-## 表单验证
-
-通过 `rules` 属性设置表单验证规则。
-
-```vue
-<template>
-  <CommonForm :form="formConfig" v-model="formData" :rules="rules" />
-</template>
-
-<script setup>
-const formData = ref({})
-
-const formConfig = ref([
-  {
-    type: 'input',
-    prop: 'name',
-    label: '姓名',
-    required: true,
-  },
-  {
-    type: 'input',
-    prop: 'email',
-    label: '邮箱',
-    required: true,
-  },
-])
-
-const rules = ref({
-  name: [
-    { required: true, message: '请输入姓名', trigger: 'blur' },
-    { min: 2, max: 10, message: '长度在 2 到 10 个字符', trigger: 'blur' },
-  ],
-  email: [
-    { required: true, message: '请输入邮箱地址', trigger: 'blur' },
-    { type: 'email', message: '请输入正确的邮箱地址', trigger: 'blur' },
-  ],
-})
-</script>
-```
-
-## 自定义表单项
-
-使用插槽自定义表单项内容。
-
-```vue
-<template>
-  <CommonForm :form="formConfig" v-model="formData">
-    <template #customField="{ item, modelValue }">
-      <el-rate v-model="modelValue[item.prop]" />
-    </template>
-  </CommonForm>
-</template>
-
-<script setup>
-const formData = ref({})
-
-const formConfig = ref([
-  {
-    type: 'custom',
-    prop: 'rating',
-    label: '评分',
-  },
-])
-</script>
-```
-
-## 行内表单
-
-设置 `inline` 属性可以让表单域变为行内的表单域。
-
-```vue
-<template>
-  <CommonForm :form="formConfig" v-model="formData" inline />
-</template>
-```
-
-## 表单尺寸
-
-通过 `size` 属性设置表单尺寸。
-
-```vue
-<template>
-  <CommonForm :form="formConfig" v-model="formData" size="large" />
-</template>
-```
-
-## 禁用表单
-
-通过 `disabled` 属性设置整个表单禁用。
-
-```vue
-<template>
-  <CommonForm :form="formConfig" v-model="formData" disabled />
-</template>
-```
-
-## 隐藏操作按钮
-
-通过设置 `showFooter` 为 `false` 隐藏默认的操作按钮。
-
-```vue
-<template>
-  <CommonForm :form="formConfig" v-model="formData" :show-footer="false" />
-  <el-button type="primary" @click="submitForm">提交</el-button>
-  <el-button @click="resetForm">重置</el-button>
-</template>
-
-<script setup>
-import { ref } from 'vue'
-
-const formRef = ref()
-
-const submitForm = () => {
-  formRef.value?.handleSubmit()
-}
-
-const resetForm = () => {
-  formRef.value?.handleReset()
-}
-</script>
-```
-
-## 自定义操作按钮
-
-使用插槽自定义操作按钮。
-
-```vue
-<template>
-  <CommonForm :form="formConfig" v-model="formData">
-    <template #footer="{ handleSubmit, handleReset }">
-      <el-button type="primary" @click="handleSubmit">保存</el-button>
-      <el-button @click="handleReset">清空</el-button>
-      <el-button @click="cancel">取消</el-button>
-    </template>
-  </CommonForm>
-</template>
-
-<script setup>
-const cancel = () => {
-  console.log('取消操作')
-}
-</script>
-```
-
-## 动态表单
-
-根据条件动态显示或隐藏表单项。
-
-```vue
-<template>
-  <CommonForm :form="dynamicForm" v-model="formData" />
-</template>
-
-<script setup>
-import { ref, computed } from 'vue'
-
-const formData = ref({})
-const showAdvanced = ref(false)
-
-const baseForm = ref([
-  {
-    type: 'input',
-    prop: 'name',
-    label: '姓名',
-  },
-  {
-    type: 'switch',
-    prop: 'showAdvanced',
-    label: '显示高级选项',
-  },
-])
-
-const advancedForm = ref([
-  {
-    type: 'input',
-    prop: 'address',
-    label: '地址',
-  },
-  {
-    type: 'select',
-    prop: 'type',
-    label: '类型',
-    options: [
-      { label: '类型1', value: 'type1' },
-      { label: '类型2', value: 'type2' },
-    ],
-  },
-])
-
-const dynamicForm = computed(() => {
-  if (formData.value.showAdvanced) {
-    return [...baseForm.value, ...advancedForm.value]
-  }
-  return baseForm.value
-})
-</script>
-```
-
-## 完整功能示例
-
-```vue
-<template>
-  <CommonForm
-    ref="formRef"
-    :form="formConfig"
-    v-model="formData"
-    :rules="rules"
-    label-width="100px"
-    @submit="handleSubmit"
-    @reset="handleReset"
-  />
-</template>
-
-<script setup>
-import { ref } from 'vue'
-
-const formRef = ref()
-const formData = ref({
-  name: '',
-  email: '',
-  gender: '',
-  birthday: '',
-  status: 'active',
-  enabled: true,
-  description: '',
-})
-
-const formConfig = ref([
-  {
-    type: 'input',
-    prop: 'name',
-    label: '姓名',
-    placeholder: '请输入姓名',
-    required: true,
-  },
-  {
-    type: 'input',
-    prop: 'email',
-    label: '邮箱',
-    placeholder: '请输入邮箱',
-    required: true,
-  },
-  {
-    type: 'select',
-    prop: 'gender',
-    label: '性别',
-    placeholder: '请选择性别',
-    options: [
-      { label: '男', value: 'male' },
-      { label: '女', value: 'female' },
-    ],
-    required: true,
-  },
-  {
-    type: 'date',
-    prop: 'birthday',
-    label: '生日',
-    placeholder: '请选择生日',
-  },
-  {
-    type: 'radio',
     prop: 'status',
-    label: '状态',
-    options: [
-      { label: '启用', value: 'active' },
-      { label: '禁用', value: 'inactive' },
-    ],
+    props: {
+      placeholder: '请选择状态',
+      options: [
+        { value: 1, label: '启用' },
+        { value: 0, label: '禁用' },
+      ],
+    },
   },
-  {
-    type: 'switch',
-    prop: 'enabled',
-    label: '是否启用',
-  },
-  {
-    type: 'input',
-    prop: 'description',
-    label: '描述',
-    type: 'textarea',
-    placeholder: '请输入描述信息',
-  },
-])
+]
 
-const rules = ref({
-  name: [
-    { required: true, message: '请输入姓名', trigger: 'blur' },
-    { min: 2, max: 10, message: '长度在 2 到 10 个字符', trigger: 'blur' },
-  ],
-  email: [
-    { required: true, message: '请输入邮箱地址', trigger: 'blur' },
-    { type: 'email', message: '请输入正确的邮箱地址', trigger: 'blur' },
-  ],
-  gender: [{ required: true, message: '请选择性别', trigger: 'change' }],
-})
-
-const handleSubmit = (data) => {
-  console.log('表单提交:', data)
-  // 处理提交逻辑
-}
-
-const handleReset = () => {
-  console.log('表单重置')
-  // 处理重置逻辑
+function handleSubmit(formData: any) {
+  console.log(formData)
 }
 </script>
 ```
 
-## 属性
+## 表单项配置
 
-| 属性名                  | 说明                                    | 类型    | 可选值              | 默认值 |
-| ----------------------- | --------------------------------------- | ------- | ------------------- | ------ |
-| form                    | 表单项配置数组                          | array   | -                   | []     |
-| model                   | 表单数据对象                            | object  | -                   | {}     |
-| rules                   | 表单验证规则                            | object  | -                   | -      |
-| inline                  | 行内表单模式                            | boolean | -                   | false  |
-| label-position          | 表单域标签的位置                        | string  | right/left/top      | right  |
-| label-width             | 表单域标签的宽度                        | string  | -                   | -      |
-| label-suffix            | 表单域标签的后缀                        | string  | -                   | -      |
-| hide-required-asterisk  | 是否隐藏必填字段的标签旁边的红色星号    | boolean | -                   | false  |
-| show-message            | 是否显示校验错误信息                    | boolean | -                   | true   |
-| inline-message          | 是否以行内形式展示校验信息              | boolean | -                   | false  |
-| status-icon             | 是否在输入框中显示校验结果反馈图标      | boolean | -                   | false  |
-| validate-on-rule-change | 是否在 rules 属性改变后立即触发一次验证 | boolean | -                   | true   |
-| size                    | 用于控制该表单内组件的尺寸              | string  | large/default/small | -      |
-| disabled                | 是否禁用该表单内的所有组件              | boolean | -                   | false  |
-| scroll-to-error         | 当校验失败时，滚动到第一个错误表单项    | boolean | -                   | false  |
-| show-footer             | 是否显示底部操作按钮                    | boolean | -                   | true   |
+每个表单项支持以下基础配置：
 
-## 事件
+| 字段 | 说明 |
+| --- | --- |
+| `is` | 组件类型，可以是内置字符串或自定义组件 |
+| `label` | 表单项标签 |
+| `prop` | 表单字段名 |
+| `props` | 传递给组件的额外属性 |
+| `initialValue` | 字段初始值 |
+| `formItem` | 传递给 `ElFormItem` 的额外配置 |
 
-| 事件名 | 说明           | 回调参数                   |
-| ------ | -------------- | -------------------------- |
-| submit | 表单提交时触发 | (formData: object) => void |
-| reset  | 表单重置时触发 | () => void                 |
+## 内置组件类型
 
-## 方法
+- `input`
+- `input-number`
+- `select`
+- `date-picker`
+- `time-picker`
+- `cascader`
+- `radio`
+- `check-box`
+- `switch`
 
-| 方法名        | 说明                                                       | 参数                                |
-| ------------- | ---------------------------------------------------------- | ----------------------------------- |
-| validate      | 对整个表单的内容进行验证                                   | (callback?: Function) => Promise    |
-| validateField | 对表单部分字段进行验证                                     | (props?: array/callback) => Promise |
-| resetFields   | 对整个表单进行重置，将所有字段值重置为初始值并移除校验结果 | -                                   |
-| clearValidate | 移除表单项的校验结果                                       | (props?: array) => void             |
-| handleSubmit  | 手动触发表单提交                                           | -                                   |
-| handleReset   | 手动触发表单重置                                           | -                                   |
+## 插槽自定义
 
-## 插槽
+可以使用表单项的 `prop` 作为插槽名，自定义渲染内容：
 
-| 插槽名  | 说明                                           |
-| ------- | ---------------------------------------------- |
-| default | 自定义表单项内容，使用表单项的 prop 作为插槽名 |
-| footer  | 自定义底部操作按钮                             |
+```vue
+<CommonForm :form="form">
+  <template #status="{ value, updateValue }">
+    <el-switch :model-value="value" @update:modelValue="updateValue" />
+  </template>
+</CommonForm>
+```
 
-## 类型定义
+插槽参数：
 
-```typescript
-interface CommonFormProps {
-  form: CommonFormItemArray[]
-  model?: Record<string, any>
-  rules?: Record<string, any>
-  inline?: boolean
-  labelPosition?: 'left' | 'right' | 'top'
-  labelWidth?: string | number
-  showFooter?: boolean
+| 参数 | 说明 |
+| --- | --- |
+| `props` | 当前表单项的 `props` 配置 |
+| `value` | 当前字段值 |
+| `updateValue` | 更新当前字段值的方法 |
+
+## 暴露方法
+
+`CommonForm` 通过 `ref` 暴露所有 Element Plus `FormInstance` 方法，以及额外的 `formData`：
+
+```vue
+<script setup lang="ts">
+import { ref } from 'vue'
+import { CommonForm, type CommonFormExpose } from '@yetuzi/vue3-query-components'
+
+const formRef = ref<CommonFormExpose>()
+
+const handleValidate = async () => {
+  await formRef.value?.validate()
+  console.log(formRef.value?.formData)
+}
+</script>
+```
+
+## Props
+
+| 属性名 | 说明 | 类型 | 默认值 |
+| --- | --- | --- | --- |
+| `form` | 表单项配置数组 | `CommonFormItemArray<T>` | `[]` |
+| `loading` | 提交按钮 loading 状态，支持 `v-model:loading` | `boolean` | `false` |
+| `inline` | 是否为行内表单 | `boolean` | `true` |
+
+> 除以上属性外，组件还支持大部分 Element Plus `ElForm` 原生属性。
+
+## TypeScript 类型
+
+```ts
+interface CommonFormProps<T> {
+  form?: CommonFormItemArray<T>
 }
 
-interface CommonFormItemArray {
-  type: 'input' | 'select' | 'date' | 'radio' | 'switch' | 'checkbox' | 'custom'
-  prop: string
-  label: string
-  placeholder?: string
-  required?: boolean
-  options?: OptionItem[]
-  rules?: FormItemRule[]
-  [key: string]: any
+type CommonFormItemArray<T> = Array<
+  | CommonFormSelectItem<T>
+  | CommonFormInputItem<T>
+  | CommonFormInputNumberItem<T>
+  | CommonFormDatePickerItem<T>
+  | CommonFormTimePickerItem<T>
+  | CommonFormCascaderItem<T>
+  | CommonFormRadioItem<T>
+  | CommonFormCustomItem<T>
+  | CommonFormCheckboxItem<T>
+  | CommonFormSwitchItem<T>
+>
+
+interface CommonFormExpose<T> extends FormInstance {
+  formData: Reactive<CommonFormData<T>>
 }
 ```

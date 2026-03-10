@@ -5,9 +5,10 @@ import { watch } from 'vue'
 import { useData } from 'vitepress'
 import './style.css'
 import 'virtual:group-icons.css'
+import 'element-plus/dist/index.css'
+import '@components-root/dist/index.css'
 
 // 导入组件库样式（已包含 Element Plus 组件样式）
-import '@yetuzi/vue3-query-components/dist/style.css'
 
 // 导入 Element Plus 暗色主题变量（组件库 CSS 不包含暗色主题）
 import 'element-plus/theme-chalk/dark/css-vars.css'
@@ -19,6 +20,10 @@ const theme: Theme = {
     // 例如：注册全局组件、添加指令等
   },
   setup() {
+    if (typeof document === 'undefined') {
+      return
+    }
+
     const { isDark } = useData()
 
     // 监听 VitePress 主题变化，自动切换 Element Plus 暗色主题

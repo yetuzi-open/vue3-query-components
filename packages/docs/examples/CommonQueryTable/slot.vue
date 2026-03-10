@@ -1,91 +1,61 @@
-<script setup lang="ts">
-import { CommonQueryTable } from "@yetuzi/vue3-query-components";
+﻿<script setup lang="ts">
+import { ElTag } from 'element-plus'
+import { CommonQueryTable } from '@yetuzi/vue3-query-components'
 
-// Mock API request
 const fetch = async () => {
   return {
     list: [
-      {
-        id: 1,
-        name: "Zhang San",
-        status: 1,
-        createTime: 1705278600000,
-      },
-      {
-        id: 2,
-        name: "Li Si",
-        status: 0,
-        createTime: 1705377600000,
-      },
-      {
-        id: 3,
-        name: "Wang Wu",
-        status: 1,
-        createTime: 1705454100000,
-      },
+      { id: 1, name: '上海智选科技', status: 1, createTime: 1705278600000 },
+      { id: 2, name: '杭州云桥数据', status: 0, createTime: 1705377600000 },
+      { id: 3, name: '苏州星合信息', status: 1, createTime: 1705454100000 },
     ],
-    total: 4,
-  };
-};
+    total: 3,
+  }
+}
 
 const form = [
   {
-    is: "input",
-    prop: "name",
-    label: "Username",
+    is: 'input',
+    prop: 'name',
+    label: '客户名称',
     props: {
-      placeholder: "Please enter username",
+      placeholder: '请输入客户名称',
     },
   },
-  {
-    is: "select",
-    prop: "status",
-    label: "Status",
-    props: {
-      placeholder: "Please select status",
-      options: [
-        { value: 1, label: "Enabled" },
-        { value: 0, label: "Disabled" },
-      ],
-    },
-  },
-];
+]
 
 const columns = [
-  {
-    label: "ID",
-    prop: "id",
-  },
-  {
-    label: "Username",
-    prop: "name",
-  },
-  {
-    label: "Status",
-    prop: "status",
-    formatter: (row: { status: number }) =>
-      row.status === 1 ? "Enabled" : "Disabled",
-  },
-  {
-    label: "Create Time",
-    prop: "createTime",
-    width: 180,
-    type: "dateTime",
-  },
-];
+  { label: 'ID', prop: 'id', width: 80 },
+  { label: '客户名称', prop: 'name', minWidth: 180 },
+  { label: '合作状态', prop: 'status', width: 120 },
+  { label: '创建时间', prop: 'createTime', width: 180, type: 'dateTime' },
+]
 </script>
 
 <template>
-  <CommonQueryTable
-    :fetch="fetch"
-    :form="form"
-    :columns="columns"
-  >
-    <template #form-name>
-        You can define custom components here
+  <div class="query-table-demo">
+    <p class="demo-description">通过具名前缀插槽可以定制内部子组件的渲染，例如自定义表格列、空状态或工具栏。</p>
+
+    <CommonQueryTable :fetch="fetch" :form="form" :columns="columns">
+      <template #table-status="{ row }">
+        <ElTag :type="row.status ? 'success' : 'info'">
+          {{ row.status ? '合作中' : '已暂停' }}
+        </ElTag>
       </template>
-      <template #table-status="{ value }">
-        {{ value === 1 ? "Enabled" : "Disabled" }}
-      </template>
-  </CommonQueryTable>
+    </CommonQueryTable>
+  </div>
 </template>
+
+<style scoped>
+.query-table-demo {
+  display: grid;
+  gap: 12px;
+}
+
+.demo-description {
+  margin: 0;
+  color: var(--vp-c-text-2);
+  font-size: 14px;
+  line-height: 1.6;
+}
+</style>

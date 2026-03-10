@@ -8,7 +8,6 @@ Vue3 Query Components is an enterprise-level query page component library design
 - ⚡️ **Efficient Development** - Reduce repetitive code, focus on business logic, and improve development efficiency
 - 🎨 **Highly Customizable** - Flexible configuration system supporting custom slots and styles
 - 🔧 **TypeScript** - Complete TypeScript support with type safety
-- 📦 **Tree Shaking** - Supports tree shaking for minimal bundle size
 - 🛡️ **Element Plus** - Consistent API design with low learning curve
 
 ## Use Cases

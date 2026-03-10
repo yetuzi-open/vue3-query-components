@@ -3,7 +3,13 @@ import { resolve } from 'path'
 import { groupIconMdPlugin, groupIconVitePlugin } from 'vitepress-plugin-group-icons'
 import { vitepressDemoPlugin } from 'vitepress-demo-plugin'
 import path from 'path'
-import { version } from '@yetuzi/vue3-query-components'
+import { readFileSync } from 'fs'
+
+const componentsPackageJson = JSON.parse(
+  readFileSync(resolve(__dirname, '../../components/package.json'), 'utf8'),
+)
+const version = componentsPackageJson.version
+const isDev = process.argv.includes('dev')
 
 // https://vitepress.vuejs.org/config/app-configs
 export default defineConfig({
@@ -67,7 +73,8 @@ export default defineConfig({
                   items: [
                     { text: 'CommonQueryTable 查询表格', link: '/components/common-query-table' },
                     { text: 'CommonForm 表单', link: '/components/common-form' },
-                    { text: 'CommonTable 表格', link: '/components/common-table' }
+                    { text: 'CommonTable 表格', link: '/components/common-table' },
+                    { text: 'CommonPagination 分页', link: '/components/common-pagination' }
                   ]
                 },
               ]
@@ -186,7 +193,8 @@ export default defineConfig({
                   items: [
                     { text: 'CommonQueryTable Query Table', link: '/en/components/common-query-table' },
                     { text: 'CommonForm Form', link: '/en/components/common-form' },
-                    { text: 'CommonTable Table', link: '/en/components/common-table' }
+                    { text: 'CommonTable Table', link: '/en/components/common-table' },
+                    { text: 'CommonPagination Pagination', link: '/en/components/common-pagination' }
                   ]
                 },
               ]
@@ -284,7 +292,10 @@ export default defineConfig({
       __VUE_OPTIONS_API__: true
     },
     server: {
-      port: 5173
+      port: 5173,
+      fs: {
+        allow: [resolve(__dirname, '../../components')]
+      }
     },
     resolve: {
       alias: {
@@ -293,6 +304,9 @@ export default defineConfig({
         '@examples': resolve(__dirname, '../examples'),
         '@pages': resolve(__dirname, '../pages'),
         '@public': resolve(__dirname, '../public'),
+        '@yetuzi/vue3-query-components': isDev
+          ? resolve(__dirname, '../../components/src/index.ts')
+          : resolve(__dirname, '../../components'),
         // 组件库源码别名（开发时使用）
         '@components-src': resolve(__dirname, '../../components/src'),
         // 组件库根目录（用于引用 CHANGELOG.md 等）
@@ -301,7 +315,9 @@ export default defineConfig({
     },
     optimizeDeps: {
       include: [
-        'element-plus',
+        'element-plus'
+      ],
+      exclude: [
         '@yetuzi/vue3-query-components'
       ]
     },

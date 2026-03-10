@@ -2,6 +2,23 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.5.1](https://github.com/yetuzi-open/vue3-query-components/compare/v1.5.0...v1.5.1) (2026-03-10)
+
+
+### ♻️ 重构
+
+* 简化 CommonTable 枚举列配置判断逻辑 ([adc524e](https://github.com/yetuzi-open/vue3-query-components/commit/adc524ef4f72c6489cafe38c712cdee248b0ef27))
+* 精简 CommonTable 渲染与列归一化逻辑 ([8bd4728](https://github.com/yetuzi-open/vue3-query-components/commit/8bd4728239145faac10ad4eba3e46105e9e8fdfa))
+
+
+### 📝 文档
+
+* 同步 CommonTable 注释与文档说明 ([d36ba28](https://github.com/yetuzi-open/vue3-query-components/commit/d36ba28773780702115f60f14db8b04980a837d9))
+* 同步 CommonQueryTable 注释与文档说明 ([bb86cba](https://github.com/yetuzi-open/vue3-query-components/commit/bb86cba57db95ff3a65827823c7b91e57c32a1ce))
+* 同步 CommonForm 注释与文档说明 ([a63dc58](https://github.com/yetuzi-open/vue3-query-components/commit/a63dc58d2a2e7e1d31adc4f259c8bfc1b980fd00))
+* 同步 CommonConfigProvider 注释与文档说明 ([cd67e8d](https://github.com/yetuzi-open/vue3-query-components/commit/cd67e8d42e6e2c00e9a016fd8edc1dbd13696500))
+* 同步 CommonPagination 注释与文档说明 ([53a33a8](https://github.com/yetuzi-open/vue3-query-components/commit/53a33a8e3799cd92238bb86d786178d0f9b17d4e))
+
 ## [1.5.0](https://github.com/yetuzi-open/vue3-query-components/compare/v1.4.4...v1.5.0) (2026-01-26)
 
 

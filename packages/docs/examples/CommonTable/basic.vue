@@ -1,70 +1,58 @@
-<script setup lang="ts">
-import { CommonTable } from "@yetuzi/vue3-query-components";
-import type { CommonTableArrayColumns } from "@yetuzi/vue3-query-components";
-import { ElButton } from "element-plus";
+﻿<script setup lang="ts">
+import { ElButton } from 'element-plus'
+import { CommonTable, type CommonTableArrayColumns } from '@yetuzi/vue3-query-components'
 
-const tableData = [
-  {
-    id: 1,
-    name: "Zhang San",
-    status: 1,
-    createTime: 1705278600000,
-  },
-  {
-    id: 2,
-    name: "Li Si",
-    status: 0,
-    createTime: 1705377600000,
-  },
-  {
-    id: 3,
-    name: "Wang Wu",
-    status: 1,
-    createTime: 1705454100000,
-  },
-];
+interface TableRow {
+  id: number
+  name: string
+  status: number
+  createTime: number
+}
 
-const columns: CommonTableArrayColumns<any> = [
+const tableData: TableRow[] = [
+  { id: 1, name: '张敏', status: 1, createTime: 1705278600000 },
+  { id: 2, name: '李婷', status: 0, createTime: 1705377600000 },
+  { id: 3, name: '王凯', status: 1, createTime: 1705454100000 },
+]
+
+const columns: CommonTableArrayColumns<TableRow> = [
+  { type: 'selection', width: 55 },
+  { type: 'index', width: 55 },
+  { prop: 'name', label: '负责人', sortable: true },
   {
-    type: "selection",
-    width: 55,
-  },
-  {
-    type: "index",
-    width: 55,
-  },
-  {
-    prop: "name",
-    label: "Name",
-    sortable: true,
-  },
-  {
-    prop: "status",
-    label: "Status",
+    prop: 'status',
+    label: '状态',
     width: 100,
-    formatter: (row: { status: number }) =>
-      row.status === 1 ? "Enabled" : "Disabled",
+    formatter: (row) => (row.status === 1 ? '启用' : '停用'),
   },
-  {
-    prop: "createTime",
-    label: "Create Time",
-    width: 180,
-    type: "dateTime",
-  },
-  {
-    prop: "operation",
-    label: "Operations",
-    width: 180,
-    fixed: "right",
-  },
-];
+  { prop: 'createTime', label: '创建时间', width: 180, type: 'dateTime' },
+  { prop: 'operation', label: '操作', width: 160, fixed: 'right' },
+]
 </script>
 
 <template>
-  <CommonTable :data="tableData" :columns="columns">
-    <template #table-operation="{ row }">
-      <ElButton link type="primary" size="small">Edit</ElButton>
-      <ElButton link type="danger" size="small">Delete</ElButton>
-    </template>
-  </CommonTable>
+  <div class="table-demo">
+    <p class="demo-description">基础表格示例展示了常见的多选、序号、格式化列和操作列组合。</p>
+
+    <CommonTable :data="tableData" :columns="columns">
+      <template #operation>
+        <ElButton link type="primary" size="small">编辑</ElButton>
+        <ElButton link type="danger" size="small">删除</ElButton>
+      </template>
+    </CommonTable>
+  </div>
 </template>
+
+<style scoped>
+.table-demo {
+  display: grid;
+  gap: 12px;
+}
+
+.demo-description {
+  margin: 0;
+  color: var(--vp-c-text-2);
+  font-size: 14px;
+  line-height: 1.6;
+}
+</style>

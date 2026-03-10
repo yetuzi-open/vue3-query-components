@@ -1,84 +1,53 @@
-<script setup lang="ts">
-import { CommonForm } from "@yetuzi/vue3-query-components";
-import { ElRate, ElSlider, ElColorPicker, ElInput } from 'element-plus';
+﻿<script setup lang="ts">
+import { ElInput, ElRate, ElTag } from 'element-plus'
+import { CommonForm } from '@yetuzi/vue3-query-components'
 
 const form = [
-  {
-    is: "input",
-    label: "Name",
-    prop: "name",
-    props: {
-      placeholder: "Please enterName",
-    },
-  },
-  {
-    is: "input",
-    label: "邮箱",
-    prop: "email",
-    props: {
-      placeholder: "Please enter邮箱",
-      type: "email",
-    },
-  },
-  // 自定义评分组件
-  {
-    is: "custom-rate",
-    label: "评分",
-    prop: "rate",
-    initialValue: 3,
-  },
-  // 自定义颜色选择器
-  {
-    is: "custom-color",
-    label: "主题色",
-    prop: "color",
-    initialValue: "#409EFF",
-  },
-];
-
-function handleSubmit(formData: any) {
-  console.log("表单提交数据:", formData);
-  alert("表单提交成功！包含自定义组件的数据。");
-}
-
-function handleReset(formData: any) {
-  console.log("表单Reset后数据:", formData);
-}
+  { is: 'input', label: '客户名称', prop: 'name' },
+  { is: 'input', label: '备注信息', prop: 'remark' },
+  { is: 'input', label: '服务评分', prop: 'rating', initialValue: 4 },
+]
 </script>
 
 <template>
-  <CommonForm :form="form" @submit="handleSubmit" @reset="handleReset">
-    <!-- 评分组件插槽 -->
-    <template #rate="{ value, updateValue }">
-      <el-rate
-        :model-value="value"
-        @update:modelValue="updateValue"
-        :colors="['#99A9BF', '#F7BA2A', '#FF9900']"
-        show-score
-        score-template="{value} 分"
-      />
-    </template>
+  <div class="form-demo">
+    <p class="demo-description">当内置组件不满足需求时，可以按字段名提供插槽，自定义任意表单项内容。</p>
 
-    <!-- 颜色选择器插槽 -->
-    <template #color="{ value, updateValue }">
-      <el-color-picker
-        :model-value="value"
-        @update:modelValue="updateValue"
-        show-alpha
-        :predefine="[
-          '#ff4500',
-          '#ff8c00',
-          '#ffd700',
-          '#90ee90',
-          '#00ced1',
-          '#1e90ff',
-          '#c71585',
-          '#409EFF'
-        ]"
-      />
-    </template>
-  </CommonForm>
+    <CommonForm :form="form" :inline="false" label-width="100px">
+      <template #remark="{ value, updateValue }">
+        <div class="slot-field">
+          <ElTag type="info">自定义备注输入框</ElTag>
+          <ElInput
+            :model-value="value"
+            placeholder="请输入补充说明"
+            @update:modelValue="updateValue"
+          />
+        </div>
+      </template>
+
+      <template #rating="{ value, updateValue }">
+        <ElRate :model-value="value" @update:modelValue="updateValue" show-score />
+      </template>
+    </CommonForm>
+  </div>
 </template>
 
 <style scoped>
+.form-demo {
+  display: grid;
+  gap: 12px;
+}
+
+.demo-description {
+  margin: 0;
+  color: var(--vp-c-text-2);
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.slot-field {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
 </style>

@@ -1,84 +1,70 @@
-<script setup lang="ts">
-import { CommonForm } from "@yetuzi/vue3-query-components";
+﻿<script setup lang="ts">
+import { CommonForm } from '@yetuzi/vue3-query-components'
 
 const form = [
   {
-    is: "input",
-    label: "Name",
-    prop: "name",
+    is: 'input',
+    label: '关键词',
+    prop: 'keyword',
+    props: {
+      placeholder: '请输入客户名称 / 手机号',
+    },
   },
   {
-    is: "select",
-    label: "性别",
-    prop: "gender",
-    initialValue: "",
+    is: 'select',
+    label: '线索来源',
+    prop: 'source',
     props: {
-      placeholder: "Please select性别",
+      placeholder: '请选择线索来源',
       options: [
-        { value: "male", label: "男" },
-        { value: "female", label: "女" },
+        { value: 'douyin', label: '抖音' },
+        { value: 'wechat', label: '微信' },
+        { value: 'offline', label: '线下活动' },
       ],
     },
   },
   {
-    is: "date-picker",
-    label: "生日",
-    prop: "birthday",
+    is: 'date-picker',
+    label: '创建日期',
+    prop: 'createdAt',
     props: {
-      type: "date",
-      placeholder: "Please select生日",
+      type: 'date',
+      placeholder: '请选择创建日期',
     },
   },
   {
-    is: "radio",
-    label: "Status",
-    prop: "status",
-    initialValue: 1,
+    is: 'radio',
+    label: '跟进状态',
+    prop: 'status',
+    initialValue: 'all',
     props: {
       options: [
-        { value: 1, label: "Enabled" },
-        { value: 0, label: "Disabled" },
+        { value: 'all', label: '全部' },
+        { value: 'pending', label: '待跟进' },
+        { value: 'done', label: '已完成' },
       ],
     },
   },
-  {
-    is: "check-box",
-    label: "爱好",
-    prop: "hobbies",
-    initialValue: [],
-    props: {
-      options: [
-        { value: "reading", label: "阅读" },
-        { value: "music", label: "音乐" },
-        { value: "sports", label: "运动" },
-        { value: "travel", label: "旅行" },
-      ],
-    },
-  },
-  {
-    is: "switch",
-    label: "是否订阅",
-    prop: "subscribe",
-    initialValue: true,
-    props: {
-      activeText: "是",
-      inactiveText: "否",
-      activeValue: true,
-      inactiveValue: false,
-    },
-  },
-];
-
-function handleSubmit(formData: any) {
-  console.log("表单提交数据:", formData);
-  alert("表单提交成功！请查看控制台输出。");
-}
-
-function handleReset(formData: any) {
-  console.log("表单Reset后数据:", formData);
-}
+]
 </script>
 
 <template>
-  <CommonForm :form="form" :inline="false" @submit="handleSubmit" @reset="handleReset" />
+  <div class="form-demo">
+    <p class="demo-description">行内表单更适合查询条件较少的列表页，能节省页面纵向空间。</p>
+    <CommonForm :form="form" inline />
+  </div>
 </template>
+
+<style scoped>
+.form-demo {
+  display: grid;
+  gap: 12px;
+}
+
+.demo-description {
+  margin: 0;
+  color: var(--vp-c-text-2);
+  font-size: 14px;
+  line-height: 1.6;
+}
+</style>

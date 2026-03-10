@@ -35,7 +35,13 @@ function replaceVersion() {
 }
 
 // 启动 Vite watch 构建
-const viteProcess = spawn("vite", ["build", "--watch"], {
+const isWindows = process.platform === "win32"
+const viteCommand = isWindows ? "cmd.exe" : "vite"
+const viteArgs = isWindows
+  ? ["/d", "/s", "/c", "vite.cmd", "build", "--watch"]
+  : ["build", "--watch"]
+
+const viteProcess = spawn(viteCommand, viteArgs, {
   stdio: "inherit",
   shell: false,
 })

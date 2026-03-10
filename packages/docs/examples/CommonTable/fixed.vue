@@ -1,86 +1,77 @@
-<script setup lang="ts">
-import { CommonTable } from "@yetuzi/vue3-query-components";
-import type { CommonTableArrayColumns } from "@yetuzi/vue3-query-components";
-import { ElButton } from "element-plus";
+﻿<script setup lang="ts">
+import { ElButton } from 'element-plus'
+import { CommonTable, type CommonTableArrayColumns } from '@yetuzi/vue3-query-components'
 
-const tableData = [
-  {
-    name: "Zhang San",
-    email: "zhangsan@example.com",
-    phone: "13800138001",
-    address: "北京市朝阳区建国路88号",
-    department: "技术部",
-    salary: "15000",
-  },
-  {
-    name: "Li Si",
-    email: "lisi@example.com",
-    phone: "13800138002",
-    address: "上海市浦东新区陆家嘴金融中心",
-    department: "产品部",
-    salary: "18000",
-  },
-  {
-    name: "Wang Wu",
-    email: "wangwu@example.com",
-    phone: "13800138003",
-    address: "广州市天河区珠江新城",
-    department: "设计部",
-    salary: "12000",
-  },
-];
+interface TableRow {
+  name: string
+  email: string
+  phone: string
+  address: string
+  department: string
+  salary: string
+}
 
-const columns: CommonTableArrayColumns<any> = [
+const tableData: TableRow[] = [
   {
-    prop: "name",
-    label: "Name",
-    width: 100,
-    fixed: "left",
+    name: '张敏',
+    email: 'zhangmin@example.com',
+    phone: '13800138001',
+    address: '北京市朝阳区建国路 88 号',
+    department: '技术部',
+    salary: '15000',
   },
   {
-    prop: "email",
-    label: "邮箱",
-    width: 200,
+    name: '李婷',
+    email: 'liting@example.com',
+    phone: '13800138002',
+    address: '上海市浦东新区金科路 88 号',
+    department: '产品部',
+    salary: '18000',
   },
   {
-    prop: "phone",
-    label: "电话",
-    width: 130,
+    name: '王凯',
+    email: 'wangkai@example.com',
+    phone: '13800138003',
+    address: '广州市天河区珠江新城',
+    department: '设计部',
+    salary: '12000',
   },
-  {
-    prop: "address",
-    label: "地址",
-    width: 1250,
-    showOverflowTooltip: true,
-  },
-  {
-    prop: "department",
-    label: "部门",
-    width: 100,
-  },
-  {
-    prop: "salary",
-    label: "薪资",
-    width: 100,
-  },
-  {
-    prop: "operation",
-    label: "Operations",
-    width: 150,
-    fixed: "right",
-  },
-];
+]
+
+const columns: CommonTableArrayColumns<TableRow> = [
+  { prop: 'name', label: '姓名', width: 100, fixed: 'left' },
+  { prop: 'email', label: '邮箱', width: 220 },
+  { prop: 'phone', label: '电话', width: 140 },
+  { prop: 'address', label: '地址', width: 260, showOverflowTooltip: true },
+  { prop: 'department', label: '部门', width: 100 },
+  { prop: 'salary', label: '月薪', width: 100 },
+  { prop: 'operation', label: '操作', width: 160, fixed: 'right' },
+]
 </script>
 
 <template>
-  <CommonTable :data="tableData" :columns="columns" border>
-    <template #operation="{ row }">
-      <el-button size="small" type="primary">
-        Edit
-      </el-button>
-      <el-button size="small" type="danger">
-        Delete
-      </el-button>
-    </template>
-  </CommonTable>
+  <div class="table-demo">
+    <p class="demo-description">列较多时可固定关键字段和操作列，提升横向滚动场景下的可读性。</p>
+
+    <CommonTable :data="tableData" :columns="columns" border>
+      <template #operation>
+        <ElButton size="small" type="primary">编辑</ElButton>
+        <ElButton size="small" type="danger">删除</ElButton>
+      </template>
+    </CommonTable>
+  </div>
 </template>
+
+<style scoped>
+.table-demo {
+  display: grid;
+  gap: 12px;
+}
+
+.demo-description {
+  margin: 0;
+  color: var(--vp-c-text-2);
+  font-size: 14px;
+  line-height: 1.6;
+}
+</style>

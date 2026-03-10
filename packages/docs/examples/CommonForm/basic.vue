@@ -1,94 +1,118 @@
-<script setup lang="ts">
-import { CommonForm } from "@yetuzi/vue3-query-components";
+﻿<script setup lang="ts">
+import { ElMessage } from 'element-plus'
+import { CommonForm } from '@yetuzi/vue3-query-components'
 
 const form = [
   {
-    is: "input",
-    label: "Name",
-    prop: "name",
+    is: 'input',
+    label: '联系人',
+    prop: 'name',
     formItem: {
       rules: [
-        { required: true, message: "Please enterName", trigger: "blur" },
-        { min: 2, max: 10, message: "长度在 2 到 10 个字符", trigger: "blur" },
+        { required: true, message: '请输入联系人姓名', trigger: 'blur' },
+        { min: 2, max: 10, message: '姓名长度需为 2 - 10 个字符', trigger: 'blur' },
       ],
+    },
+    props: {
+      placeholder: '请输入联系人姓名',
     },
   },
   {
-    is: "select",
-    label: "性别",
-    prop: "gender",
-    initialValue: "",
+    is: 'select',
+    label: '客户等级',
+    prop: 'level',
+    initialValue: 'a',
     props: {
-      placeholder: "Please select性别",
+      placeholder: '请选择客户等级',
       options: [
-        { value: "male", label: "男" },
-        { value: "female", label: "女" },
+        { value: 'a', label: 'A级' },
+        { value: 'b', label: 'B级' },
+        { value: 'c', label: 'C级' },
       ],
       clearable: true,
     },
   },
   {
-    is: "date-picker",
-    label: "生日",
-    prop: "birthday",
+    is: 'date-picker',
+    label: '跟进日期',
+    prop: 'followDate',
     props: {
-      type: "date",
-      placeholder: "Please select生日",
+      type: 'date',
+      placeholder: '请选择跟进日期',
       clearable: true,
-      format: "YYYY-MM-DD",
-      valueFormat: "YYYY-MM-DD",
+      format: 'YYYY-MM-DD',
+      valueFormat: 'YYYY-MM-DD',
     },
   },
   {
-    is: "radio",
-    label: "Status",
-    prop: "status",
-    initialValue: 1,
+    is: 'radio',
+    label: '跟进状态',
+    prop: 'status',
+    initialValue: 'pending',
     props: {
       options: [
-        { value: 1, label: "Enabled" },
-        { value: 0, label: "Disabled" },
+        { value: 'pending', label: '待联系' },
+        { value: 'tracking', label: '跟进中' },
+        { value: 'done', label: '已成交' },
       ],
     },
   },
   {
-    is: "check-box",
-    label: "爱好",
-    prop: "hobbies",
-    initialValue: [],
+    is: 'check-box',
+    label: '关注渠道',
+    prop: 'channels',
+    initialValue: ['wechat'],
     props: {
       options: [
-        { value: "reading", label: "阅读" },
-        { value: "music", label: "音乐" },
-        { value: "sports", label: "运动" },
-        { value: "travel", label: "旅行" },
+        { value: 'wechat', label: '微信' },
+        { value: 'phone', label: '电话' },
+        { value: 'email', label: '邮件' },
+        { value: 'visit', label: '到访' },
       ],
     },
   },
   {
-    is: "switch",
-    label: "是否订阅",
-    prop: "subscribe",
+    is: 'switch',
+    label: '订阅提醒',
+    prop: 'subscribe',
     initialValue: true,
     props: {
-      activeText: "是",
-      inactiveText: "否",
+      activeText: '开启',
+      inactiveText: '关闭',
       activeValue: true,
       inactiveValue: false,
     },
   },
-];
+]
 
 function handleSubmit(formData: any) {
-  console.log("表单提交数据:", formData);
-  alert("表单提交成功！请查看控制台输出。");
+  console.log('提交的表单数据：', formData)
+  ElMessage.success('提交成功，请查看控制台输出')
 }
 
 function handleReset(formData: any) {
-  console.log("表单Reset后数据:", formData);
+  console.log('重置后的表单数据：', formData)
+  ElMessage.info('表单已重置')
 }
 </script>
 
 <template>
-  <CommonForm :form="form" @submit="handleSubmit" @reset="handleReset" />
+  <div class="form-demo">
+    <p class="demo-description">基础示例展示了查询/录入场景最常见的字段组合，适合作为业务表单的起点。</p>
+    <CommonForm :form="form" @submit="handleSubmit" @reset="handleReset" />
+  </div>
 </template>
+
+<style scoped>
+.form-demo {
+  display: grid;
+  gap: 12px;
+}
+
+.demo-description {
+  margin: 0;
+  color: var(--vp-c-text-2);
+  font-size: 14px;
+  line-height: 1.6;
+}
+</style>

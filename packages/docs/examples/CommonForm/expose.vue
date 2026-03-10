@@ -1,103 +1,111 @@
-<script setup lang="ts">
+﻿<script setup lang="ts">
 import { ref } from 'vue'
-import { CommonForm } from '@yetuzi/vue3-query-components'
-import type { CommonFormExpose } from '@yetuzi/vue3-query-components'
-import { ElMessage, ElButton } from 'element-plus'
-
+import { ElButton, ElMessage } from 'element-plus'
+import { CommonForm, type CommonFormExpose } from '@yetuzi/vue3-query-components'
 
 const formRef = ref<CommonFormExpose>()
 
 const form = [
   {
     is: 'input' as const,
-    label: 'Name',
+    label: '负责人',
     prop: 'name',
     initialValue: '',
+    props: {
+      placeholder: '请输入负责人姓名',
+    },
     formItem: {
-      rules: [{ required: true, message: 'Please enterName', trigger: 'blur' }],
+      rules: [{ required: true, message: '请输入负责人姓名', trigger: 'blur' }],
     },
   },
   {
     is: 'input' as const,
-    label: '邮箱',
+    label: '邮箱地址',
     prop: 'email',
     initialValue: '',
+    props: {
+      placeholder: '请输入邮箱地址',
+    },
     formItem: {
       rules: [
-        { required: true, message: 'Please enter邮箱', trigger: 'blur' },
-        { type: 'email', message: 'Please enter正确的邮箱地址', trigger: 'blur' },
+        { required: true, message: '请输入邮箱地址', trigger: 'blur' },
+        { type: 'email', message: '请输入正确的邮箱地址', trigger: 'blur' },
       ],
     },
   },
 ]
 
-// 表单验证
 async function handleValidate() {
   const valid = await formRef.value?.validate()
   if (valid) {
-    ElMessage.success('验证通过！')
+    ElMessage.success('表单校验通过')
   } else {
-    ElMessage.error('验证失败！')
+    ElMessage.error('表单校验未通过')
   }
 }
 
-// 验证指定字段
 function handleValidateField() {
   formRef.value?.validateField('name', (errorMessage) => {
     if (errorMessage) {
-      ElMessage.error(`Name字段验证失败：${errorMessage}`)
-    } else {
-      ElMessage.success('Name字段验证通过！')
+      ElMessage.error('负责人字段校验失败：' + errorMessage)
+      return
     }
+    ElMessage.success('负责人字段校验通过')
   })
 }
 
-// Reset表单
 function handleReset() {
   formRef.value?.resetFields()
-  ElMessage.info('表单已Reset')
+  ElMessage.info('表单已重置')
 }
 
-// 清除验证信息
 function handleClearValidate() {
   formRef.value?.clearValidate()
-  ElMessage.info('验证信息已清除')
+  ElMessage.info('已清空校验结果')
 }
 
-// 滚动到指定字段
 function handleScrollToField() {
   formRef.value?.scrollToField('email')
+  ElMessage.info('已滚动到邮箱字段')
 }
 
-// 获取表单数据
 function handleGetFormData() {
-  console.log('表单数据:', formRef.value?.formData)
-  ElMessage.success('请查看控制台输出的表单数据')
+  console.log('当前表单数据：', formRef.value?.formData)
+  ElMessage.success('已输出当前表单数据，请查看控制台')
 }
 </script>
 
 <template>
   <div class="expose-demo">
+    <p class="demo-description">通过 `ref` 可以直接调用内部表单实例方法，适合复杂页面中的联动控制。</p>
+
     <CommonForm ref="formRef" :form="form" />
 
     <div class="demo-actions">
-      <el-button @click="handleValidate">验证表单</el-button>
-      <el-button @click="handleValidateField">验证Name字段</el-button>
-      <el-button @click="handleReset">Reset表单</el-button>
-      <el-button @click="handleClearValidate">清除验证</el-button>
-      <el-button @click="handleScrollToField">滚动到邮箱</el-button>
-      <el-button @click="handleGetFormData">获取表单数据</el-button>
+      <ElButton @click="handleValidate">校验表单</ElButton>
+      <ElButton @click="handleValidateField">校验负责人</ElButton>
+      <ElButton @click="handleReset">重置表单</ElButton>
+      <ElButton @click="handleClearValidate">清除校验</ElButton>
+      <ElButton @click="handleScrollToField">滚动到邮箱</ElButton>
+      <ElButton @click="handleGetFormData">获取表单数据</ElButton>
     </div>
   </div>
 </template>
 
 <style scoped>
 .expose-demo {
-  padding: 20px;
+  display: grid;
+  gap: 16px;
+}
+
+.demo-description {
+  margin: 0;
+  color: var(--vp-c-text-2);
+  font-size: 14px;
+  line-height: 1.6;
 }
 
 .demo-actions {
-  margin-top: 20px;
   display: flex;
   gap: 10px;
   flex-wrap: wrap;

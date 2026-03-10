@@ -14,7 +14,7 @@
     "vitepress": "^1.6.4"
   },
   "scripts": {
-    "dev": "npm-run-all --parallel dev:components dev:docs",
+    "dev": "npm run build:components && npm-run-all --parallel dev:components dev:docs",
     "dev:components": "cd packages/components && npm run dev",
     "dev:docs": "cd packages/docs && npm run dev",
     "build": "npm run build:components && npm run build:docs",
