@@ -10,13 +10,13 @@
 
 ```typescript
 // main.ts
-import '@yetuzi/vue3-query-components/dist/style.css'
+import '@yetuzi/vue3-query-components/dist/index.css'
 ```
 
 如果仍然不生效，请检查：
 
 1. 确认 CSS 文件路径正确
-2. 确认 Element Plus 组件样式已导入
+2. 确认宿主项目已安装 `element-plus`
 3. 检查浏览器的开发者工具，确认 CSS 文件是否被加载
 
 ### Q: TypeScript 报错 "Cannot find module"？
@@ -67,12 +67,10 @@ const columns = [
   {
     label: '状态',
     prop: 'status',
-    slot: 'status'  // 指定使用插槽
   },
   {
     label: '操作',
     prop: 'operation',
-    slot: 'operation'
   }
 ]
 </script>
@@ -80,25 +78,33 @@ const columns = [
 
 ### Q: 如何在查询表单中添加自定义组件？
 
-**A:** 使用 `custom` 类型的表单项：
+**A:** 直接把自定义 Vue 组件传给 `is` 字段：
 
 ```typescript
+import UserSelector from './UserSelector.vue'
+
 const form = [
   // ... 其他表单项
   {
-    is: 'custom',
+    is: UserSelector,
     prop: 'customField',
     label: '自定义字段',
-    // 使用 defaultContent 插槽自定义内容
+    props: {
+      placeholder: '请选择',
+    }
   }
 ]
 ```
 
-然后在模板中使用 `#form-customField` 插槽：
+如果只是想覆盖单个字段的渲染，也可以直接使用对应 `prop` 的插槽：
 
 ```vue
-<template #form-customField="{ formData }">
-  <el-input v-model="formData.customField" placeholder="自定义输入" />
+<template #form-customField="{ value, updateValue }">
+  <el-input
+    :model-value="value"
+    placeholder="自定义输入"
+    @update:modelValue="updateValue"
+  />
 </template>
 ```
 
@@ -107,7 +113,7 @@ const form = [
 **A:** 确保以下几点：
 
 1. 为每个表单项设置 `prop` 属性
-2. 如果需要必填，在表单项配置中添加 `rules`：
+2. 如果需要校验规则，请把校验配置写到 `formItem.rules` 中：
 
 ```typescript
 const form = [
@@ -115,32 +121,19 @@ const form = [
     is: 'input',
     prop: 'name',
     label: '用户名',
-    required: true,  // 必填
-    rules: [
-      { min: 2, max: 10, message: '长度在 2 到 10 个字符', trigger: 'blur' }
-    ]
+    formItem: {
+      rules: [
+        { required: true, message: '请输入用户名', trigger: 'blur' },
+        { min: 2, max: 10, message: '长度在 2 到 10 个字符', trigger: 'blur' }
+      ]
+    }
   }
 ]
 ```
 
 ### Q: 分页组件如何自定义每页条数选项？
 
-**A:** 通过 `CommonConfigProvider` 全局配置或在组件上通过 attrs 传递：
-
-```vue
-<!-- 全局配置 -->
-<CommonConfigProvider :config="{
-  component: {
-    pagination: {
-      pageSizes: [10, 20, 50, 100]  // 自定义选项
-    }
-  }
-}">
-  <App />
-</CommonConfigProvider>
-```
-
-或单独配置：
+**A:** 直接给 `CommonPagination` 传 `page-sizes`，或者给 `CommonQueryTable` 透传 `pagination-page-sizes`：
 
 ```vue
 <CommonPagination
@@ -148,6 +141,14 @@ const form = [
   v-model:page-size="page.pageSize"
   :total="total"
   :page-sizes="[10, 20, 50, 100]"
+/>
+```
+
+```vue
+<CommonQueryTable
+  :fetch="fetch"
+  :columns="columns"
+  pagination-page-sizes="[10, 20, 50, 100]"
 />
 ```
 
@@ -204,7 +205,7 @@ const form = [
 **A:** 建议采取以下优化措施：
 
 1. **使用分页**：限制每页显示的数据量
-2. **虚拟滚动**：考虑使用虚拟滚动表格（如 `el-table-v2`）
+2. **改用更适合的大数据方案**：`CommonTable` 适合常规业务表格，超大数据量场景建议结合服务端分页，或直接切换到 `el-table-v2`
 3. **减少列数**：只显示必要的列
 4. **优化 formatter**：避免在 formatter 中进行复杂计算
 
@@ -252,7 +253,7 @@ const routes = [
 **A:** 组件库支持泛型，可以获得完整的类型提示：
 
 ```typescript
-import type { CommonQueryTableProps } from '@yetuzi/vue3-query-components'
+import type { CommonTableArrayColumns } from '@yetuzi/vue3-query-components'
 
 // 定义你的数据类型
 interface User {
@@ -262,7 +263,7 @@ interface User {
 }
 
 // 使用泛型获得类型提示
-const columns: CommonTableColumn<User>[] = [
+const columns: CommonTableArrayColumns<User> = [
   {
     label: 'ID',
     prop: 'id'  // 自动提示 User 的属性
@@ -275,17 +276,19 @@ const columns: CommonTableColumn<User>[] = [
 **A:** 使用泛型约束行数据类型：
 
 ```typescript
+import type { CommonTableArrayColumns } from '@yetuzi/vue3-query-components'
+
 interface User {
   id: number
   name: string
   status: number
 }
 
-const columns: CommonTableColumn<User>[] = [
+const columns: CommonTableArrayColumns<User> = [
   {
     label: '状态',
     prop: 'status',
-    formatter: (row: User) => {
+    formatter: (row) => {
       // row 自动推断为 User 类型
       return row.status === 1 ? '启用' : '禁用'
     }

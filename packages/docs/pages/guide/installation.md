@@ -11,23 +11,26 @@
 ::: code-group
 
 ```sh [npm]
-npm install @yetuzi/vue3-query-components
+npm install @yetuzi/vue3-query-components element-plus
 ```
 
 ```sh [yarn]
-yarn add @yetuzi/vue3-query-components
+yarn add @yetuzi/vue3-query-components element-plus
 ```
 
 ```sh  [pnpm]
-pnpm add @yetuzi/vue3-query-components
+pnpm add @yetuzi/vue3-query-components element-plus
 ```
 
 :::
 
+> 说明
+> `vue` 和 `element-plus` 是 peer dependencies，需要由宿主项目自行安装。
+
 ## 引入CSS
 
 ```sh  [main.ts]
-import '@yetuzi/vue3-query-components/dist/style.css'
+import '@yetuzi/vue3-query-components/dist/index.css'
 ```
 
 ## 仓库内联调

@@ -9,31 +9,32 @@
 ```vue
 <!-- App.vue -->
 <template>
-  <common-config-provider :config="appConfig">
+  <CommonConfigProvider :component="appConfig.component">
     <router-view />
-  </common-config-provider>
+  </CommonConfigProvider>
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import type { CommonConfig } from 'vue3-query-components'
+import type { Config } from '@yetuzi/vue3-query-components'
 
-const appConfig = ref<CommonConfig>({
-  placeholder: '--',
-  pagination: {
-    defaultPageCount: 1,
-    defaultPageSize: 20  // 根据业务需求调整
-  },
-  form: {
-    submitText: '查询',
-    resetText: '重置'
-  },
-  table: {
-    headerCellStyle: {
-      backgroundColor: '#fafafa',
-      fontWeight: 600
+const appConfig = ref<Config>({
+  component: {
+    placeholder: '--',
+    pagination: {
+      defaultPageCount: 1,
+      defaultPageSize: 20,
+    },
+    form: {
+      submitText: '查询',
+      resetText: '重置',
+      formItem: {
+        components: {
+          width: '240px',
+        },
+      },
     }
-  }
+  },
 })
 </script>
 ```
@@ -44,16 +45,16 @@ const appConfig = ref<CommonConfig>({
 
 ```typescript
 // utils/request.ts
-import type { ListParam, ListResponse } from 'vue3-query-components'
+import type { ListParam } from '@yetuzi/vue3-query-components'
 
 export interface FetchOptions<T = any> {
-  api: (params: any) => Promise<ListResponse<T>>
+  api: (params: any) => Promise<{ list: T[]; total: number }>
   transform?: (params: ListParam) => any
-  transformResponse?: (response: any) => ListResponse<T>
+  transformResponse?: (response: any) => { list: T[]; total: number }
 }
 
 export function createFetcher<T = any>(options: FetchOptions<T>) {
-  return async (params: ListParam): Promise<ListResponse<T>> => {
+  return async (params: ListParam): Promise<{ list: T[]; total: number }> => {
     // 转换请求参数
     const requestParams = options.transform?.(params) || params
 
@@ -77,8 +78,9 @@ export const fetchUserList = createFetcher({
   api: userApi.getList,
   transform: (params) => ({
     ...params,
-    pageNum: params.pageNum - 1  // 后端页码从0开始
-  })
+    page: params.pageNo,
+    size: params.pageSize,
+  }),
 })
 ```
 
@@ -88,21 +90,21 @@ export const fetchUserList = createFetcher({
 
 ```typescript
 // config/table.ts
-import type { CommonTableColumn } from 'vue3-query-components'
+import type { CommonTableArrayColumns, CommonTableColumnRoot } from '@yetuzi/vue3-query-components'
 
-export const baseColumns: CommonTableColumn[] = [
+export const baseColumns: CommonTableArrayColumns<any> = [
   {
     type: 'selection',
-    width: 55
+    width: 55,
   },
   {
     type: 'index',
     label: '序号',
-    width: 60
-  }
+    width: 60,
+  },
 ]
 
-export const operationColumn: CommonTableColumn = {
+export const operationColumn: CommonTableColumnRoot<any> = {
   label: '操作',
   width: 150,
   fixed: 'right'
@@ -111,12 +113,12 @@ export const operationColumn: CommonTableColumn = {
 
 ```typescript
 // config/form.ts
-import type { CommonFormItemArray } from 'vue3-query-components'
+import type { CommonFormDatePickerItem } from '@yetuzi/vue3-query-components'
 
-export const createTimeRange = {
-  field: 'createTimeRange',
+export const createTimeRange: CommonFormDatePickerItem<any> = {
+  is: 'date-picker',
+  prop: 'createTimeRange',
   label: '创建时间',
-  type: 'date-picker' as const,
   props: {
     type: 'daterange',
     rangeSeparator: '至',
@@ -135,7 +137,7 @@ export const createTimeRange = {
 ```typescript
 // composables/useQueryTable.ts
 import { ref, computed } from 'vue'
-import type { ListParam } from 'vue3-query-components'
+import type { ListParam } from '@yetuzi/vue3-query-components'
 
 export function useQueryTable(fetchFn: (params: ListParam) => Promise<any>) {
   const loading = ref(false)
@@ -146,9 +148,9 @@ export function useQueryTable(fetchFn: (params: ListParam) => Promise<any>) {
   const pageSize = ref(10)
 
   const pagination = computed(() => ({
-    currentPage: currentPage.value,
+    pageNo: currentPage.value,
     pageSize: pageSize.value,
-    total: total.value
+    total: total.value,
   }))
 
   const fetchData = async (params: ListParam) => {
@@ -156,10 +158,10 @@ export function useQueryTable(fetchFn: (params: ListParam) => Promise<any>) {
     try {
       const response = await fetchFn({
         ...params,
-        pageNum: currentPage.value,
-        pageSize: pageSize.value
+        pageNo: currentPage.value,
+        pageSize: pageSize.value,
       })
-      data.value = response.data
+      data.value = response.list
       total.value = response.total
       return response
     } finally {
@@ -233,7 +235,7 @@ export function useFormDependency(formData: any) {
 <!-- components/TableRowActions.vue -->
 <template>
   <div class="table-row-actions">
-    <common-button
+    <CommonButton
       v-if="showEdit"
       size="small"
       type="primary"
@@ -241,8 +243,8 @@ export function useFormDependency(formData: any) {
       @click="$emit('edit', row)"
     >
       编辑
-    </common-button>
-    <common-button
+    </CommonButton>
+    <CommonButton
       v-if="showDelete"
       size="small"
       type="danger"
@@ -250,12 +252,14 @@ export function useFormDependency(formData: any) {
       @click="$emit('delete', row)"
     >
       删除
-    </common-button>
+    </CommonButton>
     <slot name="extra" :row="row" />
   </div>
 </template>
 
 <script setup lang="ts">
+import { CommonButton } from '@yetuzi/vue3-query-components'
+
 interface Props {
   row: any
   showEdit?: boolean
@@ -275,27 +279,37 @@ defineEmits(['edit', 'delete'])
 
 ```vue
 <template>
-  <common-query-table :fetch="fetchData" :columns="columns">
-    <template #default="{ row }">
-      <table-row-actions
+  <CommonQueryTable :fetch="fetchData" :columns="columns">
+    <template #table-action="{ row }">
+      <TableRowActions
         :row="row"
         @edit="handleEdit"
         @delete="handleDelete"
       >
         <template #extra="{ row }">
-          <common-button
+          <CommonButton
             v-if="row.status === 1"
             size="small"
             link
             @click="handleDisable(row)"
           >
             禁用
-          </common-button>
+          </CommonButton>
         </template>
-      </table-row-actions>
+      </TableRowActions>
     </template>
-  </common-query-table>
+  </CommonQueryTable>
 </template>
+
+<script setup lang="ts">
+import TableRowActions from './components/TableRowActions.vue'
+
+const columns = [
+  { prop: 'name', label: '名称' },
+  { prop: 'status', label: '状态' },
+  { prop: 'action', label: '操作', fixed: 'right', width: 180 },
+]
+</script>
 ```
 
 ## 7. 错误处理
@@ -356,16 +370,16 @@ const debouncedSearch = debounce((keyword: string) => {
 }, 300)
 ```
 
-3. **虚拟滚动处理大数据量**
+3. **大数据量场景切换到更合适的方案**
 
 ```vue
-<common-table
-  :data="tableData"
-  :columns="columns"
-  height="400"
->
-  <!-- 使用虚拟滚动 -->
-</common-table>
+<template>
+  <!-- 常规场景继续使用 CommonTable -->
+  <CommonTable :data="tableData" :columns="columns" />
+
+  <!-- 超大数据量场景建议改用 Element Plus 的 el-table-v2 -->
+  <!-- <el-table-v2 :columns="v2Columns" :data="tableData" :width="960" :height="480" /> -->
+</template>
 ```
 
 ## 9. 类型安全
@@ -373,6 +387,8 @@ const debouncedSearch = debounce((keyword: string) => {
 充分利用 TypeScript 的类型检查：
 
 ```typescript
+import type { CommonTableArrayColumns } from '@yetuzi/vue3-query-components'
+
 interface User {
   id: number
   name: string
@@ -381,9 +397,7 @@ interface User {
   createTime: string
 }
 
-type UserListResponse = ListResponse<User>
-
-const columns: CommonTableColumn<User>[] = [
+const columns: CommonTableArrayColumns<User> = [
   {
     prop: 'name',
     label: '姓名'
@@ -391,48 +405,16 @@ const columns: CommonTableColumn<User>[] = [
   {
     prop: 'status',
     label: '状态',
-    formatter: (row: User) => row.status === 1 ? '启用' : '禁用'
+    formatter: (row) => row.status === 1 ? '启用' : '禁用'
   }
 ]
 ```
 
-## 10. 测试策略
+## 10. 验证策略
 
-为组件编写单元测试：
+当前仓库没有单独的单元测试基建，更符合现状的验证方式是：
 
-```typescript
-// tests/components/CommonQueryTable.spec.ts
-import { mount } from '@vue/test-utils'
-import CommonQueryTable from '@/components/CommonQueryTable'
-
-describe('CommonQueryTable', () => {
-  it('should render correctly', () => {
-    const wrapper = mount(CommonQueryTable, {
-      props: {
-        fetch: jest.fn(),
-        form: {},
-        columns: []
-      }
-    })
-
-    expect(wrapper.exists()).toBe(true)
-  })
-
-  it('should call fetch when search', async () => {
-    const mockFetch = jest.fn().mockResolvedValue({ data: [], total: 0 })
-
-    const wrapper = mount(CommonQueryTable, {
-      props: {
-        fetch: mockFetch,
-        form: {},
-        columns: []
-      }
-    })
-
-    // 触发搜索
-    await wrapper.find('[data-testid="search-button"]').trigger('click')
-
-    expect(mockFetch).toHaveBeenCalled()
-  })
-})
-```
+1. 运行 `npm run type-check`，先确认组件类型和示例写法没有回归。
+2. 运行 `npm run build`，同时检查组件包和文档站点能否正常构建。
+3. 在 `packages/docs/examples` 中补一个最小复现示例，使用根目录 `npm run dev` 做手动联调。
+4. 涉及 `CommonQueryTable`、`CommonForm` 这类组合组件时，优先验证搜索、重置、分页和插槽渲染这几个高频交互。
