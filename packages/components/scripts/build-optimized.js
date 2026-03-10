@@ -1,47 +1,45 @@
-import { execSync } from "child_process";
 import { existsSync, rmSync, readFileSync, writeFileSync } from "fs";
 import path from "path";
 import { performance } from "perf_hooks";
+import {
+  applyVersionBump,
+  findVersionType,
+  readCurrentVersion,
+  restoreFiles,
+  run,
+  snapshotFiles,
+} from "./release-utils.js";
 
-// 获取命令行参数中的版本升级类型
-const args = process.argv.slice(2);
-const versionType = args.find((arg) =>
-  ["patch", "minor", "major"].includes(arg),
-);
+const versionType = findVersionType();
+const releaseSnapshot = versionType ? snapshotFiles() : null;
 
 // 性能统计开始
 const startTime = performance.now();
 console.log("🚀 开始构建组件库...");
 console.log(`⏱️ 构建开始时间: ${new Date().toLocaleTimeString()}`);
 
-// 只有指定了版本类型时才升级版本号和更新 CHANGELOG
 if (versionType) {
   try {
     console.log(`📈 升级版本号 (${versionType}) 并更新 CHANGELOG...`);
     const versionStartTime = performance.now();
-
-    // 使用 standard-version 更新 CHANGELOG 和版本号，但不创建 git tag
-    execSync(
-      `standard-version --release-as ${versionType} --skip.tag --skip.commit`,
-      {
-        stdio: "inherit",
-      },
-    );
+    const nextVersion = applyVersionBump(versionType);
 
     const versionEndTime = performance.now();
     console.log(
       `⏱️ 版本升级耗时: ${(versionEndTime - versionStartTime).toFixed(2)}ms`,
     );
+    console.log(`📌 版本已更新为: ${nextVersion}`);
   } catch (error) {
+    if (releaseSnapshot) {
+      restoreFiles(releaseSnapshot);
+      console.error("↩️ 已恢复版本文件与 CHANGELOG 的变更");
+    }
     console.error("❌ 版本号升级失败：", error.message);
     process.exit(1);
   }
 }
 
-// 读取当前版本号
-const packageJsonPath = path.resolve(process.cwd(), "package.json");
-const packageJson = JSON.parse(readFileSync(packageJsonPath, "utf8"));
-const currentVersion = packageJson.version;
+const currentVersion = readCurrentVersion();
 console.log(`📌 当前版本: ${currentVersion}`);
 
 // 清理旧的构建产物
@@ -56,8 +54,7 @@ try {
   console.log("📦 构建中...");
   const buildStartTime = performance.now();
 
-  execSync("vite build", {
-    stdio: "inherit",
+  run("vite build", {
     maxBuffer: 1024 * 1024 * 10, // 增加缓冲区大小
   });
 
@@ -166,7 +163,7 @@ try {
     console.log("📝 生成版本信息...");
     const versionInfoStartTime = performance.now();
 
-    execSync("node scripts/generate-version-info.js", { stdio: "inherit" });
+    run("node scripts/generate-version-info.js");
 
     const versionInfoEndTime = performance.now();
     console.log(
@@ -185,6 +182,10 @@ try {
   console.log(`⏱️ 总耗时: ${totalTime}ms`);
   console.log(`📅 完成时间: ${new Date().toLocaleTimeString()}`);
 } catch (error) {
+  if (releaseSnapshot) {
+    restoreFiles(releaseSnapshot);
+    console.error("↩️ 已恢复版本文件与 CHANGELOG 的变更");
+  }
   const endTime = performance.now();
   const totalTime = (endTime - startTime).toFixed(2);
 

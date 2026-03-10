@@ -1,4 +1,4 @@
-import { readFileSync, writeFileSync, existsSync } from 'fs'
+import { mkdirSync, readFileSync, writeFileSync, existsSync } from 'fs'
 import path from 'path'
 
 /**
@@ -56,10 +56,9 @@ const versionInfo = {
   peerDependencies: packageJson.peerDependencies || {}
 }
 
-// 确保 dist 目录存在
 const distDir = path.resolve(process.cwd(), 'dist')
 if (!existsSync(distDir)) {
-  console.warn('⚠️  dist 目录不存在，将在构建时自动创建')
+  mkdirSync(distDir, { recursive: true })
 }
 
 // 写入版本信息文件

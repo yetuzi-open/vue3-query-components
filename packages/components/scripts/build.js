@@ -1,37 +1,34 @@
-import { execSync } from 'child_process'
-import { existsSync, rmSync, readFileSync, writeFileSync } from 'fs'
+import { existsSync, readFileSync, writeFileSync } from 'fs'
 import path from 'path'
+import { applyVersionBump, findVersionType, readCurrentVersion, restoreFiles, run, snapshotFiles } from './release-utils.js'
 
-// 获取命令行参数中的版本升级类型
-const args = process.argv.slice(2)
-const versionType = args.find(arg => ['patch', 'minor', 'major'].includes(arg))
+const versionType = findVersionType()
+const releaseSnapshot = versionType ? snapshotFiles() : null
 
 console.log('🚀 开始构建组件库...')
 
-// 只有指定了版本类型时才升级版本号和更新 CHANGELOG
 if (versionType) {
   try {
     console.log(`📈 升级版本号 (${versionType}) 并更新 CHANGELOG...`)
-    // 使用 standard-version 更新 CHANGELOG 和版本号，但不创建 git tag
-    execSync(`standard-version --release-as ${versionType} --skip.tag --skip.commit`, {
-      stdio: 'inherit',
-    })
+    const nextVersion = applyVersionBump(versionType)
+    console.log(`📌 版本已更新为: ${nextVersion}`)
   } catch (error) {
+    if (releaseSnapshot) {
+      restoreFiles(releaseSnapshot)
+      console.error('↩️ 已恢复版本文件与 CHANGELOG 的变更')
+    }
     console.error('❌ 版本号升级失败：', error.message)
     process.exit(1)
   }
 }
 
-// 读取当前版本号
-const packageJsonPath = path.resolve(process.cwd(), 'package.json')
-const packageJson = JSON.parse(readFileSync(packageJsonPath, 'utf8'))
-const currentVersion = packageJson.version
+const currentVersion = readCurrentVersion()
 console.log(`📌 当前版本: ${currentVersion}`)
 
 // 执行构建
 try {
   console.log('📦 构建中...')
-  execSync('vite build', { stdio: 'inherit' })
+  run('vite build')
 
   console.log('✅ Vite 构建完成')
 
@@ -98,11 +95,15 @@ try {
   try {
     console.log('')
     console.log('📝 生成版本信息...')
-    execSync('node scripts/generate-version-info.js', { stdio: 'inherit' })
+    run('node scripts/generate-version-info.js')
   } catch (error) {
     console.warn('⚠️  版本信息生成失败，但不影响构建')
   }
 } catch (error) {
+  if (releaseSnapshot) {
+    restoreFiles(releaseSnapshot)
+    console.error('↩️ 已恢复版本文件与 CHANGELOG 的变更')
+  }
   console.error('❌ 构建失败：', error.message)
   process.exit(1)
 }
