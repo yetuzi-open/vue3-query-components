@@ -8,45 +8,65 @@ import { readFileSync } from 'fs'
 const componentsPackageJson = JSON.parse(
   readFileSync(resolve(__dirname, '../../components/package.json'), 'utf8'),
 )
+const siteTitle = 'Vue3 Query Components'
+const siteDescription = '一个专注于企业级查询页面的 Vue3 组件库'
+const siteUrl = 'https://yetuzi-open.github.io'
+const siteBase = '/vue3-query-components/'
+const siteOgImage = `${siteUrl}${siteBase}logo.svg`
 const version = componentsPackageJson.version
 const isDev = process.argv.includes('dev')
+const currentYear = new Date().getFullYear()
+const giteeSocialIcon = `<svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+  <title>Gitee</title>
+  <rect x="2" y="2" width="20" height="20" rx="4.5" fill="currentColor" />
+  <path
+    fill="#fff"
+    d="M9 7.5A2.5 2.5 0 0 0 6.5 10v4A2.5 2.5 0 0 0 9 16.5h5.25A2.25 2.25 0 0 0 16.5 14.25V11.5H12v2h2.5v.75a.25.25 0 0 1-.25.25H9a.5.5 0 0 1-.5-.5v-4c0-.28.22-.5.5-.5h8v-2H9Z"
+  />
+</svg>`
+const gitCodeSocialIcon = `<svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+  <title>GitCode</title>
+  <rect x="2" y="2" width="20" height="20" rx="4.5" fill="currentColor" />
+  <path
+    fill="#fff"
+    d="m10.6 8.1-3.9 3.9 3.9 3.9 1.4-1.4-2.5-2.5 2.5-2.5-1.4-1.4Zm2.8 0L12 9.5l2.5 2.5-2.5 2.5 1.4 1.4 3.9-3.9-3.9-3.9Z"
+  />
+</svg>`
 
 // https://vitepress.vuejs.org/config/app-configs
 export default defineConfig({
   lang: 'zh-CN',
-  title: 'Vue3 Query Components',
-  description: '一个专注于企业级查询页面的 Vue3 组件库',
+  title: siteTitle,
+  description: siteDescription,
+  lastUpdated: true,
 
-  base: '/vue3-query-components/',
+  base: siteBase,
   srcDir: 'pages', // 指定页面文件的根目录
   head: [
     ['meta', { name: 'keywords', content: 'vue3,query,components,table,form,element-plus' }],
     ['meta', { name: 'author', content: 'vue3-query-components' }],
-    ['link', { rel: 'icon', href: '/favicon.ico' }]
+    ['meta', { name: 'theme-color', content: '#3b82f6' }],
+    ['meta', { property: 'og:site_name', content: siteTitle }],
+    ['meta', { property: 'og:type', content: 'website' }],
+    ['meta', { property: 'og:locale', content: 'zh_CN' }],
+    ['meta', { property: 'og:title', content: siteTitle }],
+    ['meta', { property: 'og:description', content: siteDescription }],
+    ['meta', { property: 'og:url', content: `${siteUrl}${siteBase}` }],
+    ['meta', { property: 'og:image', content: siteOgImage }],
+    ['meta', { name: 'twitter:card', content: 'summary_large_image' }],
+    ['meta', { name: 'twitter:title', content: siteTitle }],
+    ['meta', { name: 'twitter:description', content: siteDescription }],
+    ['meta', { name: 'twitter:image', content: siteOgImage }],
+    ['link', { rel: 'icon', type: 'image/svg+xml', href: '/logo.svg' }],
+    ['link', { rel: 'apple-touch-icon', href: '/logo.svg' }]
   ],
 
   themeConfig: {
-    siteTitle: 'Vue3 Query Components',
+    siteTitle,
     logo: '/logo.svg',
     nav: [
       { text: '指南', link: '/guide/' },
       { text: '组件', link: '/components/common-query-table' },
-      {
-        text: 'NPM',
-        link: 'https://www.npmjs.com/package/@yetuzi/vue3-query-components'
-      },
-      {
-        text: 'GitHub',
-        link: 'https://github.com/yetuzi-open/vue3-query-components'
-      },
-      {
-        text: 'Gitee',
-        link: 'https://gitee.com/yetuzi-open/vue3-query-components',
-      },
-      {
-        text: 'GitCode',
-        link: 'https://gitcode.com/yetuzi/vue3-query-components',
-      },
       {
         text: `v${version}`,
         items: [
@@ -56,6 +76,28 @@ export default defineConfig({
           },
         ]
       },
+    ],
+    socialLinks: [
+      {
+        icon: 'npm',
+        link: 'https://www.npmjs.com/package/@yetuzi/vue3-query-components',
+        ariaLabel: 'NPM'
+      },
+      {
+        icon: 'github',
+        link: 'https://github.com/yetuzi-open/vue3-query-components',
+        ariaLabel: 'GitHub'
+      },
+      {
+        icon: { svg: giteeSocialIcon },
+        link: 'https://gitee.com/yetuzi-open/vue3-query-components',
+        ariaLabel: 'Gitee'
+      },
+      {
+        icon: { svg: gitCodeSocialIcon },
+        link: 'https://gitcode.com/yetuzi/vue3-query-components',
+        ariaLabel: 'GitCode'
+      }
     ],
     sidebar: {
       '/guide/': [
@@ -112,6 +154,9 @@ export default defineConfig({
       pattern: 'https://github.com/yetuzi-open/vue3-query-components/edit/main/packages/docs/:path',
       text: '在 GitHub 上编辑此页'
     },
+    lastUpdated: {
+      text: '最近更新'
+    },
     outline: {
       level: [2, 3],
       label: '目录'
@@ -137,7 +182,7 @@ export default defineConfig({
     },
     footer: {
       message: 'MIT Licensed',
-      copyright: 'Copyright © 2026 vue3-query-components'
+      copyright: `Copyright © ${currentYear} vue3-query-components`
     },
   },
 
