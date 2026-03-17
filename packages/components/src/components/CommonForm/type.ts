@@ -25,6 +25,10 @@ import type { AnyObject } from '../../index'
 export interface CommonFormProps<T extends AnyObject> extends ExtractPropTypes<FormProps> {
   /** 表单项配置数组 */
   form?: CommonFormItemArray<T>
+  /** 独立传入的表单值，优先级高于表单项 `initialValue` */
+  formData?: Partial<CommonFormData<T>>
+  /** 是否显示默认提交/重置操作区 */
+  showActionButtons?: boolean
 }
 
 /**

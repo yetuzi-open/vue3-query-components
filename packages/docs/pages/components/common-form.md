@@ -75,10 +75,14 @@ title: CommonForm
 | 参数 | 说明 | 类型 | 默认值 |
 | --- | --- | --- | --- |
 | `form` | 表单项配置数组 | `CommonFormItemArray<T>` | `[]` |
+| `formData` | 独立传入的表单值，优先级高于 `initialValue` | `Partial<CommonFormData<T>>` | - |
 | `loading` | 提交按钮 loading 状态，支持 `v-model:loading` | `boolean` | `false` |
 | `inline` | 是否使用行内表单布局 | `boolean` | `true` |
+| `showActionButtons` | 是否显示默认提交/重置操作区 | `boolean` | `true` |
 
 > 除以上字段外，组件还支持大部分 Element Plus `ElForm` 原生属性，例如 `label-width`、`label-position`、`size`、`disabled` 等。
+>
+> 当同时传入 `formData` 和表单项 `initialValue` 时，以 `formData` 为准；调用 `resetFields()` 时会重置回当前传入的 `formData` 基线。
 
 ### 表单项配置
 
@@ -139,6 +143,7 @@ import type {
 ```ts
 interface CommonFormProps<T> {
   form?: CommonFormItemArray<T>
+  formData?: Partial<CommonFormData<T>>
 }
 
 interface CommonFormExpose<T> extends FormInstance {

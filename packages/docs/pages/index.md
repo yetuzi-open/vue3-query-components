@@ -25,7 +25,7 @@ features:
     details: 响应式全局配置系统，支持自定义组件、插槽和样式扩展，满足各种业务场景需求
   - icon: 🧩
     title: 丰富组件
-    details: 提供 CommonTable（多种列类型）、CommonForm（9种内置表单项）及完整的基础组件体系
+    details: 提供 CommonTable、CommonForm（11种内置表单项）、CommonDialog、CommonDialogForm 及完整的基础组件体系
   - icon: ⚡️
     title: 开箱即用
     details: 基于 Element Plus 封装，API 设计一致，学习成本低，大幅提升开发效率

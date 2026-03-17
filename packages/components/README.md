@@ -58,6 +58,7 @@ import {
   CommonQueryTable,
   CommonTable,
   CommonForm,
+  CommonDialogForm,
   CommonConfigProvider,
 } from '@yetuzi/vue3-query-components'
 ```
@@ -208,6 +209,8 @@ const queryTableConfig = {
 | `CommonQueryTable` | 一体化查询表格，集成表单、表格、分页 |
 | `CommonTable` | 增强型表格组件，支持多种列类型 |
 | `CommonForm` | 动态表单组件，支持 11 种表单项 |
+| `CommonDialog` | 对话框组件，内置统一页脚按钮和 loading 状态 |
+| `CommonDialogForm` | 弹窗表单组件，适合新增和编辑场景 |
 | `CommonConfigProvider` | 全局配置组件，提供统一的组件配置 |
 
 ### 基础组件
@@ -233,6 +236,8 @@ const queryTableConfig = {
 |---------|------|
 | `useResettableRef` | 创建可重置的 ref |
 | `useResettableReactive` | 创建可重置的 reactive |
+| `useCommonDialog` | 函数式打开轻量弹窗 |
+| `useCommonDialogForm` | 函数式打开弹窗表单 |
 | `useGetComponentsChildrenSlots` | 获取组件子插槽 |
 
 ## 📚 API 文档

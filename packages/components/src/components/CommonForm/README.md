@@ -119,16 +119,21 @@ const handleValidate = async () => {
 | 属性名 | 说明 | 类型 | 默认值 |
 | --- | --- | --- | --- |
 | `form` | 表单项配置数组 | `CommonFormItemArray<T>` | `[]` |
+| `formData` | 独立传入的表单值，优先级高于 `initialValue` | `Partial<CommonFormData<T>>` | - |
+| `showActionButtons` | 是否显示默认提交/重置操作区 | `boolean` | `true` |
 | `loading` | 提交按钮 loading 状态，支持 `v-model:loading` | `boolean` | `false` |
 | `inline` | 是否为行内表单 | `boolean` | `true` |
 
 > 除以上属性外，组件还支持大部分 Element Plus `ElForm` 原生属性。
+>
+> 当同时传入 `formData` 和表单项 `initialValue` 时，以 `formData` 为准；调用 `resetFields()` 时会重置回当前传入的 `formData` 基线。
 
 ## TypeScript 类型
 
 ```ts
 interface CommonFormProps<T> {
   form?: CommonFormItemArray<T>
+  formData?: Partial<CommonFormData<T>>
 }
 
 type CommonFormItemArray<T> = Array<

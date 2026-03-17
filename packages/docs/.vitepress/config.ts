@@ -128,6 +128,7 @@ export default defineConfig({
                 { text: 'CommonTable 表格', link: '/components/common-table' },
                 { text: 'CommonPagination 分页', link: '/components/common-pagination' },
                 { text: 'CommonDialog 对话框', link: '/components/common-dialog' },
+                { text: 'CommonDialogForm 弹窗表单', link: '/components/common-dialog-form' },
               ]
             },
             {
