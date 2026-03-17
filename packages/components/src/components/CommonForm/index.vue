@@ -13,7 +13,9 @@ import {
   CommonRadio,
   CommonSelect,
   CommonSwitch,
+  CommonTreeSelect,
   CommonTimePicker,
+  CommonUpload,
   getCommonProviderConfig,
 } from '../../index'
 import type { AnyObject } from '../../index'
@@ -37,9 +39,11 @@ const componentMap = new Map<string, Component>([
   ['date-picker', CommonDatePicker],
   ['time-picker', CommonTimePicker],
   ['cascader', CommonCascader],
+  ['tree-select', CommonTreeSelect],
   ['radio', CommonRadio],
   ['check-box', CommonCheckbox],
   ['switch', CommonSwitch],
+  ['upload', CommonUpload],
 ])
 
 /**

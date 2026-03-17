@@ -11,7 +11,9 @@ import type {
   CommonRadioProps,
   CommonSelectProps,
   CommonSwitchProps,
+  CommonTreeSelectProps,
   CommonTimePickerProps,
+  CommonUploadProps,
 } from '../index'
 import type { AnyObject } from '../../index'
 
@@ -38,10 +40,12 @@ export type CommonFormItemArray<T extends AnyObject> = Array<
   | CommonFormDatePickerItem<T>
   | CommonFormTimePickerItem<T>
   | CommonFormCascaderItem<T>
+  | CommonFormTreeSelectItem<T>
   | CommonFormRadioItem<T>
   | CommonFormCustomItem<T>
   | CommonFormCheckboxItem<T>
   | CommonFormSwitchItem<T>
+  | CommonFormUploadItem<T>
 >
 
 /**
@@ -64,7 +68,7 @@ export type CommonFormData<T extends AnyObject> = T & Record<string, any>
 interface CommonFormItemBase<T, P, D extends AnyObject, V = any> {
   /**
    * 组件类型标识
-   * - 内置组件：`input`、`input-number`、`select`、`date-picker`、`time-picker`、`cascader`、`radio`、`check-box`、`switch`
+   * - 内置组件：`input`、`input-number`、`select`、`date-picker`、`time-picker`、`cascader`、`tree-select`、`radio`、`check-box`、`switch`、`upload`
    * - 自定义组件：直接传入组件对象
    */
   is: T | (string & {})
@@ -104,6 +108,10 @@ export interface CommonFormTimePickerItem<T extends AnyObject>
 export interface CommonFormCascaderItem<T extends AnyObject>
   extends CommonFormItemBase<'cascader', CommonCascaderProps, T> {}
 
+/** 树选择器表单项 */
+export interface CommonFormTreeSelectItem<T extends AnyObject>
+  extends CommonFormItemBase<'tree-select', CommonTreeSelectProps, T> {}
+
 /** 单选框表单项 */
 export interface CommonFormRadioItem<T extends AnyObject>
   extends CommonFormItemBase<'radio', CommonRadioProps, T> {}
@@ -115,6 +123,10 @@ export interface CommonFormCheckboxItem<T extends AnyObject>
 /** 开关表单项 */
 export interface CommonFormSwitchItem<T extends AnyObject>
   extends CommonFormItemBase<'switch', CommonSwitchProps, T> {}
+
+/** 上传表单项 */
+export interface CommonFormUploadItem<T extends AnyObject>
+  extends CommonFormItemBase<'upload', CommonUploadProps, T> {}
 
 /**
  * 自定义组件表单项

@@ -5,7 +5,7 @@
 主要特性：
 
 - 基于配置生成表单结构
-- 内置 `input`、`input-number`、`select`、`date-picker`、`time-picker`、`cascader`、`radio`、`check-box`、`switch`
+- 内置 `input`、`input-number`、`select`、`date-picker`、`time-picker`、`cascader`、`tree-select`、`radio`、`check-box`、`switch`、`upload`
 - 支持 Element Plus 表单校验规则
 - 支持通过具名插槽自定义表单项内容
 - 支持暴露 `FormInstance` 方法和 `formData`
@@ -70,9 +70,11 @@ function handleSubmit(formData: any) {
 - `date-picker`
 - `time-picker`
 - `cascader`
+- `tree-select`
 - `radio`
 - `check-box`
 - `switch`
+- `upload`
 
 ## 插槽自定义
 
@@ -136,10 +138,12 @@ type CommonFormItemArray<T> = Array<
   | CommonFormDatePickerItem<T>
   | CommonFormTimePickerItem<T>
   | CommonFormCascaderItem<T>
+  | CommonFormTreeSelectItem<T>
   | CommonFormRadioItem<T>
   | CommonFormCustomItem<T>
   | CommonFormCheckboxItem<T>
   | CommonFormSwitchItem<T>
+  | CommonFormUploadItem<T>
 >
 
 interface CommonFormExpose<T> extends FormInstance {

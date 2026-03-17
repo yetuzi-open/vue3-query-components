@@ -205,7 +205,7 @@ const queryTableConfig = {
 |--------|------|
 | `CommonQueryTable` | 一体化查询表格，集成表单、表格、分页 |
 | `CommonTable` | 增强型表格组件，支持多种列类型 |
-| `CommonForm` | 动态表单组件，支持 7 种表单项 |
+| `CommonForm` | 动态表单组件，支持 11 种表单项 |
 | `CommonConfigProvider` | 全局配置组件，提供统一的组件配置 |
 
 ### 基础组件
@@ -215,9 +215,14 @@ const queryTableConfig = {
 | `CommonInput` | 输入框组件 |
 | `CommonSelect` | 下拉选择组件 |
 | `CommonDatePicker` | 日期选择器组件 |
+| `CommonTimePicker` | 时间选择器组件 |
+| `CommonCascader` | 级联选择组件 |
+| `CommonTreeSelect` | 树选择组件 |
 | `CommonRadio` | 单选框组件 |
 | `CommonCheckbox` | 复选框组件 |
 | `CommonSwitch` | 开关组件 |
+| `CommonUpload` | 上传组件 |
+| `CommonButton` | 按钮组件 |
 | `CommonPagination` | 分页组件 |
 
 ### Hooks
@@ -240,16 +245,21 @@ const queryTableConfig = {
 
 ### 表单组件类型支持
 
-CommonForm 支持以下 7 种内置表单项类型：
+CommonForm 支持以下 11 种内置表单项类型：
 
 | 组件类型 | 说明 | 用途 |
 |---------|------|------|
 | `input` | 输入框 | 文本、数字等简单输入 |
+| `input-number` | 数字输入框 | 数值录入 |
 | `select` | 下拉选择 | 单选下拉选项 |
 | `date-picker` | 日期选择器 | 日期、日期时间范围选择 |
+| `time-picker` | 时间选择器 | 时间或时间范围选择 |
+| `cascader` | 级联选择器 | 多层级联动选择 |
+| `tree-select` | 树选择器 | 组织、分类、区域等树形选择 |
 | `radio` | 单选框组 | 互斥选项选择 |
 | `check-box` | 复选框组 | 多选选项 |
 | `switch` | 开关 | 二元状态切换 |
+| `upload` | 上传组件 | 附件、图片和导入文件 |
 | 自定义组件 | 任意 Vue 组件 | 扩展自定义表单项 |
 
 ### 表格列类型支持

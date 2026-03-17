@@ -50,6 +50,12 @@ title: CommonForm
 
 <demo vue="CommonForm/dynamic.vue" ssg="true"/>
 
+## 树选择与上传
+
+适合组织架构、分类树、附件和图片等后台表单高频场景。
+
+<demo vue="CommonForm/tree-select-upload.vue" ssg="true"/>
+
 ## 自定义组件
 
 除了内置类型，也可以直接传入任意 Vue 组件作为表单控件。
@@ -93,9 +99,11 @@ title: CommonForm
 - `date-picker`
 - `time-picker`
 - `cascader`
+- `tree-select`
 - `radio`
 - `check-box`
 - `switch`
+- `upload`
 
 ### Slots
 

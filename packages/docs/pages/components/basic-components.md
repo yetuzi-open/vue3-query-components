@@ -17,9 +17,11 @@ title: Basic Components
 | `CommonDatePicker` | 日期选择器组件 |
 | `CommonTimePicker` | 时间选择器组件 |
 | `CommonCascader` | 级联选择组件 |
+| `CommonTreeSelect` | 树选择组件 |
 | `CommonRadio` | 单选框组件 |
 | `CommonCheckbox` | 复选框组件 |
 | `CommonSwitch` | 开关组件 |
+| `CommonUpload` | 上传组件 |
 
 这些组件主要作为 `CommonForm`、`CommonDialog` 等上层业务组件的基础控件使用，也可以单独在业务页面中直接使用。
 
@@ -36,6 +38,7 @@ title: Basic Components
 - `CommonDatePicker`
 - `CommonTimePicker`
 - `CommonCascader`
+- `CommonTreeSelect`
 - `CommonRadio`
 - `CommonCheckbox`
 - `CommonSwitch`
@@ -43,3 +46,4 @@ title: Basic Components
 ### 交互类
 
 - `CommonButton`
+- `CommonUpload`
