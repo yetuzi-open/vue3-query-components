@@ -31,6 +31,13 @@ export interface Config {
       /** 重置按钮文本 */
       resetText: string
     }
+    /** 对话框组件 */
+    dialog: {
+      /** 确认按钮文本 */
+      confirmText: string
+      /** 取消按钮文本 */
+      cancelText: string
+    }
   }
 }
 // #endregion config

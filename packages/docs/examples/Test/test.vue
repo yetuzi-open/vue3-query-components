@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { CommonQueryTable } from '@components-src'
+import { CommonDialog, CommonQueryTable, useCommonDialog } from '@components-src'
 import type { CommonQueryTableExpose } from '@components-src'
 import { ref, reactive } from 'vue'
-import { ElMessage } from 'element-plus'
+import { ElInput, ElMessage, ElSwitch } from 'element-plus'
 
 // ========== 数据类型定义 ==========
 interface UserData {
@@ -19,9 +19,58 @@ const queryTableRef = ref<CommonQueryTableExpose<UserData>>()
 // ========== 表格选中行 ==========
 const selectedRows = ref<UserData[]>([])
 
+// ========== CommonDialog 示例 ==========
+const editDialogVisible = ref(false)
+const editDialogLoading = ref(false)
+const editDialogForm = reactive({
+  name: '',
+  email: '',
+  status: true,
+})
+
+function resetEditDialogForm() {
+  editDialogForm.name = ''
+  editDialogForm.email = ''
+  editDialogForm.status = true
+}
+
+const batchDeleteDialog = useCommonDialog({
+  title: '批量删除确认',
+  width: '420px',
+  confirmText: '确认删除',
+  confirmButtonProps: {
+    type: 'danger',
+  },
+  async onConfirm() {
+    const rows = queryTableRef.value?.getSelectionRows() || []
+    await new Promise((resolve) => setTimeout(resolve, 600))
+    ElMessage.success(`模拟删除 ${rows.length} 条数据`)
+    console.log('删除的数据:', rows)
+    queryTableRef.value?.refresh()
+  },
+})
+
 function handleSelectionChange(selection: UserData[]) {
   selectedRows.value = selection
   console.log('选中行变化:', selection)
+}
+
+function handleOpenCreateDialog() {
+  resetEditDialogForm()
+  editDialogVisible.value = true
+}
+
+async function handleConfirmCreateDialog() {
+  editDialogLoading.value = true
+  await new Promise((resolve) => setTimeout(resolve, 600))
+  editDialogLoading.value = false
+  editDialogVisible.value = false
+  ElMessage.success(`模拟保存用户：${editDialogForm.name || '未命名用户'}`)
+  queryTableRef.value?.refresh()
+}
+
+function handleEditDialogClosed() {
+  resetEditDialogForm()
 }
 
 // ========== 表单配置 ==========
@@ -173,10 +222,10 @@ function handleBatchDelete() {
     ElMessage.warning('请先选择要删除的数据')
     return
   }
-  ElMessage.success(`模拟删除 ${rows.length} 条数据`)
-  console.log('删除的数据:', rows)
-  // 删除后刷新
-  queryTableRef.value?.refresh()
+
+  batchDeleteDialog.open({
+    content: `当前选中了 ${rows.length} 条数据，确认执行批量删除吗？`,
+  })
 }
 
 // 6. 获取并操作表单
@@ -197,6 +246,12 @@ function handleQueryWithFormData() {
     <div class="test-panel">
       <h3>实例方法测试</h3>
       <div class="button-group">
+        <el-button type="primary" plain @click="handleOpenCreateDialog">
+          打开组件式弹窗
+        </el-button>
+        <el-button type="danger" plain @click="handleBatchDelete">
+          打开函数式弹窗
+        </el-button>
         <el-button type="primary" @click="handleRefresh">
           刷新列表 (refresh)
         </el-button>
@@ -247,13 +302,14 @@ function handleQueryWithFormData() {
 
       <!-- 2. Toolbar 插槽 -->
       <template #toolbar>
-        <el-button type="primary" size="small">
+        <el-button type="primary" size="small" @click="handleOpenCreateDialog">
           新增用户
         </el-button>
         <el-button
           type="danger"
           size="small"
           :disabled="selectedRows.length === 0"
+          @click="handleBatchDelete"
         >
           批量删除 ({{ selectedRows.length }})
         </el-button>
@@ -278,6 +334,30 @@ function handleQueryWithFormData() {
         </div>
       </template>
     </CommonQueryTable>
+
+    <CommonDialog
+      v-model="editDialogVisible"
+      v-model:loading="editDialogLoading"
+      title="新增用户"
+      width="520px"
+      @closed="handleEditDialogClosed"
+      @confirm="handleConfirmCreateDialog"
+    >
+      <div class="dialog-form">
+        <label class="dialog-field">
+          <span>用户名</span>
+          <ElInput v-model="editDialogForm.name" placeholder="请输入用户名" />
+        </label>
+        <label class="dialog-field">
+          <span>邮箱</span>
+          <ElInput v-model="editDialogForm.email" placeholder="请输入邮箱" />
+        </label>
+        <label class="dialog-field dialog-field-inline">
+          <span>状态</span>
+          <ElSwitch v-model="editDialogForm.status" />
+        </label>
+      </div>
+    </CommonDialog>
 
     <!-- ========== 使用说明 ========== -->
     <div class="usage-panel">
@@ -378,6 +458,23 @@ h1 {
 .custom-footer {
   text-align: center;
   padding: 12px 0;
+}
+
+.dialog-form {
+  display: grid;
+  gap: 16px;
+}
+
+.dialog-field {
+  display: grid;
+  gap: 8px;
+  color: var(--el-text-color-primary);
+  font-size: 14px;
+}
+
+.dialog-field-inline {
+  grid-template-columns: 80px auto;
+  align-items: center;
 }
 
 /* 使用说明面板 */

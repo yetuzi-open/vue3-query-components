@@ -70,6 +70,8 @@ title: CommonConfigProvider
 | `component.form.submitText` | 表单提交按钮文案 | `'搜索'` |
 | `component.form.resetText` | 表单重置按钮文案 | `'重置'` |
 | `component.form.formItem.components.width` | 表单控件默认宽度 | `'200px'` |
+| `component.dialog.confirmText` | 对话框确认按钮文案 | `'确定'` |
+| `component.dialog.cancelText` | 对话框取消按钮文案 | `'取消'` |
 
 ## TypeScript 类型
 

@@ -126,7 +126,14 @@ export default defineConfig({
                 { text: 'CommonQueryTable 查询表格', link: '/components/common-query-table' },
                 { text: 'CommonForm 表单', link: '/components/common-form' },
                 { text: 'CommonTable 表格', link: '/components/common-table' },
-                { text: 'CommonPagination 分页', link: '/components/common-pagination' }
+                { text: 'CommonPagination 分页', link: '/components/common-pagination' },
+                { text: 'CommonDialog 对话框', link: '/components/common-dialog' },
+              ]
+            },
+            {
+              text: '基础组件',
+              items: [
+                { text: '基础组件概览', link: '/components/basic-components' }
               ]
             },
           ]

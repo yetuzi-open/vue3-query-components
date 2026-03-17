@@ -2,6 +2,7 @@
 export * from './CommonConfigProvider'
 export * from './CommonQueryTable'
 export * from './CommonForm'
+export * from './CommonDialog'
 export * from './CommonTable'
 export * from './CommonPagination'
 export * from './CommonSelect'

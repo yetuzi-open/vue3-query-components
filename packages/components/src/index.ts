@@ -29,6 +29,10 @@ export const config = reactive<Config>({
         },
       },
     },
+    dialog: {
+      confirmText: '确定',
+      cancelText: '取消',
+    },
   },
 })
 // #endregion config
