@@ -2,6 +2,35 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.6.0](https://github.com/yetuzi-open/vue3-query-components/compare/v1.5.1...v1.6.0) (2026-03-17)
+
+
+### 🔧 修复
+
+* harden component release scripts ([1f1b32f](https://github.com/yetuzi-open/vue3-query-components/commit/1f1b32f04e9c7acce8162df3e58705fa1137a5dc))
+
+
+### ♻️ 重构
+
+* **query-table:** remove vue-hooks-plus request dependency ([e2aa3b2](https://github.com/yetuzi-open/vue3-query-components/commit/e2aa3b25bfc3572f7699dd6d2170715e01f2864e))
+
+
+### 📝 文档
+
+* add gitcode repository links ([f899e91](https://github.com/yetuzi-open/vue3-query-components/commit/f899e91fa1ac1ad9c86beb5b3a32825533f9c01a))
+* align docs pages with current usage ([dc6f8a7](https://github.com/yetuzi-open/vue3-query-components/commit/dc6f8a7e34dc2039b41cb4220b8148d364da2949))
+* **home:** simplify hero actions ([9b7c921](https://github.com/yetuzi-open/vue3-query-components/commit/9b7c921270a78162ae252b3d3062704bf7a0abd8))
+* polish vitepress navbar and site metadata ([fff396d](https://github.com/yetuzi-open/vue3-query-components/commit/fff396d5d888a8c65fb65c3c38b21906860e6ebf))
+* remove english docs locale ([4518014](https://github.com/yetuzi-open/vue3-query-components/commit/4518014e47a8e5b345d55b5be890d9863c501e49))
+* unify branch and docs deployment workflow ([26488ce](https://github.com/yetuzi-open/vue3-query-components/commit/26488ce1d46364c7c7e941763930928bced1751b))
+
+
+### ✨ 新增
+
+* **dialog-form:** add dialog form and programmatic api ([c1a5d62](https://github.com/yetuzi-open/vue3-query-components/commit/c1a5d624269fd8cc820f04aadb274e69c6ff36d3))
+* **dialog:** add CommonDialog and usage docs ([4b442d4](https://github.com/yetuzi-open/vue3-query-components/commit/4b442d4e06d4fd5273aaa5a043cfd202b69c8102))
+* support tree-select and upload in common form ([657b2e6](https://github.com/yetuzi-open/vue3-query-components/commit/657b2e6a41f629ea06c1e8ddbf6faaa6504533d3))
+
 ## [1.5.1](https://github.com/yetuzi-open/vue3-query-components/compare/v1.5.0...v1.5.1) (2026-03-10)
 
 
