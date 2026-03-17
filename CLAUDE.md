@@ -14,7 +14,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - **语言**: TypeScript 5.9+
 - **包管理**: npm workspaces（**注意：不是 pnpm**）
 - **Node 版本**: 20.19.0（通过 Volta 管理，项目支持 ^20.19.0 || >=22.12.0）
-- **依赖管理**: vue-hooks-plus（useReactive）、lodash-es、dayjs
+- **依赖管理**: lodash-es、dayjs
 
 ## 项目结构
 

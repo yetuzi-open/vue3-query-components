@@ -368,8 +368,7 @@ interface TableColumn {
 {
   "dependencies": {
     "dayjs": "^1.11.18",
-    "lodash-es": "^4.17.21",
-    "vue-hooks-plus": "^2.4.1"
+    "lodash-es": "^4.17.21"
   }
 }
 ```

@@ -12,8 +12,7 @@ import {
 } from '../../index'
 import type { CommonFormExpose, CommonTableExpose, PaginationParam } from '../../index'
 import { ElLoading } from 'element-plus'
-import { useRequest } from 'vue-hooks-plus'
-import { ref, type Slots, useSlots } from 'vue'
+import { onMounted, ref, type Slots, useSlots } from 'vue'
 
 const vLoading = ElLoading.directive
 
@@ -63,26 +62,17 @@ const [page, resetPage] = useResettableReactive<PaginationParam>({
   pageSize: config.component.pagination.defaultPageSize,
 })
 
-/**
- * 列表请求管理
- * 使用 `useRequest` 统一处理首次加载、手动刷新和错误兜底
- */
-const { data, loading, run } = useRequest(props.fetch, {
-  defaultParams: [
-    {
-      ...page,
-      ...initFetchParams,
-    },
-  ],
-  initialData: {
-    list: [],
-    total: 0,
-  },
-  onError() {
-    data.value.total = 0
-    data.value.list = []
-  },
+/** 列表数据 */
+const data = ref<Awaited<ReturnType<CommonQueryTableProps['fetch']>>>({
+  list: [],
+  total: 0,
 })
+
+/** 列表请求 loading 状态 */
+const loading = ref(false)
+
+/** 请求序号，确保只保留最后一次请求结果 */
+let currentRequestId = 0
 
 /** 表单提交时重新获取列表数据 */
 function handleFormSubmit() {
@@ -117,12 +107,43 @@ function handlePaginationChange(event: PaginationParam) {
  */
 function fetchListData() {
   const formData = CommonFormRef.value?.formData || {}
-  run(
+  runRequest(
     filterNullAndUndefined({
       ...page,
       ...formData,
     }),
   )
+}
+
+async function runRequest(params: Parameters<CommonQueryTableProps['fetch']>[0]) {
+  const requestId = ++currentRequestId
+  loading.value = true
+
+  try {
+    const result = await props.fetch(params)
+
+    if (requestId !== currentRequestId) {
+      return
+    }
+
+    data.value = {
+      list: result?.list ?? [],
+      total: result?.total ?? 0,
+    }
+  } catch {
+    if (requestId !== currentRequestId) {
+      return
+    }
+
+    data.value = {
+      list: [],
+      total: 0,
+    }
+  } finally {
+    if (requestId === currentRequestId) {
+      loading.value = false
+    }
+  }
 }
 
 /** 使用当前查询条件刷新列表 */
@@ -147,6 +168,15 @@ function getSelectionRows() {
 
 defineOptions({
   name: 'CommonQueryTable',
+})
+
+onMounted(() => {
+  runRequest(
+    filterNullAndUndefined({
+      ...page,
+      ...initFetchParams,
+    }),
+  )
 })
 
 /** 暴露组合组件常用方法，供父组件通过 ref 调用 */
