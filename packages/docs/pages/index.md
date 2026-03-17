@@ -12,15 +12,6 @@ hero:
     - theme: alt
       text: 安装
       link: /guide/installation
-    - theme: alt
-      text: GitHub
-      link: https://github.com/yetuzi-open/vue3-query-components
-    - theme: alt
-      text: Gitee
-      link: https://gitee.com/yetuzi-open/vue3-query-components
-    - theme: alt
-      text: GitCode
-      link: https://gitcode.com/yetuzi/vue3-query-components
 
 features:
   - icon: 🚀
