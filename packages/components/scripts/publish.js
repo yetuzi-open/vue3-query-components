@@ -3,6 +3,7 @@ import {
   ensureReleaseFilesAreClean,
   findVersionType,
   hasLocalTag,
+  readCurrentBranch,
   releaseGitPaths,
   repoRoot,
   restoreFiles,
@@ -17,7 +18,7 @@ if (!versionType) {
   process.exit(1);
 }
 
-console.log("🚀 开始发布流程...");
+console.log("🚀 开始准备 release 流程...");
 
 const releaseSnapshot = snapshotFiles();
 let newVersion = "";
@@ -26,6 +27,12 @@ let tagCreated = false;
 
 try {
   ensureReleaseFilesAreClean();
+
+  const currentBranch = readCurrentBranch();
+
+  if (currentBranch !== "main") {
+    throw new Error(`当前分支为 ${currentBranch}，请切换到 main 后再执行发布`);
+  }
 
   // 1. 升级版本号并更新 CHANGELOG
   console.log(`\n📈 升级版本号 (${versionType}) 并更新 CHANGELOG...`);
@@ -55,16 +62,12 @@ try {
   run(`git tag -a v${newVersion} -m "v${newVersion}"`, { cwd: repoRoot });
   tagCreated = true;
 
-  // 5. 发布到 npm
-  console.log(`\n🚀 发布到 npm...`);
-  run("npm publish --access public");
+  // 5. 交由 GitHub Actions 基于 tag 完成 npm 发布和文档部署
+  console.log(`\n☁️  已完成本地 release 准备，GitHub Actions 将在 tag 推送后继续发布...`);
+  console.log(`\n📤 请执行以下命令触发远程发布：`);
+  console.log(`git push origin main --follow-tags`);
 
-  // 6. 推送 commit 和 tag
-  console.log(`\n📤 推送 commit 和 tag 到远程...`);
-  run("git push", { cwd: repoRoot });
-  run(`git push origin v${newVersion}`, { cwd: repoRoot });
-
-  console.log(`\n✅ 发布成功！版本: ${newVersion}`);
+  console.log(`\n✅ release 已准备完成！版本: ${newVersion}`);
 } catch (error) {
   if (!releaseCommitted && releaseSnapshot) {
     restoreFiles(releaseSnapshot);
@@ -72,7 +75,7 @@ try {
   }
 
   if (releaseCommitted || tagCreated) {
-    console.error("⚠️ 本地可能已创建 release commit 或 tag，请确认后再决定是否继续推送。");
+    console.error("⚠️ 本地可能已创建 release commit 或 tag，请确认后再决定是否推送。");
   }
 
   console.error("\n❌ 发布失败：", error.message);

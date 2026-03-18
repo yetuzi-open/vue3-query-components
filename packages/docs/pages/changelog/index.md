@@ -44,8 +44,9 @@ title: 更新日志
 - npm 正式版本只从 `main` 发布
 - 每一个已发布 npm 版本都必须有对应的 git tag，例如 `v1.5.1`
 - `packages/components/package.json`、`CHANGELOG.md`、git tag 和 npm registry 中的版本号必须保持一致
+- 本地 release 脚本只负责生成 release commit 与 tag，真正的 npm 发布由 GitHub Actions 在 tag 推送后完成
 
 文档站点部署遵循以下约束：
 
-- GitHub Pages 在 `main` 分支相关文件变更后自动构建和部署
+- GitHub Pages 只在版本 tag 推送后的 release workflow 中自动构建和部署
 - 文档示例与组件源码保持同仓库、同主干演进，不再维护长期 `docs` 分支

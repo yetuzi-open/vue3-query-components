@@ -1,6 +1,6 @@
 # 版本管理说明
 
-本仓库的组件包版本管理基于 `standard-version`，但实际发布流程已经通过 `scripts/publish.js` 做了统一封装。
+本仓库的组件包版本管理基于 `standard-version`，实际发布流程通过本地 release 脚本和 GitHub Actions 共同完成。
 
 ## 版本来源
 
@@ -44,8 +44,8 @@ npm run publish:major
 - 更新版本号和 `CHANGELOG.md`
 - 执行类型检查和构建
 - 创建 release commit 和 git tag
-- 发布到 npm
-- 推送 `main` 和 tag 到远程
+- 输出推荐推送命令
+- 由 GitHub Actions 在 tag 推送后自动发布到 npm 并更新文档站
 
 ## 发布顺序
 
@@ -54,7 +54,9 @@ npm run publish:major
 1. 在 `main` 合并待发布内容
 2. 进入 `packages/components`
 3. 执行 `npm run publish:patch` / `minor` / `major`
-4. 发布后检查 npm registry 与 git tag 是否一致
+4. 执行 `git push origin main --follow-tags`
+5. 等待 GitHub Actions 完成 npm 发布和文档部署
+6. 发布后检查 npm registry 与 git tag 是否一致
 
 ## 约束
 
@@ -62,3 +64,4 @@ npm run publish:major
 - 每个 npm 版本必须有同名 git tag
 - 版本号、`CHANGELOG.md`、远程 tag 和 npm registry 必须一致
 - 如果发现 npm 已有版本但 git 缺少 tag，应先补齐 tag，再继续后续发布
+- GitHub Actions 的 Trusted Publisher 必须与 `.github/workflows/release.yml` 保持一致

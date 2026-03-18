@@ -35,4 +35,4 @@ npm run build:docs
 - 文档和组件源码跟随 `main` 主干一起演进
 - 不再维护长期 `docs` 分支
 - 组件 API 变更时，需要同步更新对应页面和示例
-- 文档部署由 GitHub Actions 在 `main` 分支相关文件变更后自动触发
+- 正式文档部署由 GitHub Actions 在版本 tag 推送后的 release workflow 中自动触发

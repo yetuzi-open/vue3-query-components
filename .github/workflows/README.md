@@ -1,18 +1,20 @@
 # CI/CD 说明
 
-本项目使用 GitHub Actions 自动构建和部署文档到 GitHub Pages。
+本项目使用 GitHub Actions 基于 git tag 自动发布 npm 包，并在发布成功后部署文档到 GitHub Pages。
 
 ## 🚀 工作流程
 
-当 `main` 分支中与组件库、文档站点或部署配置相关的代码发生变化时，会自动触发以下流程：
+当推送版本 tag，例如 `v1.6.0` 时，会自动触发以下流程：
 
-1. **构建组件库** - 构建组件库到 `packages/components/dist`
-2. **构建文档站点** - 使用 VitePress 构建文档
-3. **部署到 GitHub Pages** - 自动部署到 GitHub Pages
+1. **校验版本** - 校验 tag 与 `packages/components/package.json` 版本一致
+2. **构建组件库** - 构建组件库到 `packages/components/dist`
+3. **发布 npm 包** - 通过 npm Trusted Publishing 自动发布
+4. **构建文档站点** - 使用 VitePress 构建文档
+5. **部署到 GitHub Pages** - 自动部署到 GitHub Pages
 
 ## 📝 使用方法
 
-### 方法一：推荐 - 直接走主干工作流
+### 方法一：推荐 - 走 release tag 工作流
 
 1. **从 `main` 拉出短期开发分支**：
    ```bash
@@ -32,56 +34,65 @@
    git push origin docs/your-change
    ```
 
-4. **等待合并到 `main` 后自动构建部署**
+4. **在 `packages/components` 执行 release 命令**
+   ```bash
+   npm run publish:patch
+   # 或 npm run publish:minor / npm run publish:major
+   ```
+
+5. **推送 `main` 和 tag**
+   ```bash
+   git push origin main --follow-tags
+   ```
+
+6. **等待 GitHub Actions 自动发布**
    - 访问 https://github.com/yetuzi-open/vue3-query-components/actions 查看构建状态
-   - 构建成功后，文档会自动发布到 GitHub Pages
+   - npm 发布成功后，文档会自动部署到 GitHub Pages
 
 ### 方法二：手动触发
 
 1. 访问 GitHub Actions 页面
-2. 选择 "Deploy Docs to GitHub Pages" 工作流
-3. 点击 "Run workflow" 按钮
-4. 选择分支并运行
+2. 选择 `Deploy Docs to GitHub Pages (Manual)` 工作流
+3. 点击 `Run workflow`
+4. 选择分支并运行，仅用于重建当前文档站
 
 ## 🔧 配置说明
 
 ### 触发条件
 
-工作流在以下情况触发：
+自动发布工作流在以下情况触发：
 
-- 推送代码到 `main` 分支
-- 且修改了以下路径的文件：
-  - `packages/docs/**`
-  - `packages/components/**`
-  - `package.json`
-  - `package-lock.json`
-  - `.github/workflows/deploy-docs.yml`
-  - `.github/workflows/README.md`
+- 推送符合 `v*.*.*` 格式的 tag
+- 且 tag 对应代码中的 `packages/components/package.json` 版本与 tag 一致
 
 ### 构建环境
 
 - **Node.js**: 20.19.0
 - **包管理器**: npm
 - **构建命令**:
+  - `npm run type-check` - 组件类型检查
   - `npm run build:components` - 构建组件库
   - `npm run build:docs` - 构建文档站点
 
 ### 部署配置
 
+- **npm 发布方式**: npm Trusted Publishing
 - **部署目标**: GitHub Pages
 - **构建产物目录**: `packages/docs/.vitepress/dist`
-- **并发控制**: 自动取消之前的构建
+- **发布工作流**: `.github/workflows/release.yml`
+- **手动重部署工作流**: `.github/workflows/deploy-docs.yml`
 
 ## 📦 注意事项
 
-### 组件库版本
+### npm Trusted Publishing
 
-在 CI/CD 环境中，文档会先构建组件库，再构建文档站点。
+需要在 npm 后台将以下信息配置为 Trusted Publisher：
 
-如果需要使用最新的组件库功能，请确保：
+1. **Repository**：`yetuzi-open/vue3-query-components`
+2. **Workflow file**：`.github/workflows/release.yml`
+3. **Package**：`@yetuzi/vue3-query-components`
 
-1. 组件库已构建（`npm run build:components`）
-2. 组件源码和文档示例已经合并到 `main`
+未完成此配置前，tag 工作流无法真正发布 npm 包。
 
 ### 本地预览
 
@@ -137,7 +148,9 @@ git commit -m "feat: 添加新功能"
 git push origin feat/your-change
 
 # 6. 发起 PR 合并到 main
-# 7. 合并后 GitHub Actions 自动构建部署文档
+# 7. 在 packages/components 执行 npm run publish:minor
+# 8. 执行 git push origin main --follow-tags
+# 9. 等待 GitHub Actions 自动发布 npm 并部署文档
 ```
 
 ## 🛠️ 故障排除
@@ -169,3 +182,4 @@ npm run type-check
 2. Settings → Actions → General → Workflow permissions
    - 勾选 "Read and write permissions"
    - 勾选 "Allow GitHub Actions to create and approve pull requests"
+3. npm 后台已配置 Trusted Publisher，且 workflow 文件名与路径完全一致

@@ -114,3 +114,10 @@ export const hasLocalTag = (tagName) => {
 
   return output === tagName
 }
+
+export const readCurrentBranch = () => {
+  return execSync('git branch --show-current', {
+    cwd: repoRoot,
+    encoding: 'utf8',
+  }).trim()
+}
